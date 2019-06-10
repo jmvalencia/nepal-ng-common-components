@@ -1,0 +1,96 @@
+{
+  "name": "@al/nepal-ng-common-components",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Alert Logic Component Library for Angular projects",
+  "scripts": {
+    "ng": "ng",
+    "start": "npm run build && ng serve --port 4300",
+    "build": "ng build && npm run bundle-styles",
+    "bundle-styles": "scss-bundle -c scss-bundle.config.json",
+    "test": "ng test nepal-ng-common-components --watch=false",
+    "test-watch": "ng test nepal-ng-common-components --watch=true --code-coverage",
+    "lint": "ng lint",
+    "copy-license": "cp LICENSE dist/nepal-ng-common-components",
+    "copy-readme": "cp README.md dist/nepal-ng-common-components",
+    "copy-files": "npm run copy-license && npm run copy-readme",
+    "npm_pack": "cd dist/nepal-ng-common-components && npm pack",
+    "package": "npm run build && npm run copy-files && npm run npm_pack",
+    "postinstall": "./scripts/installHooks.sh"
+  },
+  "author": {
+    "name": "Robert Parker",
+    "email": "robert.parker@alertlogic.com"
+  },
+  "keywords": [
+    "Alert Logic",
+    "Design Library"
+  ],
+  "maintainers": [
+    {
+      "name": "Robert Parker",
+      "email": "robert.parker@alertlogic.com"
+    },
+    {
+      "name": "Alert Logic NPM Team",
+      "email": "npm@alertlogic.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alertlogic/nepal-ng-common-components"
+  },
+  "dependencies": {
+    "@al/client": "^1.0.0-beta.5",
+    "@al/design": "^0.1.0",
+    "@al/session": "^1.0.0-beta.6",
+    "@al/subscriptions": "^1.0.0-beta.5",
+    "@angular/common": "~7.2.0",
+    "@angular/compiler": "~7.2.0",
+    "@angular/core": "~7.2.0",
+    "@angular/forms": "~7.2.0",
+    "@angular/platform-browser": "~7.2.0",
+    "@angular/platform-browser-dynamic": "~7.2.0",
+    "@angular/router": "~7.2.0",
+    "@ng-select/ng-select": "^2.20.0",
+    "angular-highcharts": "^7.2.0",
+    "core-js": "^2.5.4",
+    "font-awesome": "^4.7.0",
+    "highcharts": "^7.1.1",
+    "primeflex": "^1.0.0-rc.1",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.1.0",
+    "prismjs": "^1.16.0",
+    "rxjs": "~6.3.3",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.8.26"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-ng-packagr": "~0.13.0",
+    "@angular/animations": "^7.2.12",
+    "@angular/cdk": "^7.3.7",
+    "@angular/cli": "~7.3.8",
+    "@angular/compiler-cli": "~7.2.0",
+    "@angular/language-service": "~7.2.0",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "codelyzer": "~4.5.0",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^4.2.0",
+    "protractor": "~5.4.0",
+    "scss-bundle": "^2.5.1",
+    "ts-node": "~7.0.0",
+    "tsickle": ">=0.34.0",
+    "tslib": "^1.9.0",
+    "tslint": "~5.11.0",
+    "typescript": "~3.2.2"
+  }
+}

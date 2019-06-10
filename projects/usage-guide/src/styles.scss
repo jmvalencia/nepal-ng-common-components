@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../../../dist/nepal-ng-common-components/styles";
+@import "~@al/design/styles/utility";
+@import "~@al/design/styles/palette";
+
+pre {
+  margin: 0!important;
+  padding: 0!important;
+  background: al-color($al-gray, 500);
+}

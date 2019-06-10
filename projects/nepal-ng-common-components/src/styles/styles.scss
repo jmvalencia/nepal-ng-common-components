@@ -1,0 +1,11 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+
+// TODO - below should live in @al/design (core theme style)??x
+html,body{
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight:normal;
+  font-size:14px;
+  margin: 0;
+  color: al-color($al-gray, 500);
+}

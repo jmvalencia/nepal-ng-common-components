@@ -1,0 +1,16 @@
+<p-sidebar [(visible)]="displayNav" styleClass="al-sidenav" [modal]="false" [showCloseIcon]="false">
+    <div class="sidenav-container">
+        <div class="sidenav-items">
+            <div *ngFor="let menuItem of menuItems; let i = index" class="menu-item-container">
+                <div class="menu-item-parent" (click)="toggleItemExpanded(menuItem);"><i class="material-icons">{{menuItem.icon}}</i><span>{{menuItem.name}}</span></div>
+                <div class="menu-item-children-container" [hidden]="!menuItem.expanded">
+                    <div class="menu-item-child" *ngFor="let childItem of menuItem.children">
+                        <span>{{childItem.name}}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- <button pButton type="button" label="Logout" style="margin-bottom:10px" (click)="logout()"></button> -->
+  </p-sidebar>

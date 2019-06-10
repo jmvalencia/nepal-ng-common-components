@@ -1,0 +1,39 @@
+{
+  "name": "@al/ng-common-components",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Alert Logic Component Library for Angular projects",
+  "author": {
+    "name": "Robert Parker",
+    "email": "robert.parker@alertlogic.com"
+  },
+  "keywords": [
+    "Alert Logic",
+    "Component Library"
+  ],
+  "maintainers": [
+    {
+      "name": "Robert Parker",
+      "email": "robert.parker@alertlogic.com"
+    },
+    {
+      "name": "Alert Logic NPM Team",
+      "email": "npm@alertlogic.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alertlogic/nepal-ng-common-components"
+  },
+  "peerDependencies": {
+    "@al/design": "^0.1.2",
+    "@al/session": "^1.0.0-beta.6",
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0",
+    "@ng-select/ng-select": "^2.20.0",
+    "highcharts": "^7.1.1",
+    "primeflex": "^1.0.0-rc.1",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.1.0"
+  }
+}

@@ -1,0 +1,69 @@
+<div class="card card-w-title">
+  <h1>Welcome</h1>
+  Welcome to the Alert Logic component library for Angular applications
+  <p>Here you 'should' find components for all your needs when developing UI features for Alert Logic console applications, if there is anything you feel
+    is missing then please get in touch with us.
+  </p>
+  <p>These components are built using <a href="https://www.primefaces.org/primeng/#/" target="_blank">PrimeNG</a> - check out their usage docs that cover how to use the Base Components from this library.
+  </p>
+</div>
+<div class="card card-w-title">
+    <h1>Getting Started</h1>
+    First install the necessary dependencies in your Angular project
+    <br/>
+    <p>
+      <code pCode>npm install --save @al/nepal-ng-common-components</code>
+    </p>
+    This library also has peer dependencies, which you will need to install as follows:
+      <pre>
+          <code pCode>
+  @al/design
+  @al/session
+  highcharts
+  primeng
+  primeflex
+  primeicons
+          </code>
+      </pre>
+    <h2>Angular CLI</h2>
+    <p>
+      Add the following resources to the <code>styles</code> section of your Angular project's <code>angular.json</code> configuration file:
+    </p>
+    <pre>
+      <code class="language-json" pCode>
+  "styles": [
+    "node_modules/primeicons/primeicons.css",
+    "node_modules/primeng/resources/primeng.min.css",
+    "node_modules/@al/design/themes/primeng/theme/theme-light.css",
+    "node_modules/@al/design/themes/primeng/layout/css/layout-light.css",
+    "node_modules/primeflex/primeflex.css",
+    "src/styles.scss"
+  ]
+      </code>
+    </pre>
+    <h2>Module Configuration</h2>
+    <p>
+      In your project's root module, e.g <code>app.module.ts</code>, import the <code>DesignClientAngularModule</code> as follows:
+    </p>
+    <pre>
+      <code class="language-ts" pCode>
+  import &#123; DesignClientAngularModule &#125; from '@al/nepal-ng-common-components';
+
+  @NgModule(&#123;
+    declarations: [
+      ...
+    ],
+    imports: [
+      DesignClientAngularModule,
+      ...
+    ],
+    providers: [
+      ...
+    ],
+    bootstrap: [AppComponent]
+  &#125;)
+  export class AppModule &#123; &#125;
+      </code>
+    </pre>
+  </div>
+

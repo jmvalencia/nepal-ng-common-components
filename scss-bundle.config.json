@@ -1,0 +1,4 @@
+{
+    "entry": "./projects/nepal-ng-common-components/src/styles/styles.scss",
+    "dest": "dist/nepal-ng-common-components/styles.scss"
+  }

@@ -1,0 +1,104 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+@import "~@al/design/styles/variables";
+
+.user-info-summary {
+  background: al-color($ir-blue, 600);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: 12px; //This is different to UX spec which was 10px but seems a bit too small?
+
+  .user-menus-container {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// below is hopefully only a temporary solution - waiting on latest theme files from UX
+::ng-deep {
+  .ui-menubar.ui-widget.ui-widget-content.ui-corner-all {
+    background-color: al-color($ir-blue, 600);
+    color: white;
+    border: none;
+    .ui-submenu-icon {
+      background-color: al-color($ir-blue, 600);
+      color: white;
+      &:before{
+        content: "arrow_drop_down";
+        display: inline-block;
+        font-family: 'Material Icons';
+        font-size: inherit;
+      }
+    }
+  }
+  .ui-menubar-root-list > li > a, .ui-menubar-root-list > li > a:hover {
+    background-color: al-color($ir-blue, 600)!important;
+    color: white!important;
+  }
+
+  .ui-menubar-root-list > li.ui-menu-item-active > a > .ui-submenu-icon {
+      transform: rotate(180deg);
+  }
+
+  .ui-menubar .ui-menubar-root-list > .ui-menuitem > .ui-menuitem-link {
+    padding-right: 0!important;
+  }
+
+  .separator {
+    color: white;
+  }
+
+  .ng-select .ng-select-container {
+    background-color: unset;
+    color: white!important;
+    border: none;
+    width: 150px!important;
+  }
+
+  .ng-select.ng-select-opened>.ng-select-container {
+    background-color: unset;
+  }
+
+  .ng-clear-wrapper {
+    display: none;
+  }
+
+  .ng-dropdown-panel {
+    width: 300px!important;
+    left: -128px;
+  }
+
+  .ng-select .ng-arrow-wrapper .ng-arrow {
+      display: none!important;
+  }
+
+  .ng-select span.ng-arrow-wrapper:before {
+      content: "arrow_drop_down";
+      display: inline-block;
+      font-family: 'Material Icons';
+      font-size: inherit;
+      text-rendering: auto;
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      margin-top: 5px;
+  }
+
+  .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+    border: none;
+    box-shadow: none;
+  }
+
+  .filter-input {
+    width: 100%;
+  }
+}
+
+.al-header-logo {
+  background: url('AlertLogic-white-logo.svg');
+  width: 105px;
+  height: 20px;
+}

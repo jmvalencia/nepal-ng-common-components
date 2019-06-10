@@ -1,0 +1,162 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "nepal-ng-common-components": {
+      "root": "projects/nepal-ng-common-components",
+      "sourceRoot": "projects/nepal-ng-common-components/src",
+      "projectType": "library",
+      "prefix": "al",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/nepal-ng-common-components/tsconfig.lib.json",
+            "project": "projects/nepal-ng-common-components/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/nepal-ng-common-components/src/test.ts",
+            "tsConfig": "projects/nepal-ng-common-components/tsconfig.spec.json",
+            "karmaConfig": "projects/nepal-ng-common-components/karma.conf.js",
+            "codeCoverageExclude": [
+              "/**/*types*.ts",
+              "/**/*test*.ts"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/nepal-ng-common-components/tsconfig.lib.json",
+              "projects/nepal-ng-common-components/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "usage-guide": {
+      "root": "projects/usage-guide/",
+      "sourceRoot": "projects/usage-guide/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/usage-guide",
+            "index": "projects/usage-guide/src/index.html",
+            "main": "projects/usage-guide/src/main.ts",
+            "polyfills": "projects/usage-guide/src/polyfills.ts",
+            "tsConfig": "projects/usage-guide/tsconfig.app.json",
+            "assets": [
+              "projects/usage-guide/src/favicon.ico",
+              "projects/usage-guide/src/assets"
+            ],
+            "styles": [
+              "projects/usage-guide/src/styles.scss",
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/@al/design/themes/primeng/layout/css/layout-light.css",
+              "node_modules/@al/design/themes/primeng/theme/theme-light.css",
+              "node_modules/prismjs/themes/prism.css"
+            ],
+            "scripts": [
+              "node_modules/prismjs/prism.js"
+            ],
+            "es5BrowserSupport": true,
+            "preserveSymlinks": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/usage-guide/src/environments/environment.ts",
+                  "with": "projects/usage-guide/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "usage-guide:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "usage-guide:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "usage-guide:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/usage-guide/src/test.ts",
+            "polyfills": "projects/usage-guide/src/polyfills.ts",
+            "tsConfig": "projects/usage-guide/tsconfig.spec.json",
+            "karmaConfig": "projects/usage-guide/karma.conf.js",
+            "styles": [
+              "projects/usage-guide/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/usage-guide/src/favicon.ico",
+              "projects/usage-guide/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/usage-guide/tsconfig.app.json",
+              "projects/usage-guide/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "nepal-ng-common-components"
+}

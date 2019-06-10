@@ -1,0 +1,98 @@
+al-detailed-table-list {
+    th, td {
+        border-style: none !important;
+        border-top: 1px solid#ededed !important;
+        border-bottom: 1px solid #ededed !important;
+        background-color: white !important;
+        text-align: left !important;
+        font-family: 'Open Sans',Arial,sans-serif !important;
+        font-size: 0.8em !important;
+    }
+    
+    th {
+        font-weight: bold !important;
+        font-size: 0.8em !important;
+        color: #707070 !important;
+    
+        &.heading0 {
+            border-right: #ededed 1px solid !important;
+        }
+        &.heading1 {
+            text-align: center !important;
+        }
+        &.heading3 {
+            text-align: right !important;
+        }
+        &.count {
+            text-align: center !important;
+            border-left: #ededed 1px solid !important;
+        }
+        &.right {
+            text-align: right !important;
+            border-left:none  !important;
+        }
+        &.status {
+            text-align: right !important;
+        }
+    }
+    td {
+        &.count {
+            text-align: center !important;
+            border-left: #ededed 1px solid !important;
+            &.right {
+                text-align: right !important;
+                font-weight: bold !important;
+                border-left:none  !important;
+            }
+        }
+        &.status {
+            text-align: right !important;
+            font-weight: 600 !important;
+
+            &.Critical {
+                color: #e53935;
+            }
+            &.High {
+                color: #f78c1e
+            }
+            &.Medium {
+                color: #ffd54f
+            }
+            &.Low {
+                color: #868686
+            }
+        }
+    }
+
+    .darkMode {
+        th {
+            background-color: #3C3C3C !important;
+            color: #EDEDED !important;
+        }
+    }
+    .darkMode {
+        td {
+            background-color: #3C3C3C !important;
+            color: #EDEDED !important;
+
+            &.status {
+                text-align: right !important;
+                font-weight: 600 !important;
+    
+                &.Critical {
+                    color: #e53935;
+                }
+                &.High {
+                    color: #f78c1e
+                }
+                &.Medium {
+                    color: #ffd54f
+                }
+                &.Low {
+                    color: #868686
+                }
+            }
+        
+        }
+    }
+}

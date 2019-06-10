@@ -1,0 +1,40 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+
+.nav-header-bar {
+  height: 60px;
+  padding-left: 24px;
+  padding-right:24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: al-color($al-gray, 50);
+  font-size: 18px;
+  // TOD - below could be in a mixin??
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+}
+
+.nav-header-content {
+  display: flex;
+  align-items: center;
+  i {
+    margin-right: 12px;
+    &.menu-toggle:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+button {
+  background-color: #FFB74D;
+  border: none;
+  &:hover:enabled {
+    background-color: #FFB74D;
+    border: none;
+  }
+  // -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+  // -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+  // box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+}
