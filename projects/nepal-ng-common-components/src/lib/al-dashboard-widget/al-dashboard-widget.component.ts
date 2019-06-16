@@ -6,7 +6,7 @@
  *
  */
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { Widget, WidgetClickType } from '../types';
+import { Widget, WidgetClickType, WidgetButtonAction } from '../types';
 
 export interface EmitValues {
   id: string;
@@ -40,8 +40,8 @@ export class AlDashboardWidgetComponent implements OnInit {
    *  appropriate buttons or links.  If none are passed then the bottom bar should not be rendered.
    */
   ngOnInit() {
-    this.hasActions = this.config.hasOwnProperty('actionLabels')
-        && Object.keys(this.config.actionLabels).length > 0;
+    this.hasActions = this.config.hasOwnProperty('actions')
+        && Object.keys(this.config.actions).length > 0;
   }
 
   /*
@@ -52,40 +52,40 @@ export class AlDashboardWidgetComponent implements OnInit {
    * Primary Button Clicked
    */
   public primaryClicked(): void {
-    this.emitClick(WidgetClickType.Primary);
+    this.emitClick(this.config.actions.primary.action);
   }
 
   /*
    * Settings Button Clicked
    */
   public settingsClicked(): void {
-    this.emitClick(WidgetClickType.Settings);
+    // this.emitClick(this.config.actions.settings);
   }
 
   /*
    * Link1 Button Clicked
    */
   public link1Clicked(): void {
-    this.emitClick(WidgetClickType.Link1);
+    // this.emitClick(WidgetClickType.Link1);
   }
 
   /*
    * Link2 Button Clicked
    */
   public link2Clicked(): void {
-    this.emitClick(WidgetClickType.Link2);
+    // this.emitClick(WidgetClickType.Link2);
   }
 
   /*
    *  Event emitters don't bubble.  Use a dom dispatchEvent mechanism to dispatch
    *  the event as far up as required
    */
-  private emitClick(clickType: WidgetClickType): void {
+  private emitClick(buttonAction: WidgetButtonAction): void {
     this.el.nativeElement
       .dispatchEvent(new CustomEvent('button-clicked', {
         detail: {
           id: this.config.id,
-          clickType
+          buttonAction
         },
         bubbles: true
       }));
