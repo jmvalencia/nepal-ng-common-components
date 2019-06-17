@@ -37,6 +37,7 @@ export class AlHighchartColumnComponent implements OnChanges {
                 categories: this.config.dateOptions,
             },
             yAxis: {
+                gridLineColor: 'transparent',
                 title: {
                     text: this.config.description
                 },
