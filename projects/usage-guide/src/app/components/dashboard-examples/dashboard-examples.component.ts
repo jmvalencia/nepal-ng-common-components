@@ -184,8 +184,14 @@ export class DashboardExamplesComponent implements OnInit {
     public configs: Widget[] = [{
       id: '1',
       title: 'Unprotected Nodes',
-      actionLabels: {
-        primary: 'Primary',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
         link1: 'Link 1',
         link2: 'Link 2',
       },
@@ -211,7 +217,7 @@ export class DashboardExamplesComponent implements OnInit {
     }, {
       id: '3',
       title: '2 x 1 Widget with Mixed Chart',
-      actionLabels: {
+      actions: {
         link1: 'Link 1',
         link2: 'Link 2',
       },
@@ -226,7 +232,7 @@ export class DashboardExamplesComponent implements OnInit {
     }, {
       id: '9',
       title: '1 x 1 Widget with TreeMap',
-      actionLabels: {
+      actions: {
         link1: 'Link 1',
         link2: 'Link 2',
       },
@@ -242,8 +248,10 @@ export class DashboardExamplesComponent implements OnInit {
       id: '4',
       hideSettings: true,
       title: 'Critical and High Classifications',
-      actionLabels: {
-        primary: 'Primary',
+      actions: {
+        primary: {
+          name: 'Primary'
+        },
       },
       content: {
         type: WidgetContentType.ActivityGauge,
@@ -257,7 +265,7 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actionLabels: {
+    actions: {
         link1: 'Export to CSV',
     },
     content: {
@@ -272,7 +280,7 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actionLabels: {
+    actions: {
       link1: 'Export to CSV',
     },
     content: {
@@ -287,7 +295,7 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actionLabels: {
+    actions: {
       link1: 'Export to CSV',
     },
     content: {
@@ -302,7 +310,7 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with Bar Chart',
-    actionLabels: {},
+    actions: {},
     content: {
       type: WidgetContentType.Bar,
       data: this.mockBarChart,
@@ -315,7 +323,7 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '1 x 1 Area Chart',
-    actionLabels: {},
+    actions: {},
     content: {
       type: WidgetContentType.Area,
       data: this.mockAreaChart,

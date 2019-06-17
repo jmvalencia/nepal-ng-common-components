@@ -7,8 +7,8 @@
         <ng-content></ng-content>
     </div>
     <footer *ngIf="hasActions">
-        <a (click)="link2Clicked()" *ngIf="config.actionLabels.link2" class="link">{{config.actionLabels.link2}}</a>
-        <a (click)="link1Clicked()" *ngIf="config.actionLabels.link1" class="link">{{config.actionLabels.link1}}</a>
-        <button pButton (click)="primaryClicked()" *ngIf="config.actionLabels.primary" label="{{config.actionLabels.primary}}"></button>
+        <a (click)="link2Clicked()" *ngIf="config.actions.link2" class="link">{{config.actions.link2}}</a>
+        <a (click)="link1Clicked()" *ngIf="config.actions.link1" class="link">{{config.actions.link1}}</a>
+        <button pButton (click)="primaryClicked()" *ngIf="config.actions.primary" label="{{config.actions.primary.name}}"></button>
     </footer>
 </div>

@@ -77,11 +77,20 @@ export interface Widget {
   hideSettings?: boolean;
   content?: WidgetContent;
   metrics: WidgetMetrics;
-  actionLabels?: {
-    primary?: string;
+  actions?: {
+    primary?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
     link1?: string;
     link2?: string;
+    settings?: string;
   };
+}
+
+export interface WidgetButtonAction {
+  target_app: string;
+  path?: string;
 }
 
 /**
