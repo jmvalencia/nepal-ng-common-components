@@ -81,7 +81,8 @@ export class AlDashboardWidgetComponent implements OnInit {
    *  the event as far up as required
    */
   private emitClick(buttonAction: WidgetButtonAction): void {
-    this.el.nativeElement
+    if (buttonAction !== undefined) {
+      this.el.nativeElement
       .dispatchEvent(new CustomEvent('button-clicked', {
         detail: {
           id: this.config.id,
@@ -89,5 +90,6 @@ export class AlDashboardWidgetComponent implements OnInit {
         },
         bubbles: true
       }));
+    }
   }
 }

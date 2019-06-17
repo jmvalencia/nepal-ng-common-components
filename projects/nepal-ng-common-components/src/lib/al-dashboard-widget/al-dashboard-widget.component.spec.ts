@@ -51,10 +51,16 @@ describe('AlDashboardWidgetComponent', () => {
             expect(component.hasActions).toEqual(false);
         });
 
-        it('should ste hasActions to true when an action label is passed in', () => {
+        it('should set hasActions to true when an action label is passed in', () => {
             Object.assign(component.config, {
                 actions: {
-                    primary: 'Primary'
+                    primary: {
+                      name: 'Primary',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
@@ -70,7 +76,13 @@ describe('AlDashboardWidgetComponent', () => {
         it('should emit the primary event when the primary button is clicked', () => {
             Object.assign(component.config, {
                 actions: {
-                    primary: 'Primary'
+                    primary: {
+                      name: 'Primary',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
