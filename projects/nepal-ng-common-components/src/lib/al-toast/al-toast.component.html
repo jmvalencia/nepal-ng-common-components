@@ -1,0 +1,18 @@
+<p-toast styleClass="custom-toast" [position]="position" [key]="key">
+    <ng-template let-message pTemplate="message">
+        <div class="p-grid p-nogutter">
+            <i *ngIf="message.data.iconClass" class="p-col-fixed toast-icon pi {{message.data.iconClass}}"></i>
+            <div class="p-col p-nogutter">
+                <div class="ui-toast-message-text-content p-col" [style.text-align]="message.data.textAlign">
+                    <div *ngIf="message.summary" class="ui-toast-summary">{{message.summary}}</div>
+                    <div *ngIf="message.detail" class="ui-toast-detail">{{message.detail}}</div>
+                </div>
+                <div *ngIf="message.data.buttons" class="p-grid toast-buttons p-nogutter">
+                    <div class="button-container {{button.class ? button.class : ''}}" *ngFor="let button of message.data.buttons" [style.text-align]="button.textAlign">
+                        <a [id]="button.key" (click)="clickEvent(button.key)">{{button.label | uppercase}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>

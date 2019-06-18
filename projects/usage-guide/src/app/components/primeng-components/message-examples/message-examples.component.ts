@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, QueryList } from '@angular/core';
 import { Message } from 'primeng/primeng';
 import { MessageService } from 'primeng/api';
 import { BreadcrumbService } from '../../../breadcrumb.service';
+import { AlToastComponent, AlToastButtonDescriptor } from 'projects/nepal-ng-common-components/src/lib/al-toast/al-toast.component';
 
 @Component({
     templateUrl: './message-examples.component.html',
@@ -14,12 +15,44 @@ import { BreadcrumbService } from '../../../breadcrumb.service';
         :host ::ng-deep .ui-message {
             margin-left: .25em;
         }
+
+        :host ::ng-deep #dont-show {
+            color: #868686;
+        }
     `],
     providers: [MessageService]
 })
 export class MessageExamplesComponent {
 
     msgs: Message[] = [];
+    toastConfig = {
+        detail: 'This is a test message, here you can put whatever you want, choose wisely your words',
+        closeable: false,
+        title: 'This is the title',
+        iconClass: 'pi-exclamation-triangle',
+        buttons: [
+            {
+                key: 'dont-show',
+                label: 'don\'t show this message again',
+                class: 'p-col',
+                textAlign: 'left'
+            },
+            {
+                key: 'close',
+                label: 'not right now',
+                class: 'p-col-fixed',
+                textAlign: 'right'
+            },
+            {
+                key: 'upgrade',
+                label: 'hell yeah!',
+                class: 'p-col-fixed',
+                textAlign: 'right'
+            }
+        ]
+    };
+
+    @ViewChild(AlToastComponent) public alToast: AlToastComponent;
 
     constructor(
       private service: MessageService,
@@ -80,5 +113,39 @@ export class MessageExamplesComponent {
         this.msgs.push({ severity: 'info', summary: 'Message 1', detail: 'PrimeNG rocks' });
         this.msgs.push({ severity: 'info', summary: 'Message 2', detail: 'PrimeUI rocks' });
         this.msgs.push({ severity: 'info', summary: 'Message 3', detail: 'PrimeFaces rocks' });
+    }
+
+    showAlToast(key: string) {
+        switch (key) {
+            case 'custom': {
+                const data = {
+                    closable: false,
+                    sticky: true,
+                    buttons: this.toastConfig.buttons,
+                    iconClass: this.toastConfig.iconClass
+                };
+                this.alToast.showMessage(this.toastConfig.title, this.toastConfig.detail, data);
+            }              break;
+
+            case 'buttons': {
+                const data = {
+                    closable: false,
+                    sticky: true,
+                    buttons: this.toastConfig.buttons,
+                };
+                this.alToast.showMessage(null , this.toastConfig.detail, data);
+            }               break;
+
+            case 'message': {
+                const data = {
+                    textAlign: 'center'
+                };
+                this.alToast.showMessage(null , this.toastConfig.detail, data);
+            }               break;
+        }
+    }
+
+    closeAlToast($event) {
+        this.alToast.close();
     }
 }

@@ -13,6 +13,7 @@ import { AlCountSummaryComponent } from './al-count-summary/al-count-summary.com
 import { AlHighchartAreaGraphComponent } from './al-highchart-area-graph/al-highchart-area-graph.component';
 import { AlHighchartBarComponent } from './al-highchart-bar/al-highchart-bar.component';
 import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-zero-data.component';
+import { AlToastComponent } from './al-toast/al-toast.component';
 
 const ALL_COMPONENTS = [
   AlHighchartColumnComponent,
@@ -29,7 +30,8 @@ const ALL_COMPONENTS = [
   AlCountSummaryComponent,
   AlHighchartAreaGraphComponent,
   AlHighchartBarComponent,
-  AlZeroContentDataComponent
+  AlZeroContentDataComponent,
+  AlToastComponent
 ];
 
 export {
