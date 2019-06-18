@@ -1,16 +1,43 @@
-<div class="ui-g">
-  <div class="ui-g-12">
-      <div class="card no-margin">
-          <h1>Toast</h1>
-          <p-toast key="tst" [style]="{marginTop: '70px'}"></p-toast>
-
-          <button type="button" pButton (click)="showInfoViaToast()" label="Info" class="ui-button-info"></button>
-          <button type="button" pButton (click)="showSuccessViaToast()" label="Success" class="ui-button-success"></button>
-          <button type="button" pButton (click)="showWarnViaToast()" label="Warn" class="ui-button-warning"></button>
-          <button type="button" pButton (click)="showErrorViaToast()" label="Error" class="ui-button-danger"></button>
-          <button type="button" pButton (click)="showMultipleViaToast()" label="Multiple"></button>
-      </div>
+<div class="card card-w-title">
+  <h1>Toast</h1>
+  <a href="https://www.primefaces.org/primeng/#/toast" target="_blank">Official API Docs</a>
+  <h3>Examples</h3>
+  <p>Click on the buttons below to see the different styles of toast messages appear.</p>
+  <div>
+    <p-toast key="tst"></p-toast>
+    <button type="button" pButton (click)="showInfoViaToast()" label="Info" class="ui-button-info"></button>
+    <button type="button" pButton (click)="showSuccessViaToast()" label="Success" class="ui-button-success"></button>
+    <button type="button" pButton (click)="showWarnViaToast()" label="Warn" class="ui-button-warning"></button>
+    <button type="button" pButton (click)="showErrorViaToast()" label="Error" class="ui-button-danger"></button>
+    <button type="button" pButton (click)="showMultipleViaToast()" label="Multiple"></button>
   </div>
+  <h3>Code</h3>
+  <p>Example showcasing how the Info toast is achieved:</p>
+  <b>Markup</b>
+  <pre>
+    <code class="language-markup" pCode>
+  &lt;p-toast key="tst"&gt;&lt;/p-toast&gt;
+  &lt;button type="button" pButton (click)="showInfoViaToast()" label="Info" class="ui-button-info"&gt;&lt;/button&gt;
+    </code>
+  </pre>
+  <br/>
+  <b>MessageService Usage</b>
+  <pre>
+    <code class="language-ts" pCode>
+  import &#123; MessageService &#125; from 'primeng/api';
+
+  export class MessageExamplesComponent &#123;
+    constructor(
+      private service: MessageService
+    )
+
+    showInfo() &#123;
+      this.messageService.add(&#123;key: 'tst', severity:'info', summary: 'Info Message', detail:'PrimeNG rocks'&#125;);
+      &#125;
+  &#125;
+    </code>
+  </pre>
+</div>
 
   <div class="ui-g-12">
       <div class="card no-margin">
@@ -46,6 +73,3 @@
           </div>
       </div>
   </div>
-
-
-</div>
