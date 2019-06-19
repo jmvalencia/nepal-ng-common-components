@@ -15,8 +15,9 @@
     "copy-readme": "cp README.md dist/nepal-ng-common-components",
     "copy-files": "npm run copy-license && npm run copy-readme",
     "npm_pack": "cd dist/nepal-ng-common-components && npm pack",
-    "package": "npm run build && npm run copy-files && npm run npm_pack",
-    "postinstall": "./scripts/installHooks.sh"
+    "package": "npm run build && npm run copy-files && npm run sync-versions && npm run npm_pack",
+    "postinstall": "./scripts/installHooks.sh",
+    "sync-versions": "./scripts/syncVersions.sh"
   },
   "author": {
     "name": "Robert Parker",
@@ -79,6 +80,7 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
+    "json": "^9.0.6",
     "karma": "~4.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
