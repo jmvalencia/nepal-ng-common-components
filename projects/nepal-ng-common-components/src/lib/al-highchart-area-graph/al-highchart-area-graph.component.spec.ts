@@ -30,12 +30,4 @@ describe('AlHighchartAreaGraphComponent', () => {
     fixture.detectChanges();
 
   });
-
-  describe('When the theme is toggled', () => {
-    it('Should change the value of the themeToggle variable', () => {
-        component.themeToggle = false;
-        component.toggleTheme();
-        expect(component.themeToggle).toBe(true);
-    });
-  });
 });

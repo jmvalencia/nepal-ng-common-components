@@ -34,12 +34,4 @@ describe('AlDetailedTableListComponent', () => {
         expect(component).toBeTruthy();
     });
   });
-
-  describe('When the component theme is toggled', () => {
-    it('Should set the themeToggle variable to true', () => {
-        component.themeToggle = false;
-        component.toggleTheme();
-        expect(component.themeToggle).toBe(true);
-    });
-  });
 });
