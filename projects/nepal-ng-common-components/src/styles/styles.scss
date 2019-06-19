@@ -52,16 +52,16 @@ html, body{
 .unhealthy rect, path.unhealthy {
   fill: al-color($al-red, 500);
 }
+
 /*
 * Global dark theme toggle
 */
 .darkMode {
   .dashboard-widget {
     background-color: #3C3C3C !important;
-    a, .count-container, th, td {
+  
+    h1, a, .count-container, th, td {
       background-color: #3C3C3C !important;
-    }
-    h1, a, .count-container span, th, td {
       color: al-color($al-gray, 50) !important;
 
       &.status {
@@ -80,6 +80,7 @@ html, body{
       }
     }
   }
+
   .highcharts-background {
     fill: #3C3C3C;
   }
@@ -97,6 +98,18 @@ html, body{
     rect.highcharts-point {
       stroke: #3C3C3C
     }
+  }
+  .dropdowns {
+    label, button {
+      color: al-color($al-gray, 50) !important;
+    }
+  }
+  .nav-header-bar {
+    background-color: al-color($al-gray, 700) !important;
+    color: al-color($al-gray, 50) !important;
+  }
+  .user-info-summary {
+    background-color: al-color($al-gray, 900) !important;
   }
 }
 
