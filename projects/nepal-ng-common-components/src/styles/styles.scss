@@ -15,16 +15,16 @@ html, body{
 */
 
 .enterprise rect,  path.enterprise, .enterprise {
-  fill: al-color($al-enterprise, 500)
+  fill: al-color($al-enterprise, 500);
 }
 .professional rect, path.professional, .professional {
-  fill: al-color($al-professional, 500)
+  fill: al-color($al-professional, 500);
 }
 .essential rect, path.essential, .essential {
   fill: al-color($al-essentials, 500);
 }
 .unprotected rect, path.unprotected, .unprotected {
-  fill: al-color($al-gray, 50)
+  fill: al-color($al-gray, 50);
 }
 
 /*
@@ -42,7 +42,7 @@ html, body{
 .info rect, path.info {
   fill: al-color($al-gray, 50);
 }
-  
+
 /*
 * Global Health Status
 */
@@ -90,13 +90,13 @@ html, body{
   .highcharts-tooltip text {
     fill: #3C3C3C;
   }
-  
+
   svg {
     text {
       fill: #CBCBCB;
     }
     rect.highcharts-point {
-      stroke: #3C3C3C
+      stroke: #3C3C3C;
     }
   }
   .dropdowns {
@@ -118,5 +118,12 @@ html, body{
 */
 path.highcharts-grid-line {
   stroke: transparent;
+}
+
+.scanned rect, path.scanned, .scanned {
+  fill: al-color($al-green, 500);
+}
+.not-scanned rect, path.not-scanned, .not-scanned {
+  fill: al-color($al-gray, 500);
 }
 
