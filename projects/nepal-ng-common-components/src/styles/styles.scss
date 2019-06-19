@@ -56,9 +56,11 @@ html, body{
 * Global dark theme toggle
 */
 .darkMode {
-  .dashboard-widget, a, .count-container, th, td {
+  .dashboard-widget {
     background-color: #3C3C3C !important;
-    
+    a, .count-container, th, td {
+      background-color: #3C3C3C !important;
+    }
     h1, a, .count-container span, th, td {
       color: al-color($al-gray, 50) !important;
 
