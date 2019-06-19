@@ -14,7 +14,6 @@ import * as Highcharts from 'highcharts';
 export class AlHighchartTreeMapComponent implements OnInit {
 
   public map: any;
-  public themeToggle = false;
 
   @ViewChild('treeMap') treeMap: ElementRef;
   /**
@@ -58,26 +57,5 @@ export class AlHighchartTreeMapComponent implements OnInit {
         text: ''
       }
     });
-  }
-
-  toggleTheme() {
-    this.themeToggle = !this.themeToggle;
-    this.toggleDarkTheme();
-  }
-
-  toggleDarkTheme() {
-    if (this.themeToggle) {
-      this.map.update({
-        chart: {
-          backgroundColor: '#3C3C3C',
-        },
-      });
-    } else {
-      this.map.update({
-        chart: {
-          backgroundColor: '#ffffff',
-        }
-      });
-    }
   }
 }

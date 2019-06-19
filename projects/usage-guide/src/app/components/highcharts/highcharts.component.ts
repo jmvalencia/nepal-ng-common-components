@@ -24,28 +24,28 @@ export class HighChartsComponent implements OnInit {
                 data: [
                     [0, 25], [1, 15], [2, 35], [3, 40], [4, 15], [5, 10], [6, 5]
                 ],
-                color: '#3FC6F1'
+                className: 'enterprise'
             },
             {
                 name: 'Professional',
                 data: [
                     [0, 5], [1, 10], [2, 15], [3, 10], [4, 5], [5, 10], [6, 5]
                 ],
-                color: '#028BA3'
+                className: 'professional'
             },
             {
                 name: 'Essential',
                 data: [
                     [0, 15], [1, 0], [2, 20], [3, 15], [4, 15], [5, 15], [6, 15]
                 ],
-                color: '#025070'
+                className: 'essential'
             },
             {
                 name: 'Unprotected',
                 data: [
                     [0, 15], [1, 15], [2, 25], [3, 20], [4, 15], [5, 15], [6, 10]
                 ],
-                color: '#EDEDED'
+                className: 'unprotected'
             },
         ]
     };

@@ -137,17 +137,6 @@ export class ColourPalettesComponent {
       {name: '800', color: '#68A16A', contrast: this.alContrastLight},
       {name: '900', color: '#609462', contrast: this.alContrastLight},
     ]
-  }, {
-    name: '$ir-blue',
-    colors: [
-      {name: '300', color: '#C3C6B9', contrast: this.alContrastLight},
-      {name: '400', color: '#D5D6D2', contrast: this.alContrastLight},
-      {name: '500', color: '#394B61', contrast: this.alContrastLight},
-      {name: '600', color: '#3C3C3C', contrast: this.alContrastLight},
-      {name: '700', color: '#6C6C6C', contrast: this.alContrastLight},
-      {name: '800', color: '#2A3849', contrast: this.alContrastLight},
-      {name: '900', color: '#17202A', contrast: this.alContrastLight},
-    ]
   }];
 
   constructor(private breadcrumbService: BreadcrumbService) {

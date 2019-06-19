@@ -13,7 +13,6 @@ import * as Highcharts from 'highcharts';
 })
 export class AlHighchartAreaGraphComponent implements OnChanges {
     public areaGraphItem: any;
-    public themeToggle = false;
 
     @ViewChild('areaGraph') areaGraph: ElementRef;
     /**
@@ -85,63 +84,6 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
             } else {
               this.updateSeries();
             }
-        }
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.areaGraphItem.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                yAxis: {
-                    gridLineColor: '#3C3C3C',
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    },
-                    categories: {
-                        color: '#EDEDED',
-                    }
-                },
-            });
-        } else  {
-            this.areaGraphItem.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                yAxis: {
-                    gridLineColor: '#e6e6e6',
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    },
-                    categories: {
-                        color: '#666666',
-                    }
-                },
-            });
         }
     }
 }

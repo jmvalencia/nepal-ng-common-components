@@ -15,7 +15,6 @@ export class AlHighchartColumnComponent implements OnChanges {
     @ViewChild('chart') chart: ElementRef;
 
     public columnChart: any;
-    public themeToggle = false;
     /**
      * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
      * an interface
@@ -26,6 +25,7 @@ export class AlHighchartColumnComponent implements OnChanges {
         this.columnChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'column',
+                styledMode: true
             },
             credits: {
                 enabled: false
@@ -64,83 +64,6 @@ export class AlHighchartColumnComponent implements OnChanges {
             } else {
               this.updateSeries();
             }
-        }
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.columnChart.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                yAxis: {
-                    gridLineColor: '#3C3C3C',
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    },
-                    categories: {
-                        color: '#EDEDED'
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#3C3C3C'
-                    }
-                },
-                legend:  {
-                    itemStyle: {
-                        color: '#EDEDED'
-                    }
-                }
-            });
-        } else  {
-            this.columnChart.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                yAxis: {
-                    gridLineColor: '#e6e6e6',
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    },
-                    categories: {
-                        color: '#666666'
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#ffffff'
-                    }
-                },
-                legend:  {
-                    itemStyle: {
-                        color: '#666666'
-                    }
-                }
-            });
         }
     }
 }

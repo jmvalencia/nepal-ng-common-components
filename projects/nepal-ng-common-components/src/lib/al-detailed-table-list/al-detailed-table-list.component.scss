@@ -63,36 +63,4 @@ al-detailed-table-list {
             }
         }
     }
-
-    .darkMode {
-        th {
-            background-color: #3C3C3C !important;
-            color: #EDEDED !important;
-        }
-    }
-    .darkMode {
-        td {
-            background-color: #3C3C3C !important;
-            color: #EDEDED !important;
-
-            &.status {
-                text-align: right !important;
-                font-weight: 600 !important;
-    
-                &.Critical {
-                    color: #e53935;
-                }
-                &.High {
-                    color: #f78c1e
-                }
-                &.Medium {
-                    color: #ffd54f
-                }
-                &.Low {
-                    color: #868686
-                }
-            }
-        
-        }
-    }
 }

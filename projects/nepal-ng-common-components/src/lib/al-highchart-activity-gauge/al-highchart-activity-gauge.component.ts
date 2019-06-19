@@ -29,7 +29,6 @@ export class AlHighchartsActivityGaugeComponent implements OnInit {
      */
     public chart: Highcharts.Chart;
 
-    public themeToggle = false;
     /*
      *  Elements
      */
@@ -53,41 +52,6 @@ export class AlHighchartsActivityGaugeComponent implements OnInit {
      */
     ngOnInit() {
         this.chart = Highcharts.chart(this.chartTarget.nativeElement, this.gaugeService.getConfig(this.config));
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.chart.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                plotOptions: {
-                    solidgauge: {
-                        dataLabels: {
-                           color: '#EDEDED'
-                        },
-                    }
-                },
-            });
-        } else {
-            this.chart.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                plotOptions: {
-                    solidgauge: {
-                        dataLabels: {
-                           color: '#3C3C3C'
-                        },
-                    }
-                },
-            });
-        }
     }
 }
 

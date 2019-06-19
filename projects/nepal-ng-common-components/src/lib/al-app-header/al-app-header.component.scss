@@ -3,7 +3,7 @@
 @import "~@al/design/styles/variables";
 
 .user-info-summary {
-  background: al-color($ir-blue, 600);
+  background: al-color($al-gray, 700);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,11 +20,11 @@
 // below is hopefully only a temporary solution - waiting on latest theme files from UX
 ::ng-deep {
   .ui-menubar.ui-widget.ui-widget-content.ui-corner-all {
-    background-color: al-color($ir-blue, 600);
+    background-color: al-color($al-gray, 700);
     color: white;
     border: none;
     .ui-submenu-icon {
-      background-color: al-color($ir-blue, 600);
+      background-color: al-color($al-gray, 700);
       color: white;
       &:before{
         content: "arrow_drop_down";
@@ -35,7 +35,7 @@
     }
   }
   .ui-menubar-root-list > li > a, .ui-menubar-root-list > li > a:hover {
-    background-color: al-color($ir-blue, 600)!important;
+    background-color: al-color($al-gray, 700)!important;
     color: white!important;
   }
 

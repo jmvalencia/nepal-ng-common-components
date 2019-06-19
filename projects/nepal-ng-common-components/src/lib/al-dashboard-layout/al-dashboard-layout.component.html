@@ -1,5 +1,5 @@
 
-<div #dashboardLayout class="dashboard-layout">
+<div #dashboardLayout class="dashboard-layout" [ngClass]="{'darkMode': themeToggle }">
     <al-dashboard-widget 
         *ngFor="let configItem of config" 
         [ngClass]="{'w2': configItem.metrics.width === 2, 'h2': configItem.metrics.height === 2 }"

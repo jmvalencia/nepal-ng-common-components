@@ -14,7 +14,6 @@ import * as Highcharts from 'highcharts';
 export class AlHighchartSemiCircleComponent implements OnChanges {
 
     public semiCircle: any;
-    public themeToggle = false;
     @ViewChild('semiCircle') semiCircleEl: ElementRef;
 
     /**
@@ -31,7 +30,8 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: 0,
-          plotShadow: false
+          plotShadow: false,
+          styledMode: true
         },
         credits: {
           enabled: false
@@ -78,39 +78,5 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
           this.updateSeries();
         }
       }
-    }
-
-    /*
-     *
-     */
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    public toggleDarkTheme(): void {
-        if ( this.themeToggle ) {
-            this.semiCircle.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                plotOptions: {
-                    pie: {
-                        borderColor: '#3C3C3C'
-                    }
-                }
-            });
-        } else {
-            this.semiCircle.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                plotOptions: {
-                    pie: {
-                        borderColor: '#ffffff'
-                    }
-                }
-            });
-        }
     }
 }

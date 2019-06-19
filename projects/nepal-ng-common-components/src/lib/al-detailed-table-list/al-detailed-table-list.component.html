@@ -1,4 +1,4 @@
-<p-table [columns]="tableConfig.headers" [value]="tableConfig.body" [ngClass]="{'darkMode': themeToggle }">
+<p-table [columns]="tableConfig.headers" [value]="tableConfig.body">
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let col of tableConfig.headers"
