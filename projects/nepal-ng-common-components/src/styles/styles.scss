@@ -2,10 +2,106 @@
 @import "~@al/design/styles/utility";
 
 // TODO - below should live in @al/design (core theme style)??x
-html,body{
+html, body{
   font-family: 'Open Sans', Arial, sans-serif;
   font-weight:normal;
   font-size:14px;
   margin: 0;
   color: al-color($al-gray, 500);
 }
+
+/*
+* Global colours for product protection coverage
+*/
+
+.enterprise rect,  path.enterprise, .enterprise {
+  fill: al-color($al-enterprise, 500)
+}
+.professional rect, path.professional, .professional {
+  fill: al-color($al-professional, 500)
+}
+.essential rect, path.essential, .essential {
+  fill: al-color($al-essentials, 500);
+}
+.unprotected rect, path.unprotected, .unprotected {
+  fill: al-color($al-gray, 50)
+}
+
+/*
+* Global colours for severity level
+*/
+.high rect, path.high {
+  fill: al-color($al-red, 600);
+}
+.medium rect, path.medium {
+  fill: al-color($al-orange, 500);
+}
+.low rect, path.low {
+  fill: al-color($al-yellow, 500);
+}
+.info rect, path.info {
+  fill: al-color($al-gray, 50);
+}
+  
+/*
+* Global Health Status
+*/
+.healthy rect, path.healthy {
+  fill: al-color($al-green, 500);
+}
+.unhealthy rect, path.unhealthy {
+  fill: al-color($al-red, 500);
+}
+/*
+* Global dark theme toggle
+*/
+.darkMode {
+  .dashboard-widget, a, .count-container, th, td {
+    background-color: #3C3C3C !important;
+    
+    h1, a, .count-container span, th, td {
+      color: al-color($al-gray, 50) !important;
+
+      &.status {
+        &.Critical {
+          color: al-color($al-red, 600);
+        }
+        &.High {
+            color: al-color($al-orange, 500);
+        }
+        &.Medium {
+            color: al-color($al-yellow, 500);
+        }
+        &.Low {
+            color: al-color($al-gray, 300);
+        }
+      }
+    }
+  }
+  .highcharts-background {
+    fill: #3C3C3C;
+  }
+  .highcharts-grid-line {
+    stroke: #3C3C3C
+  }
+  .highcharts-tooltip text {
+    fill: #3C3C3C;
+  }
+  
+  svg {
+    text {
+      fill: #CBCBCB;
+    }
+    rect.highcharts-point {
+      stroke: #3C3C3C
+    }
+  }
+}
+
+/*
+* Generic chart styling
+*/
+path.highcharts-grid-line {
+  stroke: transparent;
+}
+

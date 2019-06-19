@@ -9,7 +9,6 @@ import { TableListConfig } from '../types';
 })
 export class AlDetailedTableListComponent implements OnInit, OnChanges {
 
-    public themeToggle = false;
     public tableConfig: TableListConfig;
 
     /*
@@ -24,8 +23,4 @@ export class AlDetailedTableListComponent implements OnInit, OnChanges {
     ngOnInit() {
       this.tableConfig = this.config;
     }
-
-    toggleTheme() {
-      this.themeToggle = !this.themeToggle;
-  }
 }

@@ -108,19 +108,19 @@ export class DashboardExamplesComponent implements OnInit {
         series: [{
             name: 'Enterprise',
             data: [[0, 25], [1, 15], [2, 35], [3, 40], [4, 15], [5, 10], [6, 5]],
-            color: '#3FC6F1'
+            className: 'enterprise'
         }, {
             name: 'Professional',
             data: [[0, 5], [1, 10], [2, 15], [3, 10], [4, 5], [5, 10], [6, 5]],
-            color: '#028BA3'
+            className: 'professional'
         }, {
             name: 'Essential',
             data: [[0, 15], [1, 0], [2, 20], [3, 15], [4, 15], [5, 15], [6, 15]],
-            color: '#025070'
+            className: 'essential'
         }, {
             name: 'Unprotected',
             data: [[0, 15], [1, 15], [2, 25], [3, 20], [4, 15], [5, 15], [6, 10]],
-            color: '#EDEDED'
+            className: 'unprotected'
         }]
     };
 
@@ -129,18 +129,13 @@ export class DashboardExamplesComponent implements OnInit {
         description: 'Count of Incidents',
         dateOptions: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         series: [{
-            name: 'Critical',
-            data: [[0, 25], [1, 15], [2, 15], [3, 4], [4, 25], [5, 1], [6, 15]],
-            color: '#F57C00'
-        }, {
             name: 'High',
-            data: [[0, 5], [1, 10], [2, 25], [3, 30], [4, 5], [5, 12], [6, 15]],
-            color: '#E53935'
+            data: [[0, 25], [1, 15], [2, 15], [3, 4], [4, 25], [5, 1], [6, 15]],
+            className: 'high'
         }, {
-            type: 'line',
-            name: 'Overall Count',
-            data: [10, 20.67, 30, 16.33, 13.33, 6, 15],
-            color: '#535353',
+            name: 'Medium',
+            data: [[0, 5], [1, 10], [2, 25], [3, 30], [4, 5], [5, 12], [6, 15]],
+            className: 'low'
         }]
     };
 

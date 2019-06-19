@@ -24,6 +24,7 @@ export class AlDashboardLayoutComponent {
 
   // For use in template
   public contentType: typeof WidgetContentType = WidgetContentType;
+  public themeToggle = false;
 
   // Inputs
   @Input() config: Widget[];
@@ -44,12 +45,7 @@ export class AlDashboardLayoutComponent {
 
   // TODO - remove this test code
   private toggleTheme(): void {
-     this.columnChart.forEach(instance => instance.toggleTheme());
-     this.semiCircle.forEach(instance => instance.toggleTheme());
-     this.activityGague.forEach(instance => instance.toggleTheme());
-     this.treeMap.forEach(instance => instance.toggleTheme());
-     this.countSummary.forEach(instance => instance.toggleTheme());
-     this.tableList.forEach(instance => instance.toggleTheme());
+    this.themeToggle = !this.themeToggle;
   }
 }
 
