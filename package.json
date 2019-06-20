@@ -10,6 +10,7 @@
     "bundle-styles": "scss-bundle -c scss-bundle.config.json",
     "test": "ng test nepal-ng-common-components --watch=false",
     "test-watch": "ng test nepal-ng-common-components --watch=true --code-coverage",
+    "test-focus-checks": "! grep -Hrn --include='*.spec.ts' 'fdescribe\\|fit' src",
     "lint": "ng lint",
     "copy-license": "cp LICENSE dist/nepal-ng-common-components",
     "copy-readme": "cp README.md dist/nepal-ng-common-components",
