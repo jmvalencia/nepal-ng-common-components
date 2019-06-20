@@ -293,7 +293,7 @@ fi
                     echo "calculating typescript coverage"
                     script {
                         TYPES_COVEAGE = sh(
-                                script: "npx --package typescript --package type-coverage -c 'type-coverage -p src/tsconfig.app.json --strict'",
+                                script: "npx --package typescript --package type-coverage -c 'type-coverage -p projects/nepal-ng-common-components/tsconfig.lib.json --strict'",
                                 returnStdout: true
                         )
                         echo TYPES_COVEAGE
