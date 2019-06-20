@@ -26,7 +26,14 @@ html, body{
 .unprotected rect, path.unprotected, .unprotected {
   fill: al-color($al-gray, 50);
 }
-
+al-dashboard-widget {
+  tspan.highcharts-text-outline {
+    stroke: transparent;
+  }
+  g.highcharts-label {
+    font-size: 14px;
+  }
+}
 /*
 * Global colours for severity level
 */
@@ -87,6 +94,9 @@ html, body{
   al-count-summary {
     .count-container span{
       color: al-color($al-gray, 50) !important;
+    }
+    g.highcharts-label{
+      font-size: 14px
     }
   }
   .highcharts-background {
