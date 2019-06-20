@@ -24,6 +24,9 @@ export class AlHighchartTreeMapComponent implements OnInit {
 
   ngOnInit() {
     this.map = Highcharts.chart(this.treeMap.nativeElement, {
+      chart: {
+        styledMode: true
+      },
       series: [{
         type: 'treemap',
         layoutAlgorithm: 'strip',

@@ -37,16 +37,16 @@ al-dashboard-widget {
 /*
 * Global colours for severity level
 */
-.high rect, path.high {
+.high rect, path.high, rect.high {
   fill: al-color($al-red, 600);
 }
-.medium rect, path.medium {
+.medium rect, path.medium, rect.medium {
   fill: al-color($al-orange, 500);
 }
-.low rect, path.low {
+.low rect, path.low, rect.low {
   fill: al-color($al-yellow, 500);
 }
-.info rect, path.info {
+.info rect, path.info, rect.info {
   fill: al-color($al-gray, 50);
 }
 
