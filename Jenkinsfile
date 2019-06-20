@@ -271,6 +271,7 @@ fi
                     // if angular old, use environment, if new, use configuration
                     sh '''
 
+        npm run build
         node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build usage-guide --configuration=production --stats-json
 
         npx webpack-bundle-analyzer $OUTPUT_PATH/stats.json -m static --no-open
@@ -324,6 +325,7 @@ fi
                         sh '''
 
 
+        npm run build
         node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build usage-guide --configuration=production --stats-json
 
         npx webpack-bundle-analyzer $OUTPUT_PATH/stats.json -m static --no-open
