@@ -61,7 +61,6 @@ class Gitrepo {
                         env.PKG_VERSION = packagedotJSON['version']
                         env.OUTPUT_PATH = "dist/usage-guide"
                         echo "New Package Version: " + env.PKG_VERSION
-                        sh "echo \"export const build = '$PKG_VERSION';\" > src/environments/build.ts"
 
                       env.cleanPackageName = env.PKG_NAME.replace("o3-", "").replace('nepal-', '').replace('amp-', '').replace('.', '-')
                       env.INTEGRATION_S3 = NewS3Bucket + '/' + cleanPackageName
