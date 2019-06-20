@@ -62,7 +62,7 @@ class Gitrepo {
                         env.OUTPUT_PATH = "dist/usage-guide"
                         echo "New Package Version: " + env.PKG_VERSION
 
-                      env.cleanPackageName = env.PKG_NAME.replace("o3-", "").replace('nepal-', '').replace('amp-', '').replace('.', '-')
+                      env.cleanPackageName = env.PKG_NAME.replace("@al/", "").replace("o3-", "").replace('nepal-', '').replace('amp-', '').replace('.', '-')
                       env.INTEGRATION_S3 = NewS3Bucket + '/' + cleanPackageName
 
 
