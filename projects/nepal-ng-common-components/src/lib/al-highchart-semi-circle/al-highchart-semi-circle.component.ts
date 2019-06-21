@@ -45,7 +45,13 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
         plotOptions: {
           pie: {
             dataLabels: {
-              enabled: false,
+              enabled: true,
+              softConnector: false,
+              distance: -30,
+              // tslint:disable-next-line
+              formatter: function() {
+                return this.point.y === 0 ? null : String(this.point.y);
+              }
             },
             showInLegend: true,
             startAngle: -90,
