@@ -48,7 +48,8 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
               enabled: true,
               softConnector: false,
               distance: -30,
-              formatter: function(){
+              // tslint:disable-next-line
+              formatter: function() {
                 return this.point.y === 0 ? null : String(this.point.y);
               }
             },
