@@ -17,7 +17,6 @@
   }
 }
 
-// below is hopefully only a temporary solution - waiting on latest theme files from UX
 ::ng-deep {
   .ui-menubar.ui-widget.ui-widget-content.ui-corner-all {
     background-color: al-color($al-gray, 700);
@@ -33,15 +32,18 @@
         font-size: inherit;
       }
     }
+    .ui-menuitem-active {
+      .ui-submenu-icon::before {
+        transform: rotate(180deg);
+      }
+
+    }
   }
   .ui-menubar-root-list > li > a, .ui-menubar-root-list > li > a:hover {
     background-color: al-color($al-gray, 700)!important;
     color: white!important;
   }
 
-  .ui-menubar-root-list > li.ui-menu-item-active > a > .ui-submenu-icon {
-      transform: rotate(180deg);
-  }
 
   .ui-menubar .ui-menubar-root-list > .ui-menuitem > .ui-menuitem-link {
     padding-right: 0!important;
@@ -51,24 +53,8 @@
     color: white;
   }
 
-  .ng-select .ng-select-container {
-    background-color: unset;
-    color: white!important;
-    border: none;
-    width: 150px!important;
-  }
-
-  .ng-select.ng-select-opened>.ng-select-container {
-    background-color: unset;
-  }
-
   .ng-clear-wrapper {
     display: none;
-  }
-
-  .ng-dropdown-panel {
-    width: 300px!important;
-    left: -128px;
   }
 
   .ng-select .ng-arrow-wrapper .ng-arrow {
@@ -87,6 +73,16 @@
       margin-top: 5px;
   }
 
+  .ng-select.ng-select-opened>.ng-select-container span.ng-arrow-wrapper:before {
+    transform: rotate(180deg);
+  }
+
+  .ng-select-opened {
+    .ng-select span.ng-arrow-wrapper {
+      transform: rotate(180deg)!important;
+    }
+  }
+
   .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
     border: none;
     box-shadow: none;
@@ -94,6 +90,58 @@
 
   .filter-input {
     width: 100%;
+
+  }
+
+  .ui-inputtext {
+    padding-left: 4px!important;
+    padding-bottom: 4px!important;
+      .ui-inputtext.ui-state-focus {
+        background-size: 100% 1px, 100% 1px!important;
+        padding-bottom: 4px!important;
+    }
+    &:focus {
+      background-size: 100% 1px, 100% 1px!important;
+      padding-bottom: 4px!important;
+    }
+  }
+
+}
+
+.al-account-selector ::ng-deep {
+  .ng-select-container {
+    background-color: unset;
+    color: white!important;
+    border: none;
+    width: 150px!important;
+  }
+
+  .ng-select.ng-select-opened>.ng-select-container {
+    background-color: unset;
+  }
+
+  .ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+    border: none;
+    box-shadow: none;
+  }
+
+  .ng-dropdown-panel {
+    left: -126px;
+    width: 300px;
+    .ng-dropdown-header {
+      border-bottom: 1px solid al-color($al-gray, 50);
+      padding: 12px;
+    }
+  }
+  .ng-dropdown-panel-items {
+    .ng-option {
+      color: al-color($al-gray, 700);
+      padding: 12px;
+      &.ng-option-marked {
+        background-color: al-color($al-gray, 50);
+        color: al-color($al-smokeBlue, 500);
+      }
+    }
   }
 }
 

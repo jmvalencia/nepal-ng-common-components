@@ -14,10 +14,12 @@
           [searchable]="false"
           [(ngModel)]="actingAccountId"
           [searchFn]="accountSearchFn"
-          (change)="onAccountChanged($event)">
+          (change)="onAccountChanged($event)"
+          class="al-account-selector"
+          (open)="onOpen()">
         <ng-template ng-header-tmp>
           <div style="display:flex;">
-              <input pInputText class="filter-input" type="text" (input)="accountSelector.filter($event.target.value)" placeholder="Search by account id or name..." />
+              <input #filterInput pInputText class="filter-input" type="text" (input)="accountSelector.filter($event.target.value)" placeholder="Search by account id or name..." />
           </div>
         </ng-template>
         <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
