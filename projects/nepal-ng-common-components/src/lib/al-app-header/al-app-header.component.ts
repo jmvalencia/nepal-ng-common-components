@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import {
   ALSession,
   AlSessionStartedEvent,
@@ -33,6 +33,8 @@ export class ALAppHeaderComponent implements OnInit {
   numberOfItemsFromEndBeforeFetchingMore = 10;
 
   userMenuItems: MenuItem[];
+
+  @ViewChildren('filterInput') filterInput: QueryList<ElementRef>;
 
   constructor(private zone: NgZone) { }
 
@@ -108,6 +110,12 @@ export class ALAppHeaderComponent implements OnInit {
   accountSearchFn(term: string, account: AIMSAccount) {
     term = term.toLocaleLowerCase();
     return account.name.toLocaleLowerCase().indexOf(term) > -1 || account.id.startsWith(term);
+  }
+
+  onOpen() {
+    this.filterInput.changes.subscribe(res => {
+        this.filterInput.first.nativeElement.focus();
+    });
   }
 
   private fetchMore() {
