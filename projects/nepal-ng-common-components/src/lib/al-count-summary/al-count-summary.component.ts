@@ -124,7 +124,7 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
       if (isNumber) {
         this.summary = {...numberContract(Number(value)), origCount: value };
       } else {
-        this.summary = { count: value, origCount: value,suffix: '' };
+        this.summary = { count: value, origCount: value, suffix: '' };
       }
     }
 }
