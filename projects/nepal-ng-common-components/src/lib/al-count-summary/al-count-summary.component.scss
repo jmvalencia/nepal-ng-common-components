@@ -1,26 +1,28 @@
 .count-container {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    font-size: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    background-color: #fff;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  background-color: #fff;
 
+  span {
+    color: #535353;
+    font-weight: bold;
+    font-size: 100px;
     span {
-        color: #535353;
-        font-weight: bold;
+      font-size: 75%;
     }
+  }
 
-    &.darkMode  {
-        background-color: #3C3C3C;
-
-        span {
-            color: #EDEDED;
-        }
+  &.darkMode  {
+    background-color: #3C3C3C;
+    span {
+      color: #EDEDED;
     }
+  }
 }
 
 
