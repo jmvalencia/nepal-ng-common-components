@@ -22,6 +22,9 @@ export class DashboardExamplesComponent implements OnInit {
     public widgetHeight: string;
     public widgetWidth: string;
     public count = '999';
+    public count2 = '1245';
+    public count3 = '98765';
+    public count4 = '198765';
     public dashboards = [
         { label: 'Threat Summary', icon: 'ui-icon-vertical-align-top', value: { id: 6, name: 'Threat Summmary', code: 'TS' }},
         { label: 'Coverage and Health', icon: 'ui-icon-vertical-align-top', value: { id: 1, name: 'Coverage and Health', code: 'CAH' }},
@@ -193,6 +196,72 @@ export class DashboardExamplesComponent implements OnInit {
       content: {
         type: WidgetContentType.Count,
         data: this.count,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '101',
+      title: 'Unprotected Nodes',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.Count,
+        data: this.count2,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '102',
+      title: 'Unprotected Nodes',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.Count,
+        data: this.count3,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '103',
+      title: 'Unprotected Nodes',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.Count,
+        data: this.count4,
       },
       metrics: {
         width: WidgetWidth.W1,

@@ -11,6 +11,9 @@
       &.w2 {
         grid-column: span 2;
       }
+      &.w3 {
+        grid-column: span 3;
+      }
       &.h2 {
         grid-row: span 2;
         div.interior {
@@ -33,7 +36,7 @@
 
 @media screen and (min-width: 800px) {
     .dashboard-layout {
-        grid-template-columns: repeat(2, 2fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
