@@ -28,7 +28,7 @@ interface Summary {
 })
 
 export class AlCountSummaryComponent implements OnInit, OnChanges {
-    public fontSize: string = '100px';
+    public fontSize = '100px';
     public summary: Summary = {
       count: '',
       origCount: '',
@@ -90,7 +90,7 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
     private setFontSize = (): void => {
       const len = `${this.summary.count}${this.summary.suffix}`.length;
       switch (true) {
-        case len < 3: 
+        case len < 3:
           this.fontSize = '200px';
           break;
         case len === 3:
@@ -122,9 +122,9 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
       console.log(this.containerEl.nativeElement.offsetWidth);
 
       if (isNumber) {
-        this.summary = {...numberContract(Number(value)), origCount: value};
+        this.summary = {...numberContract(Number(value)), origCount: value };
       } else {
-        this.summary = {count: value, origCount: value,suffix: ''};
+        this.summary = { count: value, origCount: value,suffix: '' };
       }
     }
 }
