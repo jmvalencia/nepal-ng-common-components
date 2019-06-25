@@ -47,7 +47,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
             dataLabels: {
               enabled: true,
               softConnector: false,
-              distance: -30,
+              distance: 15,
               // tslint:disable-next-line
               formatter: function() {
                 return this.point.y === 0 ? null : String(this.point.y);
