@@ -12,11 +12,11 @@ export class AlHighchartsActivityGaugeService {
      *
      */
     getConfig(config: ActivityGaugeConfig): any {
-        const { title, value, text1, text2, color, backgroundColor } = config;
+        const { title, value, text1, text2, className, backgroundColor } = config;
 
         BaseConfig.title.text = title;
         BaseConfig.pane.background[0].backgroundColor = backgroundColor;
-        BaseConfig.series[0].data[0].color = color;
+        BaseConfig.series[0].data[0].className = className;
         BaseConfig.series[0].data[0].y = value;
         BaseConfig.plotOptions.solidgauge.dataLabels.formatter = (() => {
             return `<dl style='display: flex;

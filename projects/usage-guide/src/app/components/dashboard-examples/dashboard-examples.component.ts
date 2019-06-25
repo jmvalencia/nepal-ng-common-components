@@ -35,35 +35,35 @@ export class DashboardExamplesComponent implements OnInit {
         {
             id: '1',
             name: 'High',
-            color: '#EF534F'
         }, {
             id: '2',
             name: 'Medium',
-            color: '#FFB840'
         }, {
             id: '3',
             name: 'Info',
-            color: '#868686'
         }, {
             id: '4',
             name: 'Low',
-            color: '#FFDB6B'
         }, {
             name: '6',
             parent: '1',
             value: 6,
+            className: 'high'
         }, {
             name: 'B',
             parent: '2',
             value: 5,
+            className: 'medium'
         }, {
             name: 'C',
             parent: '3',
             value: 4,
+            className: 'info'
         }, {
             name: 'D',
             parent: '4',
             value: 3,
+            className: 'low'
         }
     ];
     public semiCircleData = {
@@ -80,15 +80,11 @@ export class DashboardExamplesComponent implements OnInit {
             data: [{
                 name: 'Brute Force',
                 y: 15.6,
-                color: '#C4D8FC'
+                className: 'scanned'
             }, {
                 name: 'Recon',
                 y: 15.3,
-                color: '#77A7F9'
-            }, {
-                name: 'Trojan',
-                y: 69.1,
-                color: '#3E82F7'
+                className: 'not-scanned'
             }]
         }]
     };
@@ -100,8 +96,8 @@ export class DashboardExamplesComponent implements OnInit {
         value: 50,
         text1: '761/1k',
         text2: 'Essentials',
-        color: 'rgba(2, 80, 112, 1)',
         backgroundColor: 'rgba(2, 80, 112, .3)',
+        className: 'essential'
     };
 
     public columnData = {
@@ -162,13 +158,13 @@ export class DashboardExamplesComponent implements OnInit {
             type: 'bar',
             name: 'Internal',
             data: [ 5, 4, 3, 2 ],
-            color: '#3E82F7'
+            className: 'high'
         },
         {
             type: 'bar',
             name: 'External',
             data: [ 3, 3, 2, 1 ],
-            color: '#6CA2FF'
+            className: 'medium'
         }]
     };
 
