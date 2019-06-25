@@ -4,7 +4,8 @@
 export const BaseConfig: any = {
     chart: {
         type: 'solidgauge',
-        height: '75%'
+        height: '75%',
+        styledMode: true
     },
     title: {
         text: '',
@@ -60,7 +61,7 @@ export const BaseConfig: any = {
     series: [{
         name: 'Move',
         data: [{
-            color: '',
+            className: '',
             radius: '112%',
             innerRadius: '95%',
             y: 80

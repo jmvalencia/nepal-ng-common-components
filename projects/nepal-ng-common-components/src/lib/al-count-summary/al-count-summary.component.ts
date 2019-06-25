@@ -119,7 +119,6 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
       const len: number = value.length;
 
       this.clear();
-      console.log(this.containerEl.nativeElement.offsetWidth);
 
       if (isNumber) {
         this.summary = {...numberContract(Number(value)), origCount: value };

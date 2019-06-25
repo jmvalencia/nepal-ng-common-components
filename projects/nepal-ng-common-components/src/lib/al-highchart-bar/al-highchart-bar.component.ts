@@ -24,7 +24,8 @@ export class AlHighchartBarComponent implements OnChanges {
     private populateConfig = (): void => {
         this.barChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
-                type: 'bar'
+                type: 'bar',
+                styledMode: true
             },
             title: {
                 text: ''

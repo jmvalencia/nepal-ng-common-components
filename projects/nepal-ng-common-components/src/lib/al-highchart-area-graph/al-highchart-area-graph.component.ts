@@ -24,7 +24,8 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
     private populateConfig = (): void => {
         this.areaGraphItem = Highcharts.chart(this.areaGraph.nativeElement, {
             chart: {
-                type: 'area'
+                type: 'area',
+                styledMode: true
             },
             title: {
                 text: ''
@@ -64,7 +65,8 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
                 type: 'area',
                 name: this.config.name,
                 color: this.config.color,
-                data: this.config.data
+                data: this.config.data,
+                className: this.config.className
             }]
         });
     }

@@ -39,15 +39,19 @@ al-dashboard-widget {
 */
 .high rect, path.high, rect.high {
   fill: al-color($al-red, 600);
+  stroke: none;
 }
 .medium rect, path.medium, rect.medium {
   fill: al-color($al-orange, 500);
+  stroke: none;
 }
 .low rect, path.low, rect.low {
   fill: al-color($al-yellow, 500);
+  stroke: none;
 }
 .info rect, path.info, rect.info {
   fill: al-color($al-gray, 50);
+  stroke: none;
 }
 
 /*
@@ -147,4 +151,3 @@ path.highcharts-grid-line {
 .not-scanned rect, path.not-scanned, .not-scanned {
   fill: al-color($al-gray, 500);
 }
-
