@@ -4,6 +4,7 @@
     grid-auto-rows: 384px;
     grid-auto-flow: dense;
     al-dashboard-widget {
+      min-width: 384px;
       div.interior {
           height: 286px;
           width: 100%;
@@ -46,7 +47,7 @@
     }
 }
 
-@media screen and (min-width: 1180px) {
+@media screen and (min-width: 1235px) {
     .dashboard-layout {
         grid-template-columns: repeat(4, 1fr);
     }
