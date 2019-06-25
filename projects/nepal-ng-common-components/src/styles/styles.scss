@@ -59,9 +59,11 @@ al-dashboard-widget {
 */
 .healthy rect, path.healthy {
   fill: al-color($al-green, 500);
+  stroke: al-color($al-green, 500);
 }
 .unhealthy rect, path.unhealthy {
   fill: al-color($al-red, 500);
+  stroke: al-color($al-red, 500);
 }
 
 /*
@@ -150,4 +152,10 @@ path.highcharts-grid-line {
 }
 .not-scanned rect, path.not-scanned, .not-scanned {
   fill: al-color($al-gray, 500);
+}
+
+al-highchart-treemap {
+  .highcharts-data-label text {
+    fill: white;
+  }
 }
