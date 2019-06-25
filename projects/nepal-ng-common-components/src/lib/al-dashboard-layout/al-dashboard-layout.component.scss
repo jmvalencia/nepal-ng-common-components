@@ -1,10 +1,12 @@
+$min-width: 384px;
+
 .dashboard-layout {
     display: grid;
     grid-gap: 20px;
-    grid-auto-rows: 384px;
+    grid-auto-rows: $min-width;
     grid-auto-flow: dense;
     al-dashboard-widget {
-      min-width: 384px;
+      min-width: $min-width;
       div.interior {
           height: 286px;
           width: 100%;
