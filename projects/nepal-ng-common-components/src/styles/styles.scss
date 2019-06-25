@@ -59,9 +59,11 @@ al-dashboard-widget {
 */
 .healthy rect, path.healthy {
   fill: al-color($al-green, 500);
+  stroke: al-color($al-green, 500);
 }
 .unhealthy rect, path.unhealthy {
   fill: al-color($al-red, 500);
+  stroke: al-color($al-red, 500);
 }
 
 /*
