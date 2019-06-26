@@ -114,7 +114,9 @@ export class ALAppHeaderComponent implements OnInit {
 
   onOpen() {
     this.filterInput.changes.subscribe(res => {
+      if (this.filterInput.first) {
         this.filterInput.first.nativeElement.focus();
+      }
     });
   }
 
