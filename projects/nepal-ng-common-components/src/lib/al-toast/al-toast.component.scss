@@ -1,0 +1,48 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+@import "~@al/design/styles/variables";
+
+:host ::ng-deep .custom-toast {
+
+    .ui-toast-message {
+        color: #ffffff;
+        background: al-color($al-gray, 500);
+        padding: 12px 15px;
+    }
+
+    .ui-toast-message-text-content {
+        margin: 0 10px;
+    }
+
+    .ui-toast-icon {
+        position: inherit;
+    }
+
+    &.ui-toast {
+        width: 50%;
+    }
+
+    &.ui-toast-bottom-center {
+        margin-left: -25%;
+    }
+
+    .toast-buttons {
+        margin-top: 10px;
+
+        .button-container {
+            padding: 5px 10px;
+
+            a {
+                cursor: pointer;
+                color: al-color($al-amber, 500);
+                font-weight: 600;
+                padding: 0;
+            }
+        }
+    }
+
+    .toast-icon {
+        font-size: 24px;
+        padding: 0;
+    }
+}
