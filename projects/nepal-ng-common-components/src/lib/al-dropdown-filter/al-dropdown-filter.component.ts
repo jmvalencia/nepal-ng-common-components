@@ -4,8 +4,7 @@ import { ObjectValue, ObjectDetails } from './al-dropdown-filter.types';
 @Component({
   selector: 'al-dropdown-filter',
   templateUrl: './al-dropdown-filter.component.html',
-  styleUrls: ['./al-dropdown-filter.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./al-dropdown-filter.component.scss']
 })
 
 export class AlDropdownFilterComponent implements OnInit {
