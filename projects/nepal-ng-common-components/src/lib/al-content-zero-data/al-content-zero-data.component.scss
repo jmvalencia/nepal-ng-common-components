@@ -1,0 +1,21 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+
+div.full-height {
+  height: 100%;
+}
+
+.no-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  h1 {
+    font-weight: normal;
+    color: al-color($al-gray, 100);
+  }
+  i {
+    font-size: 100px;
+    color: al-color($al-gray, 200);
+  }
+}

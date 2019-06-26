@@ -51,6 +51,25 @@ export enum WidgetContentType {
   Area,
 }
 
+
+/*
+ * Zero state reason for not displaying a chart
+ */
+export enum ZeroStateReason {
+  API,
+  Entitlement,
+  Zero
+}
+
+/*
+ *
+ */
+export interface ZeroState {
+  nodata: boolean;
+  reason: ZeroStateReason;
+}
+
+
 /*
  * Widget content - can be anything such as a chart, grid, number etc
  */
