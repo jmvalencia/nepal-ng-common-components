@@ -12,6 +12,7 @@ import { AlDropdownFilterComponent } from './al-dropdown-filter/al-dropdown-filt
 import { AlCountSummaryComponent } from './al-count-summary/al-count-summary.component';
 import { AlHighchartAreaGraphComponent } from './al-highchart-area-graph/al-highchart-area-graph.component';
 import { AlHighchartBarComponent } from './al-highchart-bar/al-highchart-bar.component';
+import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-zero-data.component';
 
 const ALL_COMPONENTS = [
   AlHighchartColumnComponent,
@@ -27,7 +28,8 @@ const ALL_COMPONENTS = [
   AlDropdownFilterComponent,
   AlCountSummaryComponent,
   AlHighchartAreaGraphComponent,
-  AlHighchartBarComponent
+  AlHighchartBarComponent,
+  AlZeroContentDataComponent
 ];
 
 export {

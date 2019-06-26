@@ -7,6 +7,8 @@ import {
         WidgetHeight,
         TableListConfig,
         ActivityGaugeConfig,
+        ZeroState,
+        ZeroStateReason
     } from '../../../../../nepal-ng-common-components/src/lib/types';
 import { BreadcrumbService } from '../../breadcrumb.service';
 
@@ -23,8 +25,24 @@ export class DashboardExamplesComponent implements OnInit {
     public widgetWidth: string;
     public count = '999';
     public count2 = '1245';
-    public count3 = '98765';
+    public count3 = '34123';
     public count4 = '198765';
+    public count5: ZeroState = {
+     nodata: true,
+     reason: ZeroStateReason.API
+    };
+    public count6: ZeroState = {
+     nodata: true,
+     reason: ZeroStateReason.Entitlement
+    };
+    public failedSemi: ZeroState = {
+     nodata: true,
+     reason: ZeroStateReason.Zero
+    };
+    public failedTree: ZeroState = {
+     nodata: true,
+     reason: ZeroStateReason.Zero
+    };
     public dashboards = [
         { label: 'Threat Summary', icon: 'ui-icon-vertical-align-top', value: { id: 6, name: 'Threat Summmary', code: 'TS' }},
         { label: 'Coverage and Health', icon: 'ui-icon-vertical-align-top', value: { id: 1, name: 'Coverage and Health', code: 'CAH' }},
@@ -258,6 +276,76 @@ export class DashboardExamplesComponent implements OnInit {
       content: {
         type: WidgetContentType.Count,
         data: this.count4,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '105',
+      title: 'Failed API Call',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.Count,
+        data: this.count5,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '106',
+      title: 'Failed Entitlement Call',
+      actions: {
+        primary: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.Count,
+        data: this.count6,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '107',
+      title: '1 x 1 Widget with SemiCircle - No Data',
+      content: {
+        type: WidgetContentType.SemiCircle,
+        data: this.failedSemi,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '108',
+      title: '1 x 1 Widget with TreeMap - No Data',
+      actions: {
+        link1: 'Link 1',
+        link2: 'Link 2',
+      },
+      content: {
+        type: WidgetContentType.TreeMap,
+        data: this.failedTree
       },
       metrics: {
         width: WidgetWidth.W1,

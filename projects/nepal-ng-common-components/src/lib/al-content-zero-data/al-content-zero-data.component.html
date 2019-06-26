@@ -1,0 +1,13 @@
+<div *ngIf="isError" class='no-chart full-height'>
+  <i class="{{icon}}"></i>
+  <h1>{{title}}</h1>
+</div>
+
+<div *ngIf="!isError && contentType == widgetContentType.SemiCircle">
+  SemiCircle - 0
+</div>
+
+<div *ngIf="!isError && contentType == widgetContentType.TreeMap">
+  TreeMap - 0
+</div>
+

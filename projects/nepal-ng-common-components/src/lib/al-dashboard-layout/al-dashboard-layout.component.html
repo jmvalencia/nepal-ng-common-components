@@ -4,32 +4,35 @@
         *ngFor="let configItem of config" 
         [ngClass]="{'w2': configItem.metrics.width === 2, 'h2': configItem.metrics.height === 2 }"
         [config]="configItem">
-        <div class="interior" *ngIf="configItem.content && configItem.content.data">
-            <al-highchart-semi-circle
-                *ngIf="configItem.content.type === contentType.SemiCircle"
-                [config]="configItem.content.data"></al-highchart-semi-circle>
-            <al-highchart-column
-                *ngIf="configItem.content.type === contentType.Column"
-                [config]="configItem.content.data"></al-highchart-column>
-            <al-detailed-table-list
-                *ngIf="configItem.content.type === contentType.TableListSummary"
-                [config]="configItem.content.data"></al-detailed-table-list>
-            <al-highchart-activity-gauge
-                *ngIf="configItem.content.type === contentType.ActivityGauge"
-                [config]="configItem.content.data"></al-highchart-activity-gauge>
-            <al-highchart-treemap
-                *ngIf="configItem.content.type === contentType.TreeMap"
-                [config]="configItem.content.data"></al-highchart-treemap>
-            <al-count-summary
-                *ngIf="configItem.content.type === contentType.Count"
-                [config]="configItem.content.data"></al-count-summary>
-            <al-highchart-bar
-                *ngIf="configItem.content.type === contentType.Bar"
-                [config]="configItem.content.data"></al-highchart-bar>
-            <al-highchart-area-graph
-                *ngIf="configItem.content.type === contentType.Area"
-                [config]="configItem.content.data"></al-highchart-area-graph>
-        </div>
+      <div class="interior" *ngIf="configItem.content && configItem.content.data && !configItem.content.data.nodata">
+          <al-highchart-semi-circle
+            *ngIf="configItem.content.type === contentType.SemiCircle"
+            [config]="configItem.content.data"></al-highchart-semi-circle>
+          <al-highchart-column
+            *ngIf="configItem.content.type === contentType.Column"
+            [config]="configItem.content.data"></al-highchart-column>
+          <al-detailed-table-list
+            *ngIf="configItem.content.type === contentType.TableListSummary"
+            [config]="configItem.content.data"></al-detailed-table-list>
+          <al-highchart-activity-gauge
+            *ngIf="configItem.content.type === contentType.ActivityGauge"
+            [config]="configItem.content.data"></al-highchart-activity-gauge>
+          <al-highchart-treemap
+            *ngIf="configItem.content.type === contentType.TreeMap"
+            [config]="configItem.content.data"></al-highchart-treemap>
+          <al-count-summary
+            *ngIf="configItem.content.type === contentType.Count"
+            [config]="configItem.content.data"></al-count-summary>
+          <al-highchart-bar
+            *ngIf="configItem.content.type === contentType.Bar"
+            [config]="configItem.content.data"></al-highchart-bar>
+          <al-highchart-area-graph
+            *ngIf="configItem.content.type === contentType.Area"
+            [config]="configItem.content.data"></al-highchart-area-graph>
+      </div>
+      <div class="interior" *ngIf="configItem.content && configItem.content.data && configItem.content.data.nodata">
+        <al-content-zero-data [contentType]="configItem.content.type" [config]="configItem.content.data"></al-content-zero-data>
+      </div>
     </al-dashboard-widget>
 </div>
 
