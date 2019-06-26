@@ -146,10 +146,14 @@ al-dashboard-widget {
 path.highcharts-grid-line {
   stroke: transparent;
 }
-
 .scanned rect, path.scanned, .scanned {
   fill: al-color($al-green, 500);
 }
 .not-scanned rect, path.not-scanned, .not-scanned {
   fill: al-color($al-gray, 500);
+}
+svg {
+  path.zero-state {
+    fill: al-color($al-gray, 100);
+  }
 }
