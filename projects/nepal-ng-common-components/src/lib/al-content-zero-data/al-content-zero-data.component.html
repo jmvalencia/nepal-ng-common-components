@@ -3,11 +3,13 @@
   <h1>{{title}}</h1>
 </div>
 
-<div *ngIf="!isError && contentType == widgetContentType.SemiCircle">
+<div *ngIf="!isError && contentType == widgetContentType.SemiCircle" class="semi-circle full-height">
   SemiCircle - 0
 </div>
 
-<div *ngIf="!isError && contentType == widgetContentType.TreeMap">
-  TreeMap - 0
+<div *ngIf="!isError && contentType == widgetContentType.TreeMap" class="tree-map full-height">
+  <div>
+    <span>0</span>
+  </div>
 </div>
 
