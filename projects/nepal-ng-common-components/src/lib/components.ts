@@ -35,5 +35,20 @@ const ALL_COMPONENTS = [
 ];
 
 export {
-  ALL_COMPONENTS
+  ALL_COMPONENTS,
+  AlHighchartColumnComponent,
+  AlHighchartSemiCircleComponent,
+  AlHighchartTreeMapComponent,
+  AlDetailedTableListComponent,
+  AlDashboardWidgetComponent,
+  ALAppHeaderComponent,
+  ALNavHeaderComponent,
+  ALSideNavComponent,
+  AlHighchartsActivityGaugeComponent,
+  AlDashboardLayoutComponent,
+  AlDropdownFilterComponent,
+  AlCountSummaryComponent,
+  AlHighchartAreaGraphComponent,
+  AlHighchartBarComponent,
+  AlToastComponent
 };
