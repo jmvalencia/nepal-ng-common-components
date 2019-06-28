@@ -9,7 +9,9 @@
     <footer *ngIf="hasActions">
         <a (click)="link2Clicked()" *ngIf="config.actions.link2" class="link">{{config.actions.link2}}</a>
         <a (click)="link1Clicked()" *ngIf="config.actions.link1" class="link">{{config.actions.link1}}</a>
-        <button pButton (click)="primaryClicked()" *ngIf="!config.actions.primary.action.url" class="flat" label="{{config.actions.primary.name}}"></button>
-        <a pButton href="{{config.actions.primary.action.url}}" *ngIf="config.actions.primary.action.url" class="flat">{{config.actions.primary.name}}</a>
+        <ng-template [ngIf]="config.actions.primary && config.actions.primary.action">
+          <button pButton (click)="primaryClicked()" *ngIf="!config.actions.primary.action.url" class="flat" label="{{config.actions.primary.name}}"></button>
+          <a pButton href="{{config.actions.primary.action.url}}" *ngIf="config.actions.primary.action.url" class="flat">{{config.actions.primary.name}}</a>
+        </ng-template>
     </footer>
 </div>
