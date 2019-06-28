@@ -108,8 +108,9 @@ export interface Widget {
 }
 
 export interface WidgetButtonAction {
-  target_app: string;
+  target_app?: string;
   path?: string;
+  url?: string;
 }
 
 /**

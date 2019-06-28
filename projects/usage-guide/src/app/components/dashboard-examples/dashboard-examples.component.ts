@@ -286,14 +286,11 @@ export class DashboardExamplesComponent implements OnInit {
       title: 'Failed API Call',
       actions: {
         primary: {
-          name: 'Primary',
+          name: 'Call Sales',
           action: {
-            target_app: 'foo',
-            path: 'bar'
+            url: 'tel:+18774848383'
           }
-        },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        }
       },
       content: {
         type: WidgetContentType.Count,
