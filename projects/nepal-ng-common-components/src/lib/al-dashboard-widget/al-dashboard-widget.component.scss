@@ -22,21 +22,18 @@ $separator-color: #ededed;
         font-size: 14px;
         text-transform: uppercase;
         margin-left: 16px;
-        &.link {
-            background-color: $background;
-        }
-        &[pbutton] {
-            background-color: $accent-color;
-            border-color: $accent-color;
-        }
     }
 
     a {
         color: $accent-color;
         text-decoration: none;
         cursor: pointer;
+        &[pbutton] {
+          color: $background;
+          padding: 0 16px;
+      }
     }
-    
+
     header, footer {
         display: flex;
         flex-direction: row;
@@ -44,7 +41,7 @@ $separator-color: #ededed;
         padding-right: 12px;
         padding-left: 24px;
     }
-    
+
     header {
         height: $header-height;
         justify-content: space-between;
@@ -59,7 +56,7 @@ $separator-color: #ededed;
             font-size: 24px;
         }
     }
-    
+
     footer {
         height: $footer-height;
         justify-content: flex-end;
