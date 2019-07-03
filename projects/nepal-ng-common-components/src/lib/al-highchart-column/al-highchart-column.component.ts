@@ -56,7 +56,6 @@ export class AlHighchartColumnComponent implements OnChanges {
                           },
                           bubbles: true
                         }));
-                        console.log(event)
                       }
                     }
                 }
