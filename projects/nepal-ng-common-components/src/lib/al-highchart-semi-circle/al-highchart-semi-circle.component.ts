@@ -31,7 +31,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
           plotBackgroundColor: null,
           plotBorderWidth: 0,
           plotShadow: false,
-          styledMode: true
+          styledMode: true,
         },
         credits: {
           enabled: false
@@ -58,6 +58,19 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
             endAngle: 90,
             center: ['50%', '75%'],
             size: '110%'
+          },
+          series: {
+            events: {
+              // tslint:disable-next-line
+              click: function(event) {
+                event.srcElement.dispatchEvent(new CustomEvent('segment-clicked', {
+                  detail: {
+                    segment: event.point
+                  },
+                  bubbles: true
+                }));
+              }
+            }
           }
         },
         series: this.config.series || []
