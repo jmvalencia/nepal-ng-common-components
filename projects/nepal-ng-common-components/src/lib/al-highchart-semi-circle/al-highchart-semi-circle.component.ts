@@ -31,7 +31,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
           plotBackgroundColor: null,
           plotBorderWidth: 0,
           plotShadow: false,
-          styledMode: true,
+          styledMode: true
         },
         credits: {
           enabled: false
