@@ -3,9 +3,14 @@
     (onChange)="clickEvent($event.value)"
     [style]="{'width': defaultWidth }">
 
-    <ng-template let-item pTemplate="selectedItem">
+    <ng-template let-selectedItem pTemplate="selectedItem">
+        <i *ngIf="selectedItem.icon !== ''|| undefined" [class]="selectedItem.icon"></i>
+        <span style="padding-left:10px">{{selectedItem.label}}</span>
+    </ng-template>
+
+    <ng-template let-item pTemplate="item">
         <i *ngIf="item.icon !== ''|| undefined" [class]="item.icon"></i>
-        <span style="padding-left:10px">{{item.label}}</span>
+        <span style="padding-left:10px">{{item.label}}</span><span *ngIf="item.subtext" class="item-subtext"> - {{item.subtext}}</span>
     </ng-template>
 
 </p-dropdown>

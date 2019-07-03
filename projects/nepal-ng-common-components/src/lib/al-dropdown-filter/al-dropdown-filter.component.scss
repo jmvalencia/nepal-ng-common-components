@@ -1,4 +1,30 @@
-::ng-deep i.ui-icon-vertical-align-top.ng-star-inserted {
+@import "~@al/design/styles/utility";
+@import "~@al/design/styles/palette";
+
+@mixin center-flex() {
+  display: flex!important;
+  align-items: center;
+}
+
+::ng-deep {
+  i.ui-icon-vertical-align-top, .ui-icon-dashboard  {
     font-size: 1em;
     font-weight: bold;
+  }
+  label.ui-dropdown-label {
+    @include center-flex();
+  }
+  .item-subtext {
+    color: al-color($al-gray, 200);
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  li.ui-dropdown-item {
+    @include center-flex();
+    &.ui-state-highlight {
+      .item-subtext {
+        color: unset;
+      }
+    }
+  }
 }
