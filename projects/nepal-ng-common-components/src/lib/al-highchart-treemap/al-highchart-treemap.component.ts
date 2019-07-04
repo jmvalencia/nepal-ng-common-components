@@ -58,6 +58,21 @@ export class AlHighchartTreeMapComponent implements OnInit {
       },
       title: {
         text: ''
+      },
+      plotOptions: {
+        series: {
+          events: {
+            // tslint:disable-next-line
+            click: function(event) {
+              event.target.dispatchEvent(new CustomEvent('segment-clicked', {
+                detail: {
+                  segment: event.point
+                },
+                bubbles: true
+              }));
+            }
+          }
+        }
       }
     });
   }

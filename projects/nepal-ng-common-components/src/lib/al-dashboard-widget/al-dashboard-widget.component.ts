@@ -55,6 +55,13 @@ export class AlDashboardWidgetComponent implements OnInit {
     this.emitClick(this.config.actions.primary.action);
   }
 
+  /**
+   * Segment of chart clicked
+   */
+  public chartSegmentClicked(): void {
+    this.emitClick(this.config.actions.primary.action);
+  }
+
   /*
    * Settings Button Clicked
    */
@@ -86,6 +93,7 @@ export class AlDashboardWidgetComponent implements OnInit {
       .dispatchEvent(new CustomEvent('button-clicked', {
         detail: {
           id: this.config.id,
+          title: this.config.title,
           buttonAction
         },
         bubbles: true
