@@ -3,7 +3,7 @@
         <h1 title="{{config.title}}">{{config.title}}</h1>
         <!-- TODO - - PUT BACK IN WHEN SETTINGS HAS BEEN DEFINED <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a> -->
     </header>
-    <div class="content">
+    <div class="content" (segment-clicked)="chartSegmentClicked()">
         <ng-content></ng-content>
     </div>
     <footer *ngIf="hasActions">

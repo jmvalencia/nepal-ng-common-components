@@ -45,6 +45,17 @@ export class AlHighchartBarComponent implements OnChanges {
             plotOptions: {
                 series: {
                     stacking: 'normal',
+                    events: {
+                        // tslint:disable-next-line
+                        click: function(event) {
+                          event.target.dispatchEvent(new CustomEvent('segment-clicked', {
+                            detail: {
+                              segment: event.point
+                            },
+                            bubbles: true
+                          }));
+                        }
+                    }
                 }
             },
             series: this.config.series
