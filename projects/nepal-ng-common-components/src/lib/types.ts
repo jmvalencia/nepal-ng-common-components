@@ -1,3 +1,5 @@
+import { PlotBoxplotTooltipDateTimeLabelFormatsOptions } from 'highcharts';
+
 /*
  * @author Stephen Jones <stephen.jones@alertlogic.com>
  * @copyright Alert Logic, Inc 2019
@@ -111,6 +113,7 @@ export interface WidgetButtonAction {
   target_app?: string;
   path?: string;
   url?: string;
+  noData?: boolean;
 }
 
 /**

@@ -73,6 +73,9 @@ export class AlDashboardWidgetComponent implements OnInit {
    * Link1 Button Clicked
    */
   public link1Clicked(): void {
+    if (this.config.content.data.nodata) {
+      this.emitClick({noData: true});
+    }
     // this.emitClick(WidgetClickType.Link1);
   }
 
