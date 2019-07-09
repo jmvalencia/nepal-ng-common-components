@@ -8,7 +8,7 @@
     "start": "npm run build && ng serve --port 4300",
     "build": "ng build && npm run bundle-styles",
     "bundle-styles": "scss-bundle -c scss-bundle.config.json",
-    "test": "ng test nepal-ng-common-components --watch=false",
+    "test": "ng test nepal-ng-common-components --watch=false  --code-coverage",
     "test-watch": "ng test nepal-ng-common-components --watch=true --code-coverage",
     "test-focus-checks": "! grep -Hrn --include='*.spec.ts' 'fdescribe\\|fit' src",
     "lint": "ng lint",
