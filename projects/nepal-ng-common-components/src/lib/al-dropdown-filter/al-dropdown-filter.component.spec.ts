@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DropdownModule } from 'primeng/dropdown';
 
 import { AlDropdownFilterComponent } from './al-dropdown-filter.component';
+import { FormsModule } from '@angular/forms';
 
 describe('AlDashboardFilterComponent', () => {
   let component: AlDropdownFilterComponent;
@@ -9,7 +10,7 @@ describe('AlDashboardFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DropdownModule],
+      imports: [DropdownModule, FormsModule],
       declarations: [ AlDropdownFilterComponent ]
     })
     .compileComponents();
