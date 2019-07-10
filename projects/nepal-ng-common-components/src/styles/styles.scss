@@ -50,7 +50,7 @@ al-dashboard-widget {
   stroke: none;
 }
 .info rect, path.info, rect.info {
-  fill: al-color($al-gray, 50);
+  fill: al-color($al-gray, 300);
   stroke: none;
 }
 
@@ -98,7 +98,7 @@ al-dashboard-widget {
   }
 
   al-count-summary {
-    .count-container span{
+    .count-container span {
       color: al-color($al-gray, 50) !important;
     }
   }
@@ -115,6 +115,9 @@ al-dashboard-widget {
   svg {
     text {
       fill: #CBCBCB;
+    }
+    g text {
+      fill: white;
     }
     rect.highcharts-point {
       stroke: #3C3C3C;
@@ -155,5 +158,11 @@ path.highcharts-grid-line {
 svg {
   path.zero-state {
     fill: al-color($al-gray, 50);
+  }
+}
+
+al-highchart-treemap {
+  .highcharts-data-label text {
+    fill: white;
   }
 }
