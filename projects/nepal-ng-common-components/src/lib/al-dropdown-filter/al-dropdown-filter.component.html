@@ -1,7 +1,9 @@
 <p-dropdown [options]="filterOptions"
     dropdownIcon="ui-icon-arrow-drop-down"
     (onChange)="clickEvent($event.value)"
-    [style]="{'width': defaultWidth }">
+    [style]="{'width': defaultWidth }"
+    [(ngModel)]="selectedOption"
+    optionLabel="label">
 
     <ng-template let-selectedItem pTemplate="selectedItem">
         <i *ngIf="selectedItem.icon !== ''|| undefined" [class]="selectedItem.icon"></i>

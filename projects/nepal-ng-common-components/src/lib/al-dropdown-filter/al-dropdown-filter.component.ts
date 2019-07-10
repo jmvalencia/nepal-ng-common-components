@@ -15,6 +15,7 @@ export class AlDropdownFilterComponent implements OnInit {
      * List of dashboard options
      */
     @Input() filterOptions: ObjectValue[];
+    @Input() selectedOption: ObjectValue;
 
     /**
      * Optional width setting
