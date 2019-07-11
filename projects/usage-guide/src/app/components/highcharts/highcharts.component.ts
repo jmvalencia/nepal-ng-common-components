@@ -110,6 +110,36 @@ export class HighChartsComponent implements OnInit {
         }]
     };
 
+    public bubbleMock = [{
+            name: '',
+            type: 'packedbubble',
+            data: [{
+                name: 'Critical',
+                value: 10,
+                className: 'high'
+            }, {
+                name: 'High',
+                value: 1000,
+                className: 'medium'
+            },
+            {
+                name: 'Medium',
+                value: 30000,
+                className: 'low'
+            },
+            {
+                name: 'Low',
+                value: 15000,
+                className: 'info'
+            },
+            {
+                name: 'Info',
+                value: 1500,
+                className: 'info'
+            }]
+        }
+    ];
+
     public mockTreeMap: any = [
         {
             id: '1',

@@ -1,6 +1,7 @@
 import { ALAppHeaderComponent } from './al-app-header/al-app-header.component';
 import { ALNavHeaderComponent } from './al-nav-header/al-nav-header.component';
 import { ALSideNavComponent } from './al-sidenav/al-sidenav.component';
+import { AlHighchartBubbleComponent } from './al-highchart-bubble/al-highchart-bubble.component';
 import { AlHighchartColumnComponent } from './al-highchart-column/al-highchart-column.component';
 import { AlHighchartSemiCircleComponent } from './al-highchart-semi-circle/al-highchart-semi-circle.component';
 import { AlHighchartTreeMapComponent } from './al-highchart-treemap/al-highchart-treemap.component';
@@ -16,6 +17,7 @@ import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-ze
 import { AlToastComponent } from './al-toast/al-toast.component';
 
 const ALL_COMPONENTS = [
+  AlHighchartBubbleComponent,
   AlHighchartColumnComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
@@ -36,6 +38,7 @@ const ALL_COMPONENTS = [
 
 export {
   ALL_COMPONENTS,
+  AlHighchartBubbleComponent,
   AlHighchartColumnComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
