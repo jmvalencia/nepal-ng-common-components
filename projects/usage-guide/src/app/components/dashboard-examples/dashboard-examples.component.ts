@@ -188,28 +188,28 @@ export class DashboardExamplesComponent implements OnInit {
 
     public mockBarChart2 = {
       title: '',
-      categories: [ "Critical", "High", "Medium", "Low", "Info" ],
+      categories: [ 'Critical', 'High', 'Medium', 'Low', 'Info' ],
       series: [{
           type: 'bar',
           data: [{
-            name: "Critical",
-            className: "high",
+            name: 'Critical',
+            className: 'high',
             y: 10,
         }, {
-            name: "High",
-            className: "medium",
+            name: 'High',
+            className: 'medium',
             y: 2825,
         }, {
-            name: "Medium",
-            className: "low",
+            name: 'Medium',
+            className: 'low',
             y: 39153,
         }, {
-            name: "Low",
-            className: "info",
+            name: 'Low',
+            className: 'info',
             y: 7005,
         }, {
-            name: "Info",
-            className: "info",
+            name: 'Info',
+            className: 'info',
             y: 2499,
         }]
       }]
