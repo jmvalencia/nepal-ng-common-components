@@ -186,6 +186,35 @@ export class DashboardExamplesComponent implements OnInit {
         }]
     };
 
+    public mockBarChart2 = {
+      title: '',
+      categories: [ "Critical", "High", "Medium", "Low", "Info" ],
+      series: [{
+          type: 'bar',
+          data: [{
+            name: "Critical",
+            className: "high",
+            y: 10,
+        }, {
+            name: "High",
+            className: "medium",
+            y: 2825,
+        }, {
+            name: "Medium",
+            className: "low",
+            y: 39153,
+        }, {
+            name: "Low",
+            className: "info",
+            y: 7005,
+        }, {
+            name: "Info",
+            className: "info",
+            y: 2499,
+        }]
+      }]
+  };
+
     public mockAreaChart = {
         categories: ['January', 'February', 'March'],
         name: 'Logs',
@@ -472,6 +501,19 @@ export class DashboardExamplesComponent implements OnInit {
     content: {
       type: WidgetContentType.Area,
       data: this.mockAreaChart,
+    },
+    metrics: {
+      width: WidgetWidth.W1,
+      height: WidgetHeight.H1,
+    }
+  },
+  {
+    id: '3',
+    title: 'Bar Chart',
+    actions: {},
+    content: {
+      type: WidgetContentType.Bar,
+      data: this.mockBarChart2,
     },
     metrics: {
       width: WidgetWidth.W1,
