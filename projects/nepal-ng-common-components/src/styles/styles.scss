@@ -141,6 +141,11 @@ al-dashboard-widget {
       background-color: al-color($al-gray, 900) !important;
     }
   }
+  svg {
+    path.zero-state {
+      fill: al-color($al-gray, 200);
+    }
+  }
 }
 
 /*
