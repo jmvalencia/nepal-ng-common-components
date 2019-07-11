@@ -214,6 +214,30 @@ export class DashboardExamplesComponent implements OnInit {
         }]
       }]
   };
+  public bubbleMock = [{
+        name: 'Critical',
+        value: 10,
+        className: 'high'
+    }, {
+        name: 'High',
+        value: 1000,
+        className: 'medium'
+    },
+    {
+        name: 'Medium',
+        value: 30000,
+        className: 'low'
+    },
+    {
+        name: 'Low',
+        value: 15000,
+        className: 'info'
+    },
+    {
+        name: 'Info',
+        value: 1500,
+        className: 'info'
+  }];
 
     public mockAreaChart = {
         categories: ['January', 'February', 'March'],
@@ -520,6 +544,19 @@ export class DashboardExamplesComponent implements OnInit {
       height: WidgetHeight.H1,
     }
   },
+  {
+    id: '7',
+    title: 'Bubble',
+    actions: {},
+    content: {
+      type: WidgetContentType.Bubble,
+      data: this.bubbleMock,
+    },
+    metrics: {
+      width: WidgetWidth.W1,
+      height: WidgetHeight.H1,
+    }
+  }
 ];
 
   // For use in template

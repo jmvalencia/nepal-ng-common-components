@@ -29,6 +29,9 @@
           <al-highchart-area-graph
             *ngIf="configItem.content.type === contentType.Area"
             [config]="configItem.content.data"></al-highchart-area-graph>
+          <al-highchart-bubble
+            *ngIf="configItem.content.type === contentType.Bubble"
+            [config]="configItem.content.data"></al-highchart-bubble>
       </div>
       <div class="interior" *ngIf="configItem.content && configItem.content.data && configItem.content.data.nodata">
         <al-content-zero-data [contentType]="configItem.content.type" [config]="configItem.content.data"></al-content-zero-data>

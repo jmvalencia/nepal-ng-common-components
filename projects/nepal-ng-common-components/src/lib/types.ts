@@ -51,6 +51,7 @@ export enum WidgetContentType {
   ActivityGauge,
   Bar,
   Area,
+  Bubble
 }
 
 
