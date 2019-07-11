@@ -38,7 +38,7 @@ al-dashboard-widget {
 * Global colours for severity level
 */
 .high rect, path.high, rect.high {
-  fill: al-color($al-red, 600);
+  fill: al-color($al-red, 500);
   stroke: none;
 }
 .medium rect, path.medium, rect.medium {
