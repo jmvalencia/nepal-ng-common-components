@@ -25,7 +25,7 @@ export class AlHighchartBubbleComponent implements OnChanges {
         this.bubbleChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'packedbubble',
-                height: '100%',
+                height: '80%',
             },
             title: {
                 text: ''
