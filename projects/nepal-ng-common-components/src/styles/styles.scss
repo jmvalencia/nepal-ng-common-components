@@ -126,8 +126,13 @@ al-dashboard-widget {
   .dropdowns {
     label, button, span {
       color: al-color($al-gray, 50) !important;
+
+      &.ui-menuitem-icon, &.ui-menuitem-text {
+        color:  al-color($al-gray, 700) !important;
+      }
     }
   }
+
   .nav-header-bar {
     background-color: al-color($al-gray, 700) !important;
     color: al-color($al-gray, 50) !important;
@@ -169,5 +174,11 @@ svg {
 al-highchart-treemap {
   .highcharts-data-label text {
     fill: white;
+  }
+}
+
+al-highchart-semi-circle {
+  g.highcharts-legend {
+    transform: translate(25%, 70%);
   }
 }
