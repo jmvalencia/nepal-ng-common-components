@@ -142,8 +142,16 @@ al-dashboard-widget {
   }
 
   al-app-header  {
-    .ui-menubar.ui-widget.ui-widget-content, a.ui-menuitem-link, span.ui-submenu-icon {
+    .ui-menubar.ui-widget.ui-widget-content, 
+    a.ui-menuitem-link, span.ui-submenu-icon, :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link, :hover span.ui-submenu-icon {
       background-color: al-color($al-gray, 900) !important;
+    }
+    ul.ui-widget-content a.ui-menuitem-link {
+      background-color: white !important;
+      span {
+        color:  al-color($al-gray, 700) !important;
+      }
     }
   }
   svg {
@@ -180,5 +188,13 @@ al-highchart-treemap {
 al-highchart-semi-circle {
   g.highcharts-legend {
     transform: translate(25%, 70%);
+  }
+}
+
+al-app-header {
+  ul.ui-widget-content a.ui-menuitem-link {
+    span {
+      color:  al-color($al-gray, 700) !important;
+    }
   }
 }
