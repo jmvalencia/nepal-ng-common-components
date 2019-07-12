@@ -25,7 +25,13 @@ export class AlHighchartBubbleComponent implements OnChanges {
         this.bubbleChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'packedbubble',
-                height: '80%',
+                height: '70%',
+            },
+            legend: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
             },
             title: {
                 text: ''
@@ -58,9 +64,10 @@ export class AlHighchartBubbleComponent implements OnChanges {
                     }
                 },
                 packedbubble: {
-                    minSize: '35%',
+                    useSimulation: false,
+                    minSize: '105px',
                     maxSize: '100%',
-                    draggable: false
+                    draggable: false,
                 }
             },
             series: [{
