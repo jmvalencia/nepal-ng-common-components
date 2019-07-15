@@ -131,6 +131,9 @@ al-dashboard-widget {
         color:  al-color($al-gray, 700) !important;
       }
     }
+    li span {
+      color: black !important;
+    }
   }
 
   .nav-header-bar {
