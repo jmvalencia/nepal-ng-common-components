@@ -6,7 +6,7 @@
  *
  */
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { Widget, WidgetClickType, WidgetButtonAction } from '../types';
+import { Widget, WidgetClickType, WidgetButtonAction, WidgetContentType } from '../types';
 
 export interface EmitValues {
   id: string;
@@ -22,6 +22,7 @@ export interface EmitValues {
 export class AlDashboardWidgetComponent implements OnInit {
 
   public hasActions = false;
+  public contentType: typeof WidgetContentType = WidgetContentType;
 
   constructor(private el: ElementRef) {}
 
