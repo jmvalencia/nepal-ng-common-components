@@ -39,6 +39,10 @@ export class DashboardExamplesComponent implements OnInit {
      nodata: true,
      reason: ZeroStateReason.Zero
     };
+    public failedBubble: ZeroState = {
+      nodata: true,
+      reason: ZeroStateReason.Zero
+    };
     public failedTree: ZeroState = {
      nodata: true,
      reason: ZeroStateReason.Zero
@@ -381,6 +385,17 @@ export class DashboardExamplesComponent implements OnInit {
       content: {
         type: WidgetContentType.SemiCircle,
         data: this.failedSemi,
+      },
+      metrics: {
+        width: WidgetWidth.W1,
+        height: WidgetHeight.H1,
+      }
+    }, {
+      id: '107',
+      title: '1 x 1 Widget with BubbleChart - No Data',
+      content: {
+        type: WidgetContentType.Bubble,
+        data: this.failedBubble,
       },
       metrics: {
         width: WidgetWidth.W1,

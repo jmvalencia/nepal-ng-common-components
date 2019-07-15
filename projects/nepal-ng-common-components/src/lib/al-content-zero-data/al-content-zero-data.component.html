@@ -17,6 +17,16 @@
     </svg>
 </div>
 
+<div *ngIf="!isError && contentType == widgetContentType.Bubble" class="bubble full-height">
+    <svg class="zero-state" width="100%" height="100%" viewBox="0 0 348 286">
+        <g class="bubble-series" transform="translate(10,-50) scale(1 1)">
+          <path fill="#ededed" d="M 156 239 A 68.53179190751445 68.53179190751445 0 1 1 156.06853178048559 238.99996573410692 Z" 
+          class="zero-state"></path>
+          <text x="153" data-z-index="1" y="175" style="font-weight: bold">0</text>
+        </g>
+    </svg>
+</div>
+
 <div *ngIf="!isError && contentType == widgetContentType.TreeMap" class="tree-map full-height">
   <div>
     <span>0</span>
