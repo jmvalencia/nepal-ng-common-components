@@ -16,7 +16,9 @@ $separator-color: #ededed;
     .content {
         height: 0;
         flex: 1;
-        overflow: auto;
+        &.auto-scroll {
+          overflow: auto;
+        }
     }
 
     button, a {
