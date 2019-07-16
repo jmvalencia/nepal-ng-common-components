@@ -1,7 +1,11 @@
 <div class="dashboard-widget" id="db-widget-${{config.id}{">
     <header>
-        <h1 title="{{config.title}}">{{config.title}}</h1>
-        <!-- TODO - - PUT BACK IN WHEN SETTINGS HAS BEEN DEFINED <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a> -->
+        <div>
+          <h1 title="{{config.title}}">{{config.title}}</h1>
+        </div>
+        <!-- <div> -->
+        <!--   TODO - - PUT BACK IN WHEN SETTINGS HAS BEEN DEFINED <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a> -->
+        <!-- </div> -->
     </header>
     <div class="content" [class.auto-scroll]="config.content?.type === contentType.TableListSummary" (segment-clicked)="chartSegmentClicked()">
         <ng-content></ng-content>
