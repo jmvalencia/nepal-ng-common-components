@@ -1,15 +1,16 @@
 $min-width: 384px;
+$default-dimension: 384px;
 
 .dashboard-layout {
     display: grid;
     grid-gap: 20px;
-    grid-auto-rows: $min-width;
+    grid-auto-rows: $default-dimension;
     grid-auto-flow: dense;
     al-dashboard-widget {
-      min-width: $min-width;
+      // min-width: $min-width;
       div.interior {
-          height: 286px;
-          width: 100%;
+        height: 286px;
+        width: 100%;
       }
       &.w2 {
         grid-column: span 2;
@@ -26,7 +27,7 @@ $min-width: 384px;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 640px) {
     .dashboard-layout {
         grid-template-columns: repeat(1, 1fr);
         al-dashboard-widget {
@@ -37,25 +38,25 @@ $min-width: 384px;
     }
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 640px) {
     .dashboard-layout {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
     .dashboard-layout {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media screen and (min-width: 1235px) {
+@media screen and (min-width: 1200px) {
     .dashboard-layout {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1440px) {
     .dashboard-layout {
         grid-template-columns: repeat(5, 1fr);
     }

@@ -5,7 +5,7 @@
  * @copyright Alert Logic, 2019
  *
  */
-import { Component, Input, ViewChild, ViewChildren, QueryList, AfterViewInit, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Widget, WidgetContentType } from '../types';
 
 @Component({
@@ -14,13 +14,46 @@ import { Widget, WidgetContentType } from '../types';
   styleUrls: ['./al-dashboard-layout.component.scss']
 })
 
-export class AlDashboardLayoutComponent {
+export class AlDashboardLayoutComponent implements OnInit {
+
+  private isResizing = false;
+  private timeoutHnd;
 
   // For use in template
   public contentType: typeof WidgetContentType = WidgetContentType;
 
   // Inputs
   @Input() config: Widget[];
+
+  // Outputs
+  @Output() resizeStart: EventEmitter<any> = new EventEmitter();
+  @Output() resizeEnd: EventEmitter<any> = new EventEmitter();
+
+  /*
+   *
+   */
+  ngOnInit() {
+    window.addEventListener('resize', () => {
+      this.resize();
+    });
+  }
+
+  /*
+   *
+   */
+  private resize = (): void => {
+    if (this.isResizing === false) {
+      this.isResizing = true;
+      this.resizeStart.emit();
+    } else {
+      clearTimeout(this.timeoutHnd);
+    }
+
+    this.timeoutHnd = setTimeout(() => {
+      this.isResizing = false;
+      this.resizeEnd.emit();
+    }, 1000);
+  }
 
 }
 
