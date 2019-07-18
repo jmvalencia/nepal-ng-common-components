@@ -28,15 +28,19 @@ interface Summary {
 })
 
 export class AlCountSummaryComponent implements OnInit, OnChanges {
-    public fontSize = '100px';
-    public summary: Summary = {
-      count: '',
-      origCount: '',
-      suffix: ''
-    };
-    public themeToggle = false;
+  public containerWidth: number;
+  public containerHeight: number;
+  public containerFontSize: number;
+  public numberFontSize: number;
 
-    @ViewChild('container') containerEl: ElementRef;
+  public summary: Summary = {
+    count: '',
+    origCount: '',
+    suffix: ''
+  };
+  public themeToggle = false;
+
+  @ViewChild('container') containerEl: ElementRef;
 
 
     /**
@@ -54,7 +58,42 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
      */
     ngOnChanges(changes: SimpleChanges): void {
       this.updateCount(this.config);
-      this.setFontSize();
+      this.reflow();
+    }
+
+    /*
+     *
+     */
+    private reflow(): void {
+      const len: number = (this.summary.count.replace(/\./, '')).length + (this.summary.suffix ? 1 : 0);
+      this.containerWidth = this.containerEl.nativeElement.offsetWidth;
+      this.containerHeight = this.containerEl.nativeElement.offsetHeight;
+      this.containerFontSize = this.containerHeight;
+
+      switch (len) {
+        case 1:
+          this.numberFontSize = this.containerHeight - 40;
+          break;
+        case 2:
+          this.numberFontSize = this.containerHeight / 1.5;
+          break;
+        case 3:
+          this.numberFontSize = this.containerHeight / 1.75;
+          break;
+        case 4:
+          this.numberFontSize = this.containerHeight / 2;
+          break;
+        case 5:
+          this.numberFontSize = this.containerHeight / 2.25;
+          break;
+        case 6:
+          this.numberFontSize = this.containerHeight / 2.5;
+          break;
+      }
+
+      if (/\./.test(this.summary.count)) {
+        this.numberFontSize -= 20;
+      }
     }
 
     /*
@@ -62,7 +101,7 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
      */
     ngOnInit() {
       this.updateCount(this.config);
-      this.setFontSize();
+      this.reflow();
     }
 
     onCountSelect( event ) {
@@ -82,31 +121,6 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
         suffix: '',
         origCount: ''
       });
-    }
-
-    /*
-     *
-     */
-    private setFontSize = (): void => {
-      const len = `${this.summary.count}${this.summary.suffix}`.length;
-      switch (true) {
-        case len < 3:
-          this.fontSize = '200px';
-          break;
-        case len === 3:
-          this.fontSize = '180px';
-          break;
-        case len === 4:
-          this.fontSize = '170px';
-          break;
-        case len === 4:
-          this.fontSize = '105px';
-          break;
-        case len === 5:
-          this.fontSize = '120px';
-          break;
-
-      }
     }
 
     /*
