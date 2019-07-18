@@ -69,7 +69,7 @@ al-dashboard-widget {
 /*
 * Global dark theme toggle
 */
-.darkMode {
+.darkMode, .darkModeBlue {
   .dashboard-widget {
     background-color: #3C3C3C !important;
   
@@ -133,6 +133,9 @@ al-dashboard-widget {
     }
     li span {
       color: black !important;
+    }
+    .ui-slidemenu-backward span {
+      color:  al-color($al-gray, 700) !important;
     }
   }
 
@@ -199,5 +202,40 @@ al-app-header {
     span {
       color:  al-color($al-gray, 700) !important;
     }
+  }
+}
+/*
+* SAMPLE BLUE COLOURING 
+*/
+.darkModeBlue {
+  .healthy rect, path.healthy {
+    fill: al-color($al-blue, 500);
+    stroke: al-color($al-green, 500);
+  }
+  .unhealthy rect, path.unhealthy {
+    fill: al-color($al-gray, 500);
+    stroke: al-color($al-gray, 500);
+  }
+  .high rect, path.high, rect.high {
+    fill: al-color($al-blue, 800);
+    stroke: none;
+  }
+  .medium rect, path.medium, rect.medium {
+    fill: al-color($al-smokeBlue, 700);
+    stroke: none;
+  }
+  .low rect, path.low, rect.low {
+    fill: al-color($al-blue, 300);
+    stroke: none;
+  }
+  .info rect, path.info, rect.info {
+    fill: al-color($al-blue, 100);
+    stroke: none;
+  }
+  .scanned rect, path.scanned, .scanned {
+    fill: al-color($al-smokeBlue, 500);
+  }
+  .not-scanned rect, path.not-scanned, .not-scanned {
+    fill: al-color($al-gray, 500);
   }
 }
