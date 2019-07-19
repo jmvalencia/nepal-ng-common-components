@@ -6,6 +6,7 @@
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
+
 @Component({
     selector: 'al-highchart-bubble',
     templateUrl: './al-highchart-bubble.component.html',
@@ -44,7 +45,19 @@ export class AlHighchartBubbleComponent implements OnChanges {
                 series: {
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b> <br> {point.value}',
+                        useHTML: true,
+                        // tslint:disable-next-line
+                        formatter: function() {
+                            let count: string;
+                            if ( this.point.value > 1000 ) {
+                                count = this.point.value > 1000000 ?
+                                        Highcharts.numberFormat( this.point.value / 1000000, 1 ) + 'M' :
+                                        Highcharts.numberFormat( this.point.value / 1000, 1 ) + 'K';
+                            } else {
+                                count = Highcharts.numberFormat( this.point.value, 0 );
+                            }
+                            return `<b>${this.point.name}</b><br>${count}`;
+                        },
                         style: {
                             color: 'white',
                             textOutline: 'none',
