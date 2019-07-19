@@ -72,8 +72,8 @@ al-dashboard-widget {
 .darkMode, .darkModeBlue {
   .dashboard-widget {
     background-color: #3C3C3C !important;
-  
-    h1, a, .count-container, th, td {
+
+    h1, a, .count-container, th, td, tr {
       background-color: #3C3C3C !important;
       color: al-color($al-gray, 50) !important;
 
@@ -90,6 +90,12 @@ al-dashboard-widget {
         &.Low {
             color: al-color($al-gray, 300);
         }
+      }
+
+    }
+    tr, td {
+      &:hover {
+        background-color: al-color($al-gray, 400) !important;
       }
     }
     .highcharts-pie-series .highcharts-point {
@@ -148,7 +154,7 @@ al-dashboard-widget {
   }
 
   al-app-header  {
-    .ui-menubar.ui-widget.ui-widget-content, 
+    .ui-menubar.ui-widget.ui-widget-content,
     a.ui-menuitem-link, span.ui-submenu-icon, :hover.ui-menubar.ui-widget.ui-widget-content,
     :hover a.ui-menuitem-link, :hover span.ui-submenu-icon {
       background-color: al-color($al-gray, 900) !important;
