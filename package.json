@@ -18,7 +18,9 @@
     "npm_pack": "cd dist/nepal-ng-common-components && npm pack",
     "package": "npm run sync-versions && npm run build && npm run copy-files && npm run npm_pack",
     "postinstall": "./scripts/installHooks.sh",
-    "sync-versions": "./scripts/syncVersions.sh"
+    "sync-versions": "./scripts/syncVersions.sh",
+    "build:stats": "ng build --stats-json",
+    "analyze": "node node_modules/.bin/webpack-bundle-analyzer dist/stats.json"
   },
   "author": {
     "name": "Robert Parker",
@@ -95,6 +97,7 @@
     "tsickle": ">=0.34.0",
     "tslib": "^1.9.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "~3.2.2",
+    "webpack-bundle-analyzer": "^3.3.2"
   }
 }
