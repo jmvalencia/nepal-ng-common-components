@@ -14,7 +14,10 @@ import * as Highcharts from 'highcharts';
 })
 export class AlHighchartBubbleComponent implements OnChanges {
     @ViewChild('chart') chart: ElementRef;
+    @ViewChild('chartContainer') chartContainer: ElementRef;
 
+    public containerWidth: number;
+    public containerHeight: number;
     public bubbleChart: any;
     /**
      * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
@@ -22,11 +25,20 @@ export class AlHighchartBubbleComponent implements OnChanges {
      */
     @Input() config: any;
 
+    /*
+     *
+     */
+    private reflow(): void {
+      this.containerWidth = this.chartContainer.nativeElement.offsetWidth;
+      this.containerHeight = this.chartContainer.nativeElement.offsetHeight;
+    }
+
     private populateConfig = (): void => {
         this.bubbleChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'packedbubble',
-                height: '75%',
+                width: this.containerWidth,
+                height: this.containerHeight,
             },
             legend: {
                 enabled: false
@@ -98,6 +110,7 @@ export class AlHighchartBubbleComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        this.reflow();
         if (this.config) {
             if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
               this.populateConfig();
