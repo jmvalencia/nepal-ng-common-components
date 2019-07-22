@@ -13,89 +13,112 @@ import * as Highcharts from 'highcharts';
 })
 export class AlHighchartSemiCircleComponent implements OnChanges {
 
-    public semiCircle: any;
-    @ViewChild('semiCircle') semiCircleEl: ElementRef;
 
-    /**
-     * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
-     * an interface
-     */
-    @Input() config: any;
+  public containerWidth: number;
+  public containerHeight: number;
 
-    /*
-     *
-     */
-    private populateConfig = (): void => {
-      this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: 0,
-          plotShadow: false,
-          styledMode: true
-        },
-        credits: {
-          enabled: false
-        },
-        title: {
-          text: this.config.title || ''
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
-        },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              enabled: true,
-              softConnector: false,
-              distance: 15,
-              // tslint:disable-next-line
-              formatter: function() {
-                return this.point.y === 0 ? null : String(this.point.y);
-              }
-            },
-            showInLegend: true,
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
+  public semiCircle: any;
+  @ViewChild('semiCircle') semiCircleEl: ElementRef;
+  @ViewChild('semiCircleContainer') semiCircleContainer: ElementRef;
+
+  /**
+   * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
+   * an interface
+   */
+  @Input() config: any;
+
+  /*
+   *
+   */
+  private populateConfig = (): void => {
+    this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        styledMode: true,
+        width: this.containerWidth,
+        height: this.containerHeight,
+        marginLeft: 50,
+        marginRight: 50,
+        marginBottom: 0,
+        spacingLeft: 0,
+        spacingRight: 0,
+        spacingBottom: 40,
+        spacingTop: 10
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: this.config.title || ''
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            softConnector: false,
+            distance: 15,
+            // tslint:disable-next-line
+            formatter: function() {
+              return this.point.y === 0 ? null : String(this.point.y);
+            }
           },
-          series: {
-            events: {
-              // tslint:disable-next-line
-              click: function(event) {
-                event.target.dispatchEvent(new CustomEvent('segment-clicked', {
-                  detail: {
-                    segment: event.point
-                  },
-                  bubbles: true
-                }));
-              }
+          showInLegend: true,
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '65%'],
+          size: '120%'
+        },
+        series: {
+          events: {
+            // tslint:disable-next-line
+            click: function(event) {
+              event.target.dispatchEvent(new CustomEvent('segment-clicked', {
+                detail: {
+                  segment: event.point
+                },
+                bubbles: true
+              }));
             }
           }
-        },
-        series: this.config.series || []
-      });
-    }
-
-    /*
-     *
-     */
-    private updateSeries = (): void => {
-      this.semiCircle.update({
-        series: this.config.series
-      });
-    }
-
-    /*
-     *
-     */
-    ngOnChanges(changes: SimpleChanges): void {
-      if (this.config) {
-        if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
-          this.populateConfig();
-        } else {
-          this.updateSeries();
         }
+      },
+      series: this.config.series || []
+    });
+  }
+
+  /*
+   *
+   */
+  private updateSeries = (): void => {
+    this.semiCircle.update({
+      series: this.config.series
+    });
+  }
+
+  /*
+   *
+   */
+  private reflow(): void {
+    this.containerWidth = this.semiCircleContainer.nativeElement.offsetWidth;
+    this.containerHeight = this.semiCircleContainer.nativeElement.offsetHeight;
+  }
+
+  /*
+   *
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    this.reflow();
+    if (this.config) {
+      if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
+        this.populateConfig();
+      } else {
+        this.updateSeries();
       }
     }
+  }
 }
