@@ -239,3 +239,7 @@ al-app-header {
     fill: al-color($al-gray, 500);
   }
 }
+
+.highcharts-tooltip-box {
+  stroke: al-color($al-gray, 500);
+}
