@@ -39,7 +39,11 @@ export class AlHighchartBubbleComponent implements OnChanges {
             },
             tooltip: {
                 useHTML: true,
-                pointFormat: '{point.value}'
+                pointFormat: '{point.value}',
+                headerFormat: '',
+                style: {
+                    animation: false,
+                }
             },
             plotOptions: {
                 series: {
