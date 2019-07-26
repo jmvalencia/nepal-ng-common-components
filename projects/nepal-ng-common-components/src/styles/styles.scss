@@ -221,6 +221,10 @@ al-app-header {
     fill: al-color($al-gray, 500);
     stroke: al-color($al-gray, 500);
   }
+  .critical rect, path.critical, rect.critical {
+    fill: al-color($al-blue, 500);
+    stroke: none;
+  }
   .high rect, path.high, rect.high {
     fill: al-color($al-blue, 800);
     stroke: none;
