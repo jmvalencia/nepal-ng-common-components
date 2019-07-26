@@ -61,7 +61,7 @@ describe('ALAppHeaderComponent Test Suite', () => {
             by: 'blaa'
           }
         },
-        session: new AlSessionInstance()
+       // session: new AlSessionInstance()
 
       };
       component.onSessionStart(sessionStartedEvent);
