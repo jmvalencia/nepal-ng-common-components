@@ -35,6 +35,7 @@ export class AlHighchartColumnComponent implements OnChanges {
             },
             tooltip: {
                 headerFormat: '',
+                pointFormat: '{point.y}',
             },
             xAxis: {
                 categories: this.config.dateOptions,
