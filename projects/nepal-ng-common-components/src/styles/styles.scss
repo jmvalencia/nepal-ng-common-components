@@ -145,6 +145,9 @@ al-dashboard-widget {
     li span {
       color: black !important;
     }
+    .ui-state-highlight span {
+      color: white !important;
+    }
     .ui-slidemenu-backward span {
       color:  al-color($al-gray, 700) !important;
     }
