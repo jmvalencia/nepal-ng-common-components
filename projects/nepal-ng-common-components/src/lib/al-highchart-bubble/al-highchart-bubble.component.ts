@@ -94,7 +94,7 @@ export class AlHighchartBubbleComponent implements OnChanges {
                 },
                 packedbubble: {
                     useSimulation: false,
-                    minSize: '105px',
+                    minSize: '115px',
                     maxSize: '100%',
                     draggable: false,
                 }
