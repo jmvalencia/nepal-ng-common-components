@@ -66,7 +66,19 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
             distance: 15,
             // tslint:disable-next-line
             formatter: function() {
-              return this.point.y === 0 ? null : String(this.point.y);
+              if ( this.point.y === 0 ) {
+                return null;
+              } else {
+                let count: string;
+                if ( this.point.y > 1000 ) {
+                  count = this.point.y > 1000000 ?
+                    Highcharts.numberFormat( this.point.y / 1000000, 1 ) + 'M' :
+                    Highcharts.numberFormat( this.point.y / 1000, 1 ) + 'K';
+                } else {
+                  count = String(this.point.y);
+                }
+                return count;
+              }
             }
           },
           showInLegend: true,
