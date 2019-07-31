@@ -2,18 +2,20 @@
 @import "~@al/design/styles/utility";
 
 // TODO - below should live in @al/design (core theme style)??x
-html, body{
+html,
+body {
   font-family: 'Open Sans', Arial, sans-serif;
-  font-weight:normal;
-  font-size:14px;
+  font-weight: normal;
+  font-size: 14px;
   margin: 0;
   color: al-color($al-gray, 500);
 
-  .ui-dropdown  {
-           background-image: linear-gradient(to bottom, #57a0d7, #57a0d7),
-           linear-gradient(to bottom, #748090, #748090);
-      &.ui-inputtext {
-        font: 1em 'Open Sans', Arial, sans-serif;
+  .ui-dropdown {
+    background-image: linear-gradient(to bottom, #57a0d7, #57a0d7),
+      linear-gradient(to bottom, #748090, #748090);
+
+    &.ui-inputtext {
+      font: 1em 'Open Sans', Arial, sans-serif;
     }
   }
 }
@@ -23,47 +25,77 @@ html, body{
 * Global colours for product protection coverage
 */
 
-.enterprise rect,  path.enterprise, .enterprise {
+.enterprise rect,
+path.enterprise,
+.enterprise {
   fill: al-color($al-enterprise, 500);
 }
-.professional rect, path.professional, .professional {
+
+.professional rect,
+path.professional,
+.professional {
   fill: al-color($al-professional, 500);
 }
-.essential rect, path.essential, .essential {
+
+.essential rect,
+path.essential,
+.essential {
   fill: al-color($al-essentials, 500);
 }
-.unprotected rect, path.unprotected, .unprotected {
+
+.unprotected rect,
+path.unprotected,
+.unprotected {
   fill: al-color($al-gray, 50);
 }
+
 al-dashboard-widget {
   tspan.highcharts-text-outline {
     stroke: transparent;
   }
+
   g.highcharts-label {
     font-size: 14px;
   }
 }
+
 /*
 * Global colours for severity level
 */
-.critical rect, path.critical, rect.critical,
-.high rect, path.high, rect.high {
+.critical rect,
+path.critical,
+rect.critical,
+.high rect,
+path.high,
+rect.high {
   fill: al-color($al-red, 500);
   stroke: none;
 }
-.medium rect, path.medium, rect.medium {
+
+.medium rect,
+path.medium,
+rect.medium {
   fill: al-color($al-orange, 500);
   stroke: none;
 }
-.low rect, path.low, rect.low {
+
+.low rect,
+path.low,
+rect.low {
   fill: al-color($al-yellow, 500);
   stroke: none;
 }
-.info rect, path.info, rect.info {
+
+.info rect,
+path.info,
+rect.info {
   fill: al-color($al-gray, 300);
   stroke: none;
 }
-.info2 rect, path.info2, rect.info2 {
+
+.info2 rect,
+path.info2,
+rect.info2 {
   fill: al-color($al-gray, 500);
   stroke: none;
 }
@@ -71,11 +103,14 @@ al-dashboard-widget {
 /*
 * Global Health Status
 */
-.healthy rect, path.healthy {
+.healthy rect,
+path.healthy {
   fill: al-color($al-green, 500);
   stroke: al-color($al-green, 500);
 }
-.unhealthy rect, path.unhealthy {
+
+.unhealthy rect,
+path.unhealthy {
   fill: al-color($al-red, 500);
   stroke: al-color($al-red, 500);
 }
@@ -83,11 +118,17 @@ al-dashboard-widget {
 /*
 * Global dark theme toggle
 */
-.darkMode, .darkModeBlue {
+.darkMode,
+.darkModeBlue {
   .dashboard-widget {
     background-color: #3C3C3C !important;
 
-    h1, a, .count-container, th, td, tr {
+    h1,
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
       background-color: #3C3C3C !important;
       color: al-color($al-gray, 50) !important;
 
@@ -95,23 +136,29 @@ al-dashboard-widget {
         &.Critical {
           color: al-color($al-red, 600);
         }
+
         &.High {
-            color: al-color($al-orange, 500);
+          color: al-color($al-orange, 500);
         }
+
         &.Medium {
-            color: al-color($al-yellow, 500);
+          color: al-color($al-yellow, 500);
         }
+
         &.Low {
-            color: al-color($al-gray, 300);
+          color: al-color($al-gray, 300);
         }
       }
 
     }
-    tr, td {
+
+    tr,
+    td {
       &:hover {
         background-color: al-color($al-gray, 400) !important;
       }
     }
+
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
     }
@@ -122,12 +169,15 @@ al-dashboard-widget {
       color: al-color($al-gray, 50) !important;
     }
   }
+
   .highcharts-background {
     fill: #3C3C3C;
   }
+
   .highcharts-grid-line {
     stroke: #3C3C3C
   }
+
   .highcharts-tooltip text {
     fill: #3C3C3C;
   }
@@ -136,29 +186,39 @@ al-dashboard-widget {
     text {
       fill: #CBCBCB;
     }
+
     g text {
       fill: white;
     }
+
     rect.highcharts-point {
       stroke: #3C3C3C;
     }
   }
+
   .dropdowns {
-    label, button, span {
+
+    label,
+    button,
+    span {
       color: al-color($al-gray, 50) !important;
 
-      &.ui-menuitem-icon, &.ui-menuitem-text {
-        color:  al-color($al-gray, 700) !important;
+      &.ui-menuitem-icon,
+      &.ui-menuitem-text {
+        color: al-color($al-gray, 700) !important;
       }
     }
+
     li span {
       color: black !important;
     }
+
     .ui-state-highlight span {
       color: white !important;
     }
+
     .ui-slidemenu-backward span {
-      color:  al-color($al-gray, 700) !important;
+      color: al-color($al-gray, 700) !important;
     }
   }
 
@@ -166,23 +226,31 @@ al-dashboard-widget {
     background-color: al-color($al-gray, 700) !important;
     color: al-color($al-gray, 50) !important;
   }
+
   .user-info-summary {
     background-color: al-color($al-gray, 900) !important;
   }
 
-  al-app-header  {
+  al-app-header {
+
     .ui-menubar.ui-widget.ui-widget-content,
-    a.ui-menuitem-link, span.ui-submenu-icon, :hover.ui-menubar.ui-widget.ui-widget-content,
-    :hover a.ui-menuitem-link, :hover span.ui-submenu-icon {
+    a.ui-menuitem-link,
+    span.ui-submenu-icon,
+    :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link,
+    :hover span.ui-submenu-icon {
       background-color: al-color($al-gray, 900) !important;
     }
+
     ul.ui-widget-content a.ui-menuitem-link {
       background-color: white !important;
+
       span {
-        color:  al-color($al-gray, 700) !important;
+        color: al-color($al-gray, 700) !important;
       }
     }
   }
+
   svg {
     path.zero-state {
       fill: al-color($al-gray, 200);
@@ -196,12 +264,19 @@ al-dashboard-widget {
 path.highcharts-grid-line {
   stroke: transparent;
 }
-.scanned rect, path.scanned, .scanned {
+
+.scanned rect,
+path.scanned,
+.scanned {
   fill: al-color($al-green, 500);
 }
-.not-scanned rect, path.not-scanned, .not-scanned {
+
+.not-scanned rect,
+path.not-scanned,
+.not-scanned {
   fill: al-color($al-gray, 500);
 }
+
 svg {
   path.zero-state {
     fill: al-color($al-gray, 50);
@@ -217,339 +292,403 @@ al-highchart-treemap {
 al-app-header {
   ul.ui-widget-content a.ui-menuitem-link {
     span {
-      color:  al-color($al-gray, 700) !important;
+      color: al-color($al-gray, 700) !important;
     }
   }
 }
+
 /*
 * SAMPLE BLUE COLOURING 
 */
-.blueTheme {
-  
-  .dashboard-widget {
+
+.dashboard-widget {
+  background-color: #2A3849 !important;
+
+  header {
+    border-bottom: 1px solid #566578 !important;
+  }
+
+  footer {
+    border-top: 1px solid #566578 !important;
+  }
+
+  h1 {
     background-color: #2A3849 !important;
-
-    header {
-      border-bottom: 1px solid #566578 !important;
-    }
-
-    footer {
-      border-top: 1px solid #566578 !important;
-    }
-
-    h1 {
-      background-color: #2A3849 !important;
-    }
-    a,
-    .count-container,
-    th,
-    td,
-    tr {
-      background-color: #2A3849 !important;
-      color: al-color($al-gray, 50) !important;
-
-      &.status {
-        &.Critical {
-          color: #F04349;
-        }
-
-        &.High {
-          color: #C84049;
-        }
-
-        &.Medium {
-          color: #A13E48;
-        }
-
-        &.Low {
-          color: #793C49;
-        }
-      }
-
-    }
-
-    tr,
-    td {
-      &:hover {
-        background-color: #6883A4 !important;
-      }
-    }
-
-    .highcharts-pie-series .highcharts-point {
-      stroke: #3C3C3C;
-    }
   }
 
-  /*
-  * Global Health Status
-  */
-  .healthy rect, path.healthy {
-    fill: #1592E6;
-    stroke: #1592E6;
-  }
-  .unhealthy rect, path.unhealthy {
-    fill: #566578;
-    stroke: #566578;
-  }
-
-  /*
-  * Global colours for severity level
-  */
-  .critical rect, path.critical, rect.critical
-  {
-    fill: #F04349;
-    stroke: none;
-  }
-  .high rect, path.high, rect.high {
-    fill: #F04349;
-    stroke: none;
-  }
-  .medium rect, path.medium, rect.medium {
-    fill: #C84049;
-    stroke: none;
-  }
-  .low rect, path.low, rect.low {
-    fill: #A13E48;
-    stroke: none;
-  }
-  .info rect, path.info, rect.info {
-    fill: #793C49;
-    stroke: none;
-  }
-  .info2 rect, path.info2, rect.info2 {
-    fill: #5C3A49;
-    stroke: none;
-  }
-  .scanned rect, path.scanned, .scanned {
-    fill: #1592E6;
-  }
-  .not-scanned rect, path.not-scanned, .not-scanned {
-    fill: #566578;
-  }
-
-  .nav-header-bar {
+  a,
+  .count-container,
+  th,
+  td,
+  tr {
     background-color: #2A3849 !important;
     color: al-color($al-gray, 50) !important;
-  }
-  .user-info-summary {
-    background-color: #1E2B38 !important;
-  }
 
-  al-app-header {
-
-    .ui-menubar.ui-widget.ui-widget-content,
-    a.ui-menuitem-link,
-    span.ui-submenu-icon,
-    :hover.ui-menubar.ui-widget.ui-widget-content,
-    :hover a.ui-menuitem-link,
-    :hover span.ui-submenu-icon {
-      background-color: #1E2B38 !important;
-    }
-
-    ul.ui-widget-content a.ui-menuitem-link {
-      background-color: white !important;
-
-      span {
-        color: #2A3849 !important;
-      }
-    }
-  }
-  .highcharts-background {
-    fill: #2A3849;
-  }
-  svg {
-    path.zero-state {
-      fill: #6883A4;
-    }
-  }
-  al-count-summary {
-    .count-container span {
-      color: #6883A4 !important;
-    }
-  }
-  .ui-button {
-    color: #ffffff;
-    background-color: #536984;
-
-    &:enabled:hover {
-      background-color: #3F546E;
-    }
-
-    &:enabled:not(:focus):hover {
-      background-color: #3F546E;
-    }
-
-    &:enabled:focus {
-      background-color: lighten(#536984, 10%);
-    }
-
-    &:enabled:focus {
-      background-color: #3F546E;
-    }
-  }
-
-
-  .dashboard-widget {
-    background-color: #2A3849 !important;
-
-    header {
-      border-bottom: 1px solid #566578 !important;
-    }
-
-    footer {
-      border-top: 1px solid #566578 !important;
-    }
-
-    h1 {
-      background-color: #2A3849 !important;
-    }
-    a,
-    .count-container,
-    th,
-    td,
-    tr {
-      background-color: #2A3849 !important;
-      color: al-color($al-gray, 50) !important;
-
-      &.status {
-        &.Critical {
-          color: #F04349;
-        }
-
-        &.High {
-          color: #C84049;
-        }
-
-        &.Medium {
-          color: #A13E48;
-        }
-
-        &.Low {
-          color: #793C49;
-        }
+    &.status {
+      &.Critical {
+        color: #F04349;
       }
 
-    }
+      &.High {
+        color: #C84049;
+      }
 
-    tr,
-    td {
-      &:hover {
-        background-color: #6883A4 !important;
+      &.Medium {
+        color: #A13E48;
+      }
+
+      &.Low {
+        color: #793C49;
       }
     }
 
-    .highcharts-pie-series .highcharts-point {
-      stroke: #3C3C3C;
+  }
+
+  tr,
+  td {
+    &:hover {
+      background-color: #6883A4 !important;
     }
   }
 
-  /*
-  * Global Health Status
-  */
-  .healthy rect, path.healthy {
-    fill: #1592E6;
-    stroke: #1592E6;
+  .highcharts-pie-series .highcharts-point {
+    stroke: #3C3C3C;
   }
-  .unhealthy rect, path.unhealthy {
-    fill: #566578;
-    stroke: #566578;
-  }
-
-  /*
-  * Global colours for severity level
-  */
-  .critical rect, path.critical, rect.critical
-  {
-    fill: #F04349;
-    stroke: none;
-  }
-  .high rect, path.high, rect.high {
-    fill: #F04349;
-    stroke: none;
-  }
-  .medium rect, path.medium, rect.medium {
-    fill: #C84049;
-    stroke: none;
-  }
-  .low rect, path.low, rect.low {
-    fill: #A13E48;
-    stroke: none;
-  }
-  .info rect, path.info, rect.info {
-    fill: #793C49;
-    stroke: none;
-  }
-  .info2 rect, path.info2, rect.info2 {
-    fill: #5C3A49;
-    stroke: none;
-  }
-  .scanned rect, path.scanned, .scanned {
-    fill: #1592E6;
-  }
-  .not-scanned rect, path.not-scanned, .not-scanned {
-    fill: #566578;
-  }
-
-  .nav-header-bar {
-    background-color: #2A3849 !important;
-    color: al-color($al-gray, 50) !important;
-  }
-  .user-info-summary {
-    background-color: #1E2B38 !important;
-  }
-
-  al-app-header {
-
-    .ui-menubar.ui-widget.ui-widget-content,
-    a.ui-menuitem-link,
-    span.ui-submenu-icon,
-    :hover.ui-menubar.ui-widget.ui-widget-content,
-    :hover a.ui-menuitem-link,
-    :hover span.ui-submenu-icon {
-      background-color: #1E2B38 !important;
-    }
-
-    ul.ui-widget-content a.ui-menuitem-link {
-      background-color: white !important;
-
-      span {
-        color: #2A3849 !important;
-      }
-    }
-  }
-  .highcharts-background {
-    fill: #2A3849;
-  }
-  svg {
-    path.zero-state {
-      fill: #6883A4;
-    }
-  }
-  al-count-summary {
-    .count-container span {
-      color: #6883A4 !important;
-    }
-  }
-  .ui-button {
-    color: #ffffff;
-    background-color: #536984;
-
-    &:enabled:hover {
-      background-color: #3F546E;
-    }
-
-    &:enabled:not(:focus):hover {
-      background-color: #3F546E;
-    }
-
-    &:enabled:focus {
-      background-color: lighten(#536984, 10%);
-    }
-
-    &:enabled:focus {
-      background-color: #3F546E;
-    }
 }
+
+/*
+  * Global Health Status
+  */
+.healthy rect,
+path.healthy {
+  fill: #1592E6;
+  stroke: #1592E6;
+}
+
+.unhealthy rect,
+path.unhealthy {
+  fill: #566578;
+  stroke: #566578;
+}
+
+/*
+  * Global colours for severity level
+  */
+.critical rect,
+path.critical,
+rect.critical {
+  fill: #F04349;
+  stroke: none;
+}
+
+.high rect,
+path.high,
+rect.high {
+  fill: #F04349;
+  stroke: none;
+}
+
+.medium rect,
+path.medium,
+rect.medium {
+  fill: #C84049;
+  stroke: none;
+}
+
+.low rect,
+path.low,
+rect.low {
+  fill: #A13E48;
+  stroke: none;
+}
+
+.info rect,
+path.info,
+rect.info {
+  fill: #793C49;
+  stroke: none;
+}
+
+.info2 rect,
+path.info2,
+rect.info2 {
+  fill: #5C3A49;
+  stroke: none;
+}
+
+.scanned rect,
+path.scanned,
+.scanned {
+  fill: #1592E6;
+}
+
+.not-scanned rect,
+path.not-scanned,
+.not-scanned {
+  fill: #566578;
+}
+
+.nav-header-bar {
+  background-color: #2A3849 !important;
+  color: al-color($al-gray, 50) !important;
+}
+
+.user-info-summary {
+  background-color: #1E2B38 !important;
+}
+
+al-app-header {
+
+  .ui-menubar.ui-widget.ui-widget-content,
+  a.ui-menuitem-link,
+  span.ui-submenu-icon,
+  :hover.ui-menubar.ui-widget.ui-widget-content,
+  :hover a.ui-menuitem-link,
+  :hover span.ui-submenu-icon {
+    background-color: #1E2B38 !important;
+  }
+
+  ul.ui-widget-content a.ui-menuitem-link {
+    background-color: white !important;
+
+    span {
+      color: #2A3849 !important;
+    }
+  }
+}
+
+.highcharts-background {
+  fill: #2A3849;
+}
+
+svg {
+  path.zero-state {
+    fill: #6883A4;
+  }
+}
+
+al-count-summary {
+  .count-container span {
+    color: #6883A4 !important;
+  }
+}
+
+.ui-button {
+  color: #ffffff;
+  background-color: #536984;
+
+  &:enabled:hover {
+    background-color: #3F546E;
+  }
+
+  &:enabled:not(:focus):hover {
+    background-color: #3F546E;
+  }
+
+  &:enabled:focus {
+    background-color: lighten(#536984, 10%);
+  }
+
+  &:enabled:focus {
+    background-color: #3F546E;
+  }
+}
+
+
+.dashboard-widget {
+  background-color: #2A3849 !important;
+
+  header {
+    border-bottom: 1px solid #566578 !important;
+  }
+
+  footer {
+    border-top: 1px solid #566578 !important;
+  }
+
+  h1 {
+    background-color: #2A3849 !important;
+  }
+
+  a,
+  .count-container,
+  th,
+  td,
+  tr {
+    background-color: #2A3849 !important;
+    color: al-color($al-gray, 50) !important;
+
+    &.status {
+      &.Critical {
+        color: #F04349;
+      }
+
+      &.High {
+        color: #C84049;
+      }
+
+      &.Medium {
+        color: #A13E48;
+      }
+
+      &.Low {
+        color: #793C49;
+      }
+    }
+
+  }
+
+  tr,
+  td {
+    &:hover {
+      background-color: #6883A4 !important;
+    }
+  }
+
+  .highcharts-pie-series .highcharts-point {
+    stroke: #3C3C3C;
+  }
+}
+
+/*
+  * Global Health Status
+  */
+.healthy rect,
+path.healthy {
+  fill: #1592E6;
+  stroke: #1592E6;
+}
+
+.unhealthy rect,
+path.unhealthy {
+  fill: #566578;
+  stroke: #566578;
+}
+
+/*
+  * Global colours for severity level
+  */
+.critical rect,
+path.critical,
+rect.critical {
+  fill: #F04349;
+  stroke: none;
+}
+
+.high rect,
+path.high,
+rect.high {
+  fill: #F04349;
+  stroke: none;
+}
+
+.medium rect,
+path.medium,
+rect.medium {
+  fill: #C84049;
+  stroke: none;
+}
+
+.low rect,
+path.low,
+rect.low {
+  fill: #A13E48;
+  stroke: none;
+}
+
+.info rect,
+path.info,
+rect.info {
+  fill: #793C49;
+  stroke: none;
+}
+
+.info2 rect,
+path.info2,
+rect.info2 {
+  fill: #5C3A49;
+  stroke: none;
+}
+
+.scanned rect,
+path.scanned,
+.scanned {
+  fill: #1592E6;
+}
+
+.not-scanned rect,
+path.not-scanned,
+.not-scanned {
+  fill: #566578;
+}
+
+.nav-header-bar {
+  background-color: #2A3849 !important;
+  color: al-color($al-gray, 50) !important;
+}
+
+.user-info-summary {
+  background-color: #1E2B38 !important;
+}
+
+al-app-header {
+
+  .ui-menubar.ui-widget.ui-widget-content,
+  a.ui-menuitem-link,
+  span.ui-submenu-icon,
+  :hover.ui-menubar.ui-widget.ui-widget-content,
+  :hover a.ui-menuitem-link,
+  :hover span.ui-submenu-icon {
+    background-color: #1E2B38 !important;
+  }
+
+  ul.ui-widget-content a.ui-menuitem-link {
+    background-color: white !important;
+
+    span {
+      color: #2A3849 !important;
+    }
+  }
+}
+
+.highcharts-background {
+  fill: #2A3849;
+}
+
+svg {
+  path.zero-state {
+    fill: #6883A4;
+  }
+}
+
+al-count-summary {
+  .count-container span {
+    color: #6883A4 !important;
+  }
+}
+
+.ui-button {
+  color: #ffffff;
+  background-color: #536984;
+
+  &:enabled:hover {
+    background-color: #3F546E;
+  }
+
+  &:enabled:not(:focus):hover {
+    background-color: #3F546E;
+  }
+
+  &:enabled:focus {
+    background-color: lighten(#536984, 10%);
+  }
+
+  &:enabled:focus {
+    background-color: #3F546E;
+  }
+}
+
+
 
 .highcharts-tooltip-box {
   stroke: white;
