@@ -8,7 +8,16 @@ html, body{
   font-size:14px;
   margin: 0;
   color: al-color($al-gray, 500);
+
+  .ui-dropdown  {
+           background-image: linear-gradient(to bottom, #57a0d7, #57a0d7),
+           linear-gradient(to bottom, #748090, #748090);
+      &.ui-inputtext {
+        font: 1em 'Open Sans', Arial, sans-serif;
+    }
+  }
 }
+
 
 /*
 * Global colours for product protection coverage
@@ -216,40 +225,330 @@ al-app-header {
 * SAMPLE BLUE COLOURING 
 */
 .blueTheme {
+  
+  .dashboard-widget {
+    background-color: #2A3849 !important;
+
+    header {
+      border-bottom: 1px solid #566578 !important;
+    }
+
+    footer {
+      border-top: 1px solid #566578 !important;
+    }
+
+    h1 {
+      background-color: #2A3849 !important;
+    }
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
+      background-color: #2A3849 !important;
+      color: al-color($al-gray, 50) !important;
+
+      &.status {
+        &.Critical {
+          color: #F04349;
+        }
+
+        &.High {
+          color: #C84049;
+        }
+
+        &.Medium {
+          color: #A13E48;
+        }
+
+        &.Low {
+          color: #793C49;
+        }
+      }
+
+    }
+
+    tr,
+    td {
+      &:hover {
+        background-color: #6883A4 !important;
+      }
+    }
+
+    .highcharts-pie-series .highcharts-point {
+      stroke: #3C3C3C;
+    }
+  }
+
+  /*
+  * Global Health Status
+  */
   .healthy rect, path.healthy {
-    fill: al-color($al-blue, 500);
-    stroke: al-color($al-green, 500);
+    fill: #1592E6;
+    stroke: #1592E6;
   }
   .unhealthy rect, path.unhealthy {
-    fill: al-color($al-gray, 500);
-    stroke: al-color($al-gray, 500);
+    fill: #566578;
+    stroke: #566578;
   }
-  .critical rect, path.critical, rect.critical {
-    fill: al-color($al-blue, 500);
+
+  /*
+  * Global colours for severity level
+  */
+  .critical rect, path.critical, rect.critical
+  {
+    fill: #F04349;
     stroke: none;
   }
   .high rect, path.high, rect.high {
-    fill: al-color($al-blue, 800);
+    fill: #F04349;
     stroke: none;
   }
   .medium rect, path.medium, rect.medium {
-    fill: al-color($al-smokeBlue, 700);
+    fill: #C84049;
     stroke: none;
   }
   .low rect, path.low, rect.low {
-    fill: al-color($al-blue, 300);
+    fill: #A13E48;
     stroke: none;
   }
   .info rect, path.info, rect.info {
-    fill: al-color($al-blue, 100);
+    fill: #793C49;
+    stroke: none;
+  }
+  .info2 rect, path.info2, rect.info2 {
+    fill: #5C3A49;
     stroke: none;
   }
   .scanned rect, path.scanned, .scanned {
-    fill: al-color($al-smokeBlue, 500);
+    fill: #1592E6;
   }
   .not-scanned rect, path.not-scanned, .not-scanned {
-    fill: al-color($al-gray, 500);
+    fill: #566578;
   }
+
+  .nav-header-bar {
+    background-color: #2A3849 !important;
+    color: al-color($al-gray, 50) !important;
+  }
+  .user-info-summary {
+    background-color: #1E2B38 !important;
+  }
+
+  al-app-header {
+
+    .ui-menubar.ui-widget.ui-widget-content,
+    a.ui-menuitem-link,
+    span.ui-submenu-icon,
+    :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link,
+    :hover span.ui-submenu-icon {
+      background-color: #1E2B38 !important;
+    }
+
+    ul.ui-widget-content a.ui-menuitem-link {
+      background-color: white !important;
+
+      span {
+        color: #2A3849 !important;
+      }
+    }
+  }
+  .highcharts-background {
+    fill: #2A3849;
+  }
+  svg {
+    path.zero-state {
+      fill: #6883A4;
+    }
+  }
+  al-count-summary {
+    .count-container span {
+      color: #6883A4 !important;
+    }
+  }
+  .ui-button {
+    color: #ffffff;
+    background-color: #536984;
+
+    &:enabled:hover {
+      background-color: #3F546E;
+    }
+
+    &:enabled:not(:focus):hover {
+      background-color: #3F546E;
+    }
+
+    &:enabled:focus {
+      background-color: lighten(#536984, 10%);
+    }
+
+    &:enabled:focus {
+      background-color: #3F546E;
+    }
+  }
+
+
+  .dashboard-widget {
+    background-color: #2A3849 !important;
+
+    header {
+      border-bottom: 1px solid #566578 !important;
+    }
+
+    footer {
+      border-top: 1px solid #566578 !important;
+    }
+
+    h1 {
+      background-color: #2A3849 !important;
+    }
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
+      background-color: #2A3849 !important;
+      color: al-color($al-gray, 50) !important;
+
+      &.status {
+        &.Critical {
+          color: #F04349;
+        }
+
+        &.High {
+          color: #C84049;
+        }
+
+        &.Medium {
+          color: #A13E48;
+        }
+
+        &.Low {
+          color: #793C49;
+        }
+      }
+
+    }
+
+    tr,
+    td {
+      &:hover {
+        background-color: #6883A4 !important;
+      }
+    }
+
+    .highcharts-pie-series .highcharts-point {
+      stroke: #3C3C3C;
+    }
+  }
+
+  /*
+  * Global Health Status
+  */
+  .healthy rect, path.healthy {
+    fill: #1592E6;
+    stroke: #1592E6;
+  }
+  .unhealthy rect, path.unhealthy {
+    fill: #566578;
+    stroke: #566578;
+  }
+
+  /*
+  * Global colours for severity level
+  */
+  .critical rect, path.critical, rect.critical
+  {
+    fill: #F04349;
+    stroke: none;
+  }
+  .high rect, path.high, rect.high {
+    fill: #F04349;
+    stroke: none;
+  }
+  .medium rect, path.medium, rect.medium {
+    fill: #C84049;
+    stroke: none;
+  }
+  .low rect, path.low, rect.low {
+    fill: #A13E48;
+    stroke: none;
+  }
+  .info rect, path.info, rect.info {
+    fill: #793C49;
+    stroke: none;
+  }
+  .info2 rect, path.info2, rect.info2 {
+    fill: #5C3A49;
+    stroke: none;
+  }
+  .scanned rect, path.scanned, .scanned {
+    fill: #1592E6;
+  }
+  .not-scanned rect, path.not-scanned, .not-scanned {
+    fill: #566578;
+  }
+
+  .nav-header-bar {
+    background-color: #2A3849 !important;
+    color: al-color($al-gray, 50) !important;
+  }
+  .user-info-summary {
+    background-color: #1E2B38 !important;
+  }
+
+  al-app-header {
+
+    .ui-menubar.ui-widget.ui-widget-content,
+    a.ui-menuitem-link,
+    span.ui-submenu-icon,
+    :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link,
+    :hover span.ui-submenu-icon {
+      background-color: #1E2B38 !important;
+    }
+
+    ul.ui-widget-content a.ui-menuitem-link {
+      background-color: white !important;
+
+      span {
+        color: #2A3849 !important;
+      }
+    }
+  }
+  .highcharts-background {
+    fill: #2A3849;
+  }
+  svg {
+    path.zero-state {
+      fill: #6883A4;
+    }
+  }
+  al-count-summary {
+    .count-container span {
+      color: #6883A4 !important;
+    }
+  }
+  .ui-button {
+    color: #ffffff;
+    background-color: #536984;
+
+    &:enabled:hover {
+      background-color: #3F546E;
+    }
+
+    &:enabled:not(:focus):hover {
+      background-color: #3F546E;
+    }
+
+    &:enabled:focus {
+      background-color: lighten(#536984, 10%);
+    }
+
+    &:enabled:focus {
+      background-color: #3F546E;
+    }
 }
 
 .highcharts-tooltip-box {
