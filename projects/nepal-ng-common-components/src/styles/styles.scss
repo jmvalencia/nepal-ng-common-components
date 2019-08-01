@@ -314,6 +314,7 @@ al-app-header {
     }
 
     h1 {
+      color: al-color($al-gray, 50) !important;
       background-color: #2A3849 !important;
     }
 
@@ -356,7 +357,39 @@ al-app-header {
       stroke: #3C3C3C;
     }
   }
+  svg {
+    g text {
+      fill: al-color($al-gray, 50)
+    }
+    text {
+      fill: al-color($al-gray, 50);
+    }
+  }
 
+  .dropdowns {
+    label,
+    button,
+    span {
+      color: al-color($al-gray, 50) !important;
+
+      &.ui-menuitem-icon,
+      &.ui-menuitem-text {
+        color: al-color($al-gray, 700) !important;
+      }
+    }
+
+    li span {
+      color: al-color($al-gray, 700) !important;
+    }
+
+    .ui-state-highlight span {
+      color: al-color($al-gray, 50) !important;
+    }
+
+    .ui-slidemenu-backward span {
+      color: al-color($al-gray, 700) !important;
+    }
+  }
   /*
   * Global Health Status
   */
