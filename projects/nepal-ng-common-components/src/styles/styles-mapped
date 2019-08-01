@@ -1,0 +1,692 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+
+// TODO - below should live in @al/design (core theme style)??x
+html,
+body {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0;
+  color: al-color($al-gray, 500);
+
+  .ui-dropdown {
+    background-image: linear-gradient(to bottom, al-color($al-smokeBlue, 500), al-color($al-smokeBlue, 500)),
+      linear-gradient(to bottom, al-color($db-slate, 500), al-color($db-slate, 500));
+
+    &.ui-inputtext {
+      font: 1em 'Open Sans', Arial, sans-serif;
+    }
+  }
+}
+
+
+/*
+* Global colours for product protection coverage
+*/
+
+.enterprise rect,
+path.enterprise,
+.enterprise {
+  fill: al-color($al-enterprise, 500);
+}
+
+.professional rect,
+path.professional,
+.professional {
+  fill: al-color($al-professional, 500);
+}
+
+.essential rect,
+path.essential,
+.essential {
+  fill: al-color($al-essentials, 500);
+}
+
+.unprotected rect,
+path.unprotected,
+.unprotected {
+  fill: al-color($al-gray, 50);
+}
+
+al-dashboard-widget {
+  tspan.highcharts-text-outline {
+    stroke: transparent;
+  }
+
+  g.highcharts-label {
+    font-size: 14px;
+  }
+}
+
+/*
+* Global colours for severity level
+*/
+.critical rect,
+path.critical,
+rect.critical,
+.high rect,
+path.high,
+rect.high {
+  fill: al-color($al-red, 500);
+  stroke: none;
+}
+
+.medium rect,
+path.medium,
+rect.medium {
+  fill: al-color($al-orange, 500);
+  stroke: none;
+}
+
+.low rect,
+path.low,
+rect.low {
+  fill: al-color($al-yellow, 500);
+  stroke: none;
+}
+
+.info rect,
+path.info,
+rect.info {
+  fill: al-color($al-gray, 300);
+  stroke: none;
+}
+
+.info2 rect,
+path.info2,
+rect.info2 {
+  fill: al-color($al-gray, 500);
+  stroke: none;
+}
+
+/*
+* Global Health Status
+*/
+.healthy rect,
+path.healthy {
+  fill: al-color($al-green, 500);
+  stroke: al-color($al-green, 500);
+}
+
+.unhealthy rect,
+path.unhealthy {
+  fill: al-color($al-red, 500);
+  stroke: al-color($al-red, 500);
+}
+
+/*
+* Global dark theme toggle
+*/
+.darkMode {
+  .dashboard-widget {
+    background-color: al-color($al-gray, 700) !important;
+
+    h1,
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
+      background-color: al-color($al-gray, 700) !important;
+      color: al-color($al-gray, 50) !important;
+
+      &.status {
+        &.Critical {
+          color: al-color($al-red, 600);
+        }
+
+        &.High {
+          color: al-color($al-orange, 500);
+        }
+
+        &.Medium {
+          color: al-color($al-yellow, 500);
+        }
+
+        &.Low {
+          color: al-color($al-gray, 300);
+        }
+      }
+
+    }
+
+    tr,
+    td {
+      &:hover {
+        background-color: al-color($al-gray, 400) !important;
+      }
+    }
+
+    .highcharts-pie-series .highcharts-point {
+      stroke: al-color($al-gray, 700);
+    }
+  }
+
+  al-count-summary {
+    .count-container span {
+      color: al-color($al-gray, 50) !important;
+    }
+  }
+
+  .highcharts-background {
+    fill: al-color($al-gray, 700);
+  }
+
+  .highcharts-grid-line {
+    stroke: al-color($al-gray, 700);
+  }
+
+  .highcharts-tooltip text {
+    fill: al-color($al-gray, 700);
+  }
+
+  svg {
+    text {
+      fill: al-color($al-gray, 100);
+    }
+
+    g text {
+      fill: white;
+    }
+
+    rect.highcharts-point {
+      stroke: al-color($al-gray, 700);
+    }
+  }
+
+  .dropdowns {
+
+    label,
+    button,
+    span {
+      color: al-color($al-gray, 50) !important;
+
+      &.ui-menuitem-icon,
+      &.ui-menuitem-text {
+        color: al-color($al-gray, 700) !important;
+      }
+    }
+
+    li span {
+      color: black !important;
+    }
+
+    .ui-state-highlight span {
+      color: white !important;
+    }
+
+    .ui-slidemenu-backward span {
+      color: al-color($al-gray, 700) !important;
+    }
+  }
+
+  .nav-header-bar {
+    background-color: al-color($al-gray, 700) !important;
+    color: al-color($al-gray, 50) !important;
+  }
+
+  .user-info-summary {
+    background-color: al-color($al-gray, 900) !important;
+  }
+
+  al-app-header {
+
+    .ui-menubar.ui-widget.ui-widget-content,
+    a.ui-menuitem-link,
+    span.ui-submenu-icon,
+    :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link,
+    :hover span.ui-submenu-icon {
+      background-color: al-color($al-gray, 900) !important;
+    }
+
+    ul.ui-widget-content a.ui-menuitem-link {
+      background-color: white !important;
+
+      span {
+        color: al-color($al-gray, 700) !important;
+      }
+    }
+  }
+
+  svg {
+    path.zero-state {
+      fill: al-color($al-gray, 200);
+    }
+  }
+}
+
+/*
+* Generic chart styling
+*/
+path.highcharts-grid-line {
+  stroke: transparent;
+}
+
+.scanned rect,
+path.scanned,
+.scanned {
+  fill: al-color($al-green, 500);
+}
+
+.not-scanned rect,
+path.not-scanned,
+.not-scanned {
+  fill: al-color($al-gray, 500);
+}
+
+svg {
+  path.zero-state {
+    fill: al-color($al-gray, 50);
+  }
+}
+
+al-highchart-treemap {
+  .highcharts-data-label text {
+    fill: white;
+  }
+}
+
+al-app-header {
+  ul.ui-widget-content a.ui-menuitem-link {
+    span {
+      color: al-color($al-gray, 700) !important;
+    }
+  }
+}
+
+/*
+* SAMPLE BLUE COLOURING 
+*/
+.blueTheme {
+
+    .dashboard-widget {
+    background-color: al-color($db-slate, 700) !important;
+
+    header {
+        border-bottom: 1px solid al-color($db-slate, 400) !important;
+    }
+
+    footer {
+        border-top: 1px solid al-color($db-slate, 400) !important;
+    }
+
+    h1 {
+        background-color: al-color($db-slate, 700) !important;
+    }
+
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
+        background-color: al-color($db-slate, 700) !important;
+        color: al-color($al-gray, 50) !important;
+
+        &.status {
+        &.Critical {
+            color: al-color($db-charts, 400);
+        }
+
+        &.High {
+            color: al-color($db-charts,300);
+        }
+
+        &.Medium {
+            color: al-color($db-charts, 200);
+        }
+
+        &.Low {
+            color: al-color($db-charts, 100);
+        }
+        }
+
+    }
+
+    tr,
+    td {
+        &:hover {
+        background-color: al-color($db-blue, 500) !important;
+        }
+    }
+
+    .highcharts-pie-series .highcharts-point {
+        stroke: al-color($al-gray, 700);
+    }
+    }
+
+    /*
+    * Global Health Status
+    */
+    .healthy rect,
+    path.healthy {
+    fill: al-color($db-blue, 500);
+    stroke: al-color($db-blue, 500);
+    }
+
+    .unhealthy rect,
+    path.unhealthy {
+    fill: al-color($db-slate, 400);
+    stroke: al-color($db-slate, 400);
+    }
+
+    /*
+    * Global colours for severity level
+    */
+    .critical rect,
+    path.critical,
+    rect.critical {
+    fill: al-color($db-charts, 400);
+    stroke: none;
+    }
+
+    .high rect,
+    path.high,
+    rect.high {
+    fill: al-color($db-charts, 400);
+    stroke: none;
+    }
+
+    .medium rect,
+    path.medium,
+    rect.medium {
+    fill: al-color($db-charts, 300);
+    stroke: none;
+    }
+
+    .low rect,
+    path.low,
+    rect.low {
+    fill: al-color($db-charts, 200);
+    stroke: none;
+    }
+
+    .info rect,
+    path.info,
+    rect.info {
+    fill: al-color($db-charts, 100);
+    stroke: none;
+    }
+
+    .info2 rect,
+    path.info2,
+    rect.info2 {
+    fill: al-color($db-charts, 50);
+    stroke: none;
+    }
+
+    .scanned rect,
+    path.scanned,
+    .scanned {
+    fill: al-color($db-blue, 500);
+    }
+
+    .not-scanned rect,
+    path.not-scanned,
+    .not-scanned {
+    fill: al-color($db-slate, 400)
+    }
+
+    .nav-header-bar {
+    background-color: al-color($db-slate, 700) !important;
+    color: al-color($al-gray, 50) !important;
+    }
+
+    .user-info-summary {
+    background-color: al-color($db-slate, 800) !important;
+    }
+
+    al-app-header {
+
+    .ui-menubar.ui-widget.ui-widget-content,
+    a.ui-menuitem-link,
+    span.ui-submenu-icon,
+    :hover.ui-menubar.ui-widget.ui-widget-content,
+    :hover a.ui-menuitem-link,
+    :hover span.ui-submenu-icon {
+        background-color: al-color($db-slate, 800) !important;
+    }
+
+    ul.ui-widget-content a.ui-menuitem-link {
+        background-color: white !important;
+
+        span {
+        color: al-color($db-slate, 700) !important;
+        }
+    }
+    }
+
+    .highcharts-background {
+    fill: al-color($db-slate, 700);
+    }
+
+    svg {
+    path.zero-state {
+        fill: al-color($db-blue, 500);
+    }
+    }
+
+    al-count-summary {
+    .count-container span {
+        color: al-color($db-blue, 500) !important;
+    }
+    }
+
+    .ui-button {
+    color: #ffffff;
+    background-color: al-color($db-blue, 600);
+
+    &:enabled:hover {
+        background-color: al-color($db-blue, 800);
+    }
+
+    &:enabled:not(:focus):hover {
+        background-color: al-color($db-blue, 800);
+    }
+
+    &:enabled:focus {
+        background-color: lighten(al-color($db-blue, 600), 10%);
+    }
+
+    &:enabled:focus {
+        background-color: al-color($db-blue, 800);
+    }
+    }
+
+
+    .dashboard-widget {
+    background-color: al-color($db-slate, 700) !important;
+
+    header {
+        border-bottom: 1px solid al-color($db-slate, 400) !important;
+    }
+
+    footer {
+        border-top: 1px solid al-color($db-slate, 400) !important;
+    }
+
+    h1 {
+        background-color: al-color($db-slate, 700) !important;
+    }
+
+    a,
+    .count-container,
+    th,
+    td,
+    tr {
+        background-color: al-color($db-slate, 700) !important;
+        color: al-color($al-gray, 50) !important;
+
+        &.status {
+        &.Critical {
+            color: al-color($db-charts, 400);
+        }
+
+        &.High {
+            color: al-color($db-charts, 300);
+        }
+
+        &.Medium {
+            color: al-color($db-charts, 200);
+        }
+
+        &.Low {
+            color: al-color($db-charts, 100);
+        }
+        }
+
+    }
+
+    tr,
+    td {
+        &:hover {
+        background-color: al-color($db-blue, 500) !important;
+        }
+    }
+
+    .highcharts-pie-series .highcharts-point {
+        stroke: al-color($al-gray, 700);
+    }
+    }
+
+    /*
+    * Global Health Status
+    */
+    .healthy rect,
+    path.healthy {
+        fill: al-color($db-charts, 500);
+        stroke: al-color($db-charts, 500);
+    }
+
+    .unhealthy rect,
+    path.unhealthy {
+        fill: al-color($db-slate, 400);
+        stroke: al-color($db-slate, 400);
+    }
+
+    /*
+    * Global colours for severity level
+    */
+    .critical rect,
+    path.critical,
+    rect.critical {
+        fill: al-color($db-charts, 400);
+        stroke: none;
+    }
+
+    .high rect,
+    path.high,
+    rect.high {
+        fill: al-color($db-charts, 400);
+        stroke: none;
+    }
+
+    .medium rect,
+    path.medium,
+    rect.medium {
+        fill: al-color($db-charts, 300);
+        stroke: none;
+    }
+
+    .low rect,
+    path.low,
+    rect.low {
+        fill: al-color($db-charts, 200);
+        stroke: none;
+    }
+
+    .info rect,
+    path.info,
+    rect.info {
+        fill: al-color($db-charts, 100);
+        stroke: none;
+    }
+
+    .info2 rect,
+    path.info2,
+    rect.info2 {
+        fill: al-color($db-charts, 50);
+        stroke: none;
+    }
+
+    .scanned rect,
+    path.scanned,
+    .scanned {
+        fill: al-color($db-blue, 500);
+    }
+
+    .not-scanned rect,
+    path.not-scanned,
+    .not-scanned {
+        fill: al-color($db-slate, 400);
+    }
+
+    .nav-header-bar {
+        background-color: al-color($db-slate, 700)!important;
+        color: al-color($al-gray, 50) !important;
+    }
+
+    .user-info-summary {
+        background-color: al-color($db-slate, 800)!important;
+    }
+
+    al-app-header {
+        .ui-menubar.ui-widget.ui-widget-content,
+        a.ui-menuitem-link,
+        span.ui-submenu-icon,
+        :hover.ui-menubar.ui-widget.ui-widget-content,
+        :hover a.ui-menuitem-link,
+        :hover span.ui-submenu-icon {
+        background-color: al-color($db-slate, 800)!important;
+    }
+
+    ul.ui-widget-content a.ui-menuitem-link {
+        background-color: white !important;
+
+        span {
+        color: al-color($db-slate, 700) !important;
+        }
+    }
+    }
+
+    .highcharts-background {
+        fill: al-color($db-slate, 700);
+    }
+
+    svg {
+        path.zero-state {
+        fill: al-color($db-blue, 500);
+    }
+    }
+
+    al-count-summary {
+        .count-container span {
+            color: al-color($db-blue, 500) !important;
+        }
+    }
+
+    .ui-button {
+        color: #ffffff;
+        background-color: al-color($db-blue,600);
+
+        &:enabled:hover {
+            background-color: al-color($db-blue, 800);
+        }
+
+        &:enabled:not(:focus):hover {
+            background-color: al-color($db-blue, 800);
+        }
+
+        &:enabled:focus {
+            background-color: lighten(al-color($db-blue, 600), 10%);
+        }
+    }
+}
+
+
+
+.highcharts-tooltip-box {
+  stroke: white;
+  fill: white;
+}
