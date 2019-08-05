@@ -6,7 +6,8 @@ al-detailed-table-list {
         border-style: none !important;
         border-top: 1px solid al-color($al-gray, 50) !important;
         border-bottom: 1px solid al-color($al-gray, 50) !important;
-        background-color: white !important;
+        background-color: white;
+        background: unset;
         text-align: left !important;
         font-family: 'Open Sans',Arial,sans-serif !important;
         font-size: 0.8em !important;
@@ -51,27 +52,34 @@ al-detailed-table-list {
         &.status {
             text-align: right !important;
             font-weight: 600 !important;
+            text-transform: capitalize;
 
-            &.Critical {
+            &.critical, &.high {
                 color: al-color($al-red, 600);
             }
-            &.High {
+            &.medium {
                 color: al-color($al-orange, 500);
             }
-            &.Medium {
+            &.low {
                 color: al-color($al-yellow, 500);
             }
-            &.Low {
+            &.info {
                 color: al-color($al-gray, 300);
             }
         }
     }
     tbody {
-      tr, td {
+      tr {
         &:hover {
           cursor: pointer;
           background-color: al-color($al-smokeBlue, 100) !important;
         }
       }
+    }
+    .ui-table table {
+      table-layout: unset;
+    }
+    tr:nth-child(odd) {
+        background-color: white !important;
     }
 }

@@ -130,25 +130,22 @@ path.unhealthy {
     tr {
       background-color: #3C3C3C !important;
       color: al-color($al-gray, 50) !important;
-
+    }
+    td {
       &.status {
-        &.Critical {
-          color: al-color($al-red, 600);
-        }
-
-        &.High {
-          color: al-color($al-orange, 500);
-        }
-
-        &.Medium {
-          color: al-color($al-yellow, 500);
-        }
-
-        &.Low {
-          color: al-color($al-gray, 300);
-        }
+          &.critical, &.high {
+              color: al-color($al-red, 600) !important;
+          }
+          &.medium {
+              color: al-color($al-orange, 500) !important;
+          }
+          &.low {
+              color: al-color($al-yellow, 500) !important;
+          }
+          &.info {
+              color: al-color($al-gray, 300) !important;
+          }
       }
-
     }
 
     tr,
@@ -297,7 +294,7 @@ al-app-header {
 }
 
 /*
-* SAMPLE BLUE COLOURING 
+* SAMPLE BLUE COLOURING
 */
 .blueTheme {
 
