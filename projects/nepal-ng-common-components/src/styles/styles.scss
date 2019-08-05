@@ -118,8 +118,7 @@ path.unhealthy {
 /*
 * Global dark theme toggle
 */
-.darkMode,
-.darkModeBlue {
+.darkMode {
   .dashboard-widget {
     background-color: #3C3C3C !important;
 
@@ -501,6 +500,9 @@ al-app-header {
     }
   }
 
+  .highcharts-tooltip text {
+    fill: #3C3C3C;
+  }
   al-count-summary {
     .count-container span {
       color: #6883A4 !important;
