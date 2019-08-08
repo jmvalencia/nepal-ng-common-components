@@ -14,4 +14,5 @@ export interface ObjectValue {
     label: string;
     icon?: string;
     value?: ObjectDetails[];
+    subtext?: string;
 }

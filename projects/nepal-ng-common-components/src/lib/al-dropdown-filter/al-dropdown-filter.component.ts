@@ -8,7 +8,7 @@ import { ObjectValue, ObjectDetails } from './al-dropdown-filter.types';
 })
 
 export class AlDropdownFilterComponent implements OnInit {
-    public  options: any;
+    public options: any;
     public defaultWidth: string;
 
     /**
