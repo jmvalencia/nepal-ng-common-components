@@ -28,7 +28,7 @@ al-detailed-table-list {
             text-align: right !important;
         }
         &.count {
-            text-align: center !important;
+            text-align: right !important;
             border-left: al-color($al-gray, 50) 1px solid !important;
         }
         &.right {
@@ -36,12 +36,12 @@ al-detailed-table-list {
             border-left:none  !important;
         }
         &.status {
-            text-align: right !important;
+            text-align: left !important;
         }
     }
     td {
         &.count {
-            text-align: center !important;
+            text-align: right !important;
             border-left: al-color($al-gray, 50) 1px solid !important;
             &.right {
                 text-align: right !important;
@@ -50,7 +50,7 @@ al-detailed-table-list {
             }
         }
         &.status {
-            text-align: right !important;
+            text-align: left !important;
             font-weight: 600 !important;
             text-transform: capitalize;
 
