@@ -118,7 +118,8 @@ path.unhealthy {
 /*
 * Global dark theme toggle
 */
-.darkMode {
+.darkMode,
+.darkModeBlue {
   .dashboard-widget {
     background-color: #3C3C3C !important;
 
@@ -130,31 +131,26 @@ path.unhealthy {
     tr {
       background-color: #3C3C3C !important;
       color: al-color($al-gray, 50) !important;
-    }
-    td {
+
       &.status {
-          &.critical, &.high {
-              color: al-color($al-red, 600) !important;
-          }
-          &.medium {
-              color: al-color($al-orange, 500) !important;
-          }
-          &.low {
-              color: al-color($al-yellow, 500) !important;
-          }
-          &.info {
-              color: al-color($al-gray, 300) !important;
-          }
+        &.Critical, &.critical {
+          color: al-color($al-red, 600);
+        }
+
+        &.High, &.high {
+          color: al-color($al-orange, 500);
+        }
+
+        &.Medium, &.medium {
+          color: al-color($al-yellow, 500);
+        }
+
+        &.Low, &.low {
+          color: al-color($al-gray, 300);
+        }
       }
     }
-
-    tr,
-    td {
-      &:hover {
-        background-color: al-color($al-gray, 400) !important;
-      }
-    }
-
+    
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
     }
@@ -252,6 +248,11 @@ path.unhealthy {
       fill: al-color($al-gray, 200);
     }
   }
+  tbody {
+    tr:hover td {
+        background-color: al-color($al-gray, 400) !important;
+      }
+    }
 }
 
 /*
@@ -294,7 +295,7 @@ al-app-header {
 }
 
 /*
-* SAMPLE BLUE COLOURING
+* SAMPLE BLUE COLOURING 
 */
 .blueTheme {
 
@@ -323,19 +324,19 @@ al-app-header {
       color: al-color($al-gray, 50) !important;
 
       &.status {
-        &.Critical {
+        &.Critical, &.critical {
           color: #F04349;
         }
 
-        &.High {
+        &.High, &.high {
           color: #C84049;
         }
 
-        &.Medium {
+        &.Medium, &.medium {
           color: #A13E48;
         }
 
-        &.Low {
+        &.Low, &.low {
           color: #793C49;
         }
       }
@@ -497,9 +498,6 @@ al-app-header {
     }
   }
 
-  .highcharts-tooltip text {
-    fill: #3C3C3C;
-  }
   al-count-summary {
     .count-container span {
       color: #6883A4 !important;
@@ -552,30 +550,23 @@ al-app-header {
       color: al-color($al-gray, 50) !important;
 
       &.status {
-        &.Critical {
+        &.Critical, &.critical {
           color: #F04349;
         }
 
-        &.High {
+        &.High, &.high{
           color: #C84049;
         }
 
-        &.Medium {
+        &.Medium, &.medium {
           color: #A13E48;
         }
 
-        &.Low {
+        &.Low, &.low {
           color: #793C49;
         }
       }
 
-    }
-
-    tr,
-    td {
-      &:hover {
-        background-color: #6883A4 !important;
-      }
     }
 
     .highcharts-pie-series .highcharts-point {
@@ -718,6 +709,11 @@ al-app-header {
 
     &:enabled:focus {
       background-color: #3F546E;
+    }
+  }
+  tbody {
+    tr:hover td {
+      background-color: #6883A4 !important;
     }
   }
 }
