@@ -3,6 +3,8 @@ import {
         Widget,
         WidgetContent,
         WidgetContentType,
+        WidgetButtonAction,
+        WidgetButtonActionMethods,
         WidgetWidth,
         WidgetHeight,
         TableListConfig,
@@ -260,9 +262,7 @@ export class DashboardExamplesComponent implements OnInit {
             target_app: 'foo',
             path: 'bar'
           }
-        },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        }
       },
       content: {
         type: WidgetContentType.Count,
@@ -283,8 +283,13 @@ export class DashboardExamplesComponent implements OnInit {
             path: 'bar'
           }
         },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        link1: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
       },
       content: {
         type: WidgetContentType.Count,
@@ -305,8 +310,20 @@ export class DashboardExamplesComponent implements OnInit {
             path: 'bar'
           }
         },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        link1: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
+        link2: {
+          name: 'Primary',
+          action: {
+            target_app: 'foo',
+            path: 'bar'
+          }
+        },
       },
       content: {
         type: WidgetContentType.Count,
@@ -326,9 +343,7 @@ export class DashboardExamplesComponent implements OnInit {
             target_app: 'foo',
             path: 'bar'
           }
-        },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        }
       },
       content: {
         type: WidgetContentType.Count,
@@ -367,9 +382,7 @@ export class DashboardExamplesComponent implements OnInit {
             target_app: 'foo',
             path: 'bar'
           }
-        },
-        link1: 'Link 1',
-        link2: 'Link 2',
+        }
       },
       content: {
         type: WidgetContentType.Count,
@@ -404,10 +417,6 @@ export class DashboardExamplesComponent implements OnInit {
     }, {
       id: '108',
       title: '1 x 1 Widget with TreeMap - No Data',
-      actions: {
-        link1: 'Link 1',
-        link2: 'Link 2',
-      },
       content: {
         type: WidgetContentType.TreeMap,
         data: this.failedTree
@@ -430,10 +439,6 @@ export class DashboardExamplesComponent implements OnInit {
     }, {
       id: '3',
       title: '2 x 1 Widget with Mixed Chart',
-      actions: {
-        link1: 'Link 1',
-        link2: 'Link 2',
-      },
       content: {
         type: WidgetContentType.Column,
         data: this.columnRedData,
@@ -445,10 +450,6 @@ export class DashboardExamplesComponent implements OnInit {
     }, {
       id: '9',
       title: '1 x 1 Widget with TreeMap',
-      actions: {
-        link1: 'Link 1',
-        link2: 'Link 2',
-      },
       content: {
         type: WidgetContentType.TreeMap,
         data: this.mockTreeMap
@@ -478,9 +479,6 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actions: {
-        link1: 'Export to CSV',
-    },
     content: {
       type: WidgetContentType.SemiCircle,
       data: this.semiCircleData,
@@ -493,9 +491,6 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actions: {
-      link1: 'Export to CSV',
-    },
     content: {
       type: WidgetContentType.TableListSummary,
       data: this.tableConfig,
@@ -508,9 +503,6 @@ export class DashboardExamplesComponent implements OnInit {
   {
     id: '3',
     title: '2 x 1 Widget with List Chart',
-    actions: {
-      link1: 'Export to CSV',
-    },
     content: {
       type: WidgetContentType.TableListSummary,
       data: this.tableConfig,

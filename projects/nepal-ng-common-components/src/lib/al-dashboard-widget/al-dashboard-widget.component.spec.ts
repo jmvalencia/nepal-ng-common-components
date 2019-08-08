@@ -92,6 +92,25 @@ describe('AlDashboardWidgetComponent', () => {
             expect(eventSpy).toHaveBeenCalled();
         });
 
+        it('should emit the primary event when the drill down button is clicked', () => {
+            Object.assign(component.config, {
+                actions: {
+                    primary: {
+                      name: 'Primary',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
+                }
+            });
+
+            const eventSpy = jasmine.createSpy();
+            fixture.nativeElement.addEventListener('button-clicked', eventSpy);
+            component.chartSegmentClicked();
+            expect(eventSpy).toHaveBeenCalled();
+        });
+
         xit('should emit the settings event when the settings button is clicked', () => {
             Object.assign(component.config, {
                 actions: {
@@ -105,10 +124,16 @@ describe('AlDashboardWidgetComponent', () => {
             expect(eventSpy).toHaveBeenCalled();
         });
 
-        xit('should emit the link 1 event when the link 1 link is clicked', () => {
+        it('should emit the link 1 event when the link 1 link is clicked', () => {
             Object.assign(component.config, {
                 actions: {
-                    link1: 'Link 1'
+                    link1: {
+                      name: 'Link 1',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
@@ -118,10 +143,16 @@ describe('AlDashboardWidgetComponent', () => {
             expect(eventSpy).toHaveBeenCalled();
         });
 
-        xit('should emit the link 2 event when the link 2 link is clicked', () => {
+        it('should emit the link 2 event when the link 2 link is clicked', () => {
             Object.assign(component.config, {
                 actions: {
-                    link2: 'Link 2'
+                    link2: {
+                      name: 'Link 2',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 

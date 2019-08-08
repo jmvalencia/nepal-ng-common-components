@@ -11,8 +11,8 @@
         <ng-content></ng-content>
     </div>
     <footer *ngIf="hasActions">
-        <a (click)="link2Clicked()" *ngIf="config.actions.link2">{{config.actions.link2}}</a>
-        <a (click)="link1Clicked()" *ngIf="config.actions.link1">{{config.actions.link1}}</a>
+        <button pButton (click)="link2Clicked()" *ngIf="config.actions.link2" label="{{config.actions.link2.name}}" class="flat ui-button"></button>
+        <button pButton (click)="link1Clicked()" *ngIf="config.actions.link1" label="{{config.actions.link1.name}}" class="flat ui-button"></button>
         <ng-template [ngIf]="config.actions.primary && config.actions.primary.action">
           <button pButton (click)="primaryClicked()" *ngIf="!config.actions.primary.action.url" label="{{config.actions.primary.name}}"></button>
           <a pButton href="{{config.actions.primary.action.url}}" *ngIf="config.actions.primary.action.url">{{config.actions.primary.name}}</a>

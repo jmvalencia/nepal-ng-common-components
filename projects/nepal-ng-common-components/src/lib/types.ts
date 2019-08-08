@@ -36,6 +36,7 @@ export enum WidgetClickType {
   Primary,
   Link1,
   Link2,
+  DrillDown
 }
 
 /*
@@ -104,10 +105,23 @@ export interface Widget {
       name: string,
       action?: WidgetButtonAction;
     };
-    link1?: string;
-    link2?: string;
+    link1?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
+    link2?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
     settings?: string;
   };
+}
+
+export enum WidgetButtonActionMethods {
+  ExportCSV = 1,
+  NoData,
+  Support,
+  Refresh,
 }
 
 export interface WidgetButtonAction {
@@ -115,6 +129,7 @@ export interface WidgetButtonAction {
   path?: string;
   url?: string;
   noData?: boolean;
+  method?: WidgetButtonActionMethods;
 }
 
 /**
