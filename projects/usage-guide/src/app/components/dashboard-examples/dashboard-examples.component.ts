@@ -169,7 +169,7 @@ export class DashboardExamplesComponent implements OnInit {
             { name: 'Deployment1', field: 'deployment'}
         ],
         body: [
-            { summary: '123.234.45', count: '12.3k', deployment: 'AWS Account' },
+            { summary: '123.234.45', count: '12.3k', deployment: 'AWS Account', recordLink: 'blaaa' },
             { summary: '123.234.456', count: '12.36', deployment: 'AWS Account2' },
             { summary: '123.4.45', count: '12', deployment: 'AWS Account 1' }
         ]
@@ -510,6 +510,15 @@ export class DashboardExamplesComponent implements OnInit {
     metrics: {
       width: WidgetWidth.W2,
       height: WidgetHeight.H1,
+    },
+    actions: {
+      drilldown: {
+        name: '',
+        action: {
+          target_app: 'foo',
+          path: 'bar'
+        }
+      }
     }
   },
   {
@@ -583,6 +592,10 @@ export class DashboardExamplesComponent implements OnInit {
    *
    */
   buttonClicked(e) {
+    console.dirxml(e);
+  }
+
+  viewRecordDetails(e) {
     console.dirxml(e);
   }
 
@@ -682,7 +695,7 @@ export class DashboardExamplesComponent implements OnInit {
                 { name: 'Deployment2', field: 'deployment'}
             ],
             body: [
-                { summary: '123.234.46', count: '12.3k', deployment: 'AWS Account' },
+                { summary: '123.234.46', count: '12.3k', deployment: 'AWS Account', recordLink: 'blaaa' },
                 { summary: '123.234.46', count: '12.36', deployment: 'AWS Account2' },
                 { summary: '123.4.445', count: '12', deployment: 'AWS Account 1' }
             ]

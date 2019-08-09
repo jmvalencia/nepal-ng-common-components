@@ -57,10 +57,10 @@ export class AlDashboardWidgetComponent implements OnInit {
   }
 
   /**
-   * Segment of chart clicked
+   * Data element clicked
    */
-  public chartSegmentClicked(): void {
-    this.emitClick(this.config.actions.primary.action, WidgetClickType.DrillDown);
+  public dataElementClicked(ev: CustomEventInit<{recordLink: string}>): void {
+    this.emitClick(this.config.actions.drilldown.action, WidgetClickType.DrillDown, ev.detail.recordLink);
   }
 
   /*
@@ -88,18 +88,32 @@ export class AlDashboardWidgetComponent implements OnInit {
    *  Event emitters don't bubble.  Use a dom dispatchEvent mechanism to dispatch
    *  the event as far up as required
    */
-  private emitClick(buttonAction: WidgetButtonAction, widgetButton: WidgetClickType): void {
+  private emitClick(buttonAction: WidgetButtonAction, widgetButton: WidgetClickType, recordLink?: string): void {
     if (buttonAction !== undefined) {
-      this.el.nativeElement
-      .dispatchEvent(new CustomEvent('button-clicked', {
-        detail: {
-          id: this.config.id,
-          title: this.config.title,
-          buttonAction,
-          widgetButton
-        },
-        bubbles: true
-      }));
+      if (!recordLink) {
+        this.el.nativeElement
+          .dispatchEvent(new CustomEvent('button-clicked', {
+            detail: {
+              id: this.config.id,
+              title: this.config.title,
+              buttonAction,
+              widgetButton
+            },
+            bubbles: true
+          }));
+      } else {
+        this.el.nativeElement
+          .dispatchEvent(new CustomEvent('view-filtered-records', {
+            detail: {
+              id: this.config.id,
+              title: this.config.title,
+              buttonAction,
+              widgetButton,
+              recordLink
+            },
+            bubbles: true
+          }));
+      }
     }
   }
 }
