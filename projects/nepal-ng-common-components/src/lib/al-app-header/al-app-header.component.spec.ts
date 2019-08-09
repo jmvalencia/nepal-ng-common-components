@@ -33,20 +33,19 @@ describe('ALAppHeaderComponent Test Suite', () => {
   });
   describe('When a session has started', () => {
     it('should set authenticated to true', () => {
-      const sessionStartedEvent: AlSessionStartedEvent = {
-        user: {
-          name: 'Peter Pan',
-          email: 'peter@pan.com',
-          created: {
-            at: 1,
-            by: 'blaa'
-          },
-          modified: {
-            at: 1,
-            by: 'blaa'
-          }
+      const sessionStartedEvent: AlSessionStartedEvent = new AlSessionStartedEvent({
+        name: 'Peter Pan',
+        email: 'peter@pan.com',
+        created: {
+          at: 1,
+          by: 'blaa'
         },
-        primaryAccount: {
+        modified: {
+          at: 1,
+          by: 'blaa'
+        }
+      },
+        {
           name: 'Foo',
           id: '1',
           active: true,
@@ -60,10 +59,7 @@ describe('ALAppHeaderComponent Test Suite', () => {
             at: 1,
             by: 'blaa'
           }
-        },
-       // session: new AlSessionInstance()
-
-      };
+        });
       component.onSessionStart(sessionStartedEvent);
       expect(component.authenticated).toEqual(true);
       expect(component.userMenuItems[0].label).toEqual(sessionStartedEvent.user.name);
@@ -86,9 +82,8 @@ describe('ALAppHeaderComponent Test Suite', () => {
       }
 
     };
-    const event: AlActingAccountResolvedEvent = {
-      actingAccount: primaryAccount,
-      managedAccounts: [{
+    const event: AlActingAccountResolvedEvent = new AlActingAccountResolvedEvent(primaryAccount,
+      [{
         id: '132002',
         name: 'SRE Child Account 1',
         active: true,
@@ -101,10 +96,11 @@ describe('ALAppHeaderComponent Test Suite', () => {
         modified: {
           at: 1,
           by: 'blaa'
-        }}
+        }
+      }
       ],
-      entitlements: new AlEntitlementCollection()
-    };
+      new AlEntitlementCollection()
+    );
     beforeEach(() => {
       spyOn(component[alSessionLib], 'getPrimaryAccount').and.returnValue(primaryAccount);
       component.onActingAccountResolved(event);
@@ -120,7 +116,7 @@ describe('ALAppHeaderComponent Test Suite', () => {
   });
   describe('When calling logout', () => {
     it('should call deactivateSession on the ALSession instance', () => {
-      spyOn(component[alSessionLib], 'deactivateSession').and.callFake(() => {});
+      spyOn(component[alSessionLib], 'deactivateSession').and.callFake(() => { });
       component.logout();
       expect(component[alSessionLib].deactivateSession).toHaveBeenCalled();
     });
@@ -143,7 +139,7 @@ describe('ALAppHeaderComponent Test Suite', () => {
             by: 'blaa'
           }
         };
-        spyOn(component[alSessionLib], 'setActingAccount').and.callFake(() => {});
+        spyOn(component[alSessionLib], 'setActingAccount').and.callFake(() => { });
         component.onAccountChanged(account);
         expect(component[alSessionLib].setActingAccount).toHaveBeenCalledWith(account);
       });
@@ -226,7 +222,7 @@ describe('ALAppHeaderComponent Test Suite', () => {
       it('should not add any more items to the managedAccountsBuffer', () => {
         component.managedAccountsBuffer = [];
         component.managedAccounts = [];
-        component.onScroll({end: 1});
+        component.onScroll({ end: 1 });
         expect(component.managedAccountsBuffer.length).toEqual(0);
       });
     });
@@ -248,14 +244,14 @@ describe('ALAppHeaderComponent Test Suite', () => {
             by: 'blaa'
           }
         }];
-        component.onScroll({end: 1});
+        component.onScroll({ end: 1 });
         expect(component.managedAccountsBuffer.length).toEqual(1);
       });
     });
   });
   describe('On invoking the command associated to the Logout user menu item', () => {
     it('should call the component logout function', () => {
-      spyOn(component, 'logout').and.callFake(() => {});
+      spyOn(component, 'logout').and.callFake(() => { });
       const logoutItem = component.userMenuItems[0].items[0] as MenuItem;
       logoutItem.command();
       expect(component.logout).toHaveBeenCalled();
