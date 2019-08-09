@@ -53,14 +53,14 @@ export class AlDashboardWidgetComponent implements OnInit {
    * Primary Button Clicked
    */
   public primaryClicked(): void {
-    this.emitClick(this.config.actions.primary.action);
+    this.emitClick(this.config.actions.primary.action, WidgetClickType.Primary);
   }
 
   /**
    * Segment of chart clicked
    */
   public chartSegmentClicked(): void {
-    this.emitClick(this.config.actions.primary.action);
+    this.emitClick(this.config.actions.primary.action, WidgetClickType.DrillDown);
   }
 
   /*
@@ -74,31 +74,29 @@ export class AlDashboardWidgetComponent implements OnInit {
    * Link1 Button Clicked
    */
   public link1Clicked(): void {
-    if (this.config.content.data.nodata) {
-      this.emitClick({noData: true});
-    }
-    // this.emitClick(WidgetClickType.Link1);
+    this.emitClick(this.config.actions.link1.action, WidgetClickType.Link1);
   }
 
   /*
    * Link2 Button Clicked
    */
   public link2Clicked(): void {
-    // this.emitClick(WidgetClickType.Link2);
+    this.emitClick(this.config.actions.link2.action, WidgetClickType.Link2);
   }
 
   /*
    *  Event emitters don't bubble.  Use a dom dispatchEvent mechanism to dispatch
    *  the event as far up as required
    */
-  private emitClick(buttonAction: WidgetButtonAction): void {
+  private emitClick(buttonAction: WidgetButtonAction, widgetButton: WidgetClickType): void {
     if (buttonAction !== undefined) {
       this.el.nativeElement
       .dispatchEvent(new CustomEvent('button-clicked', {
         detail: {
           id: this.config.id,
           title: this.config.title,
-          buttonAction
+          buttonAction,
+          widgetButton
         },
         bubbles: true
       }));
