@@ -95,8 +95,8 @@ describe('AlDashboardWidgetComponent', () => {
         it('should emit the primary event when the drill down button is clicked', () => {
             Object.assign(component.config, {
                 actions: {
-                    primary: {
-                      name: 'Primary',
+                    drilldown: {
+                      name: '',
                       action: {
                         target_app: 'foo',
                         path: 'bar'
@@ -106,8 +106,13 @@ describe('AlDashboardWidgetComponent', () => {
             });
 
             const eventSpy = jasmine.createSpy();
-            fixture.nativeElement.addEventListener('button-clicked', eventSpy);
-            component.chartSegmentClicked();
+            fixture.nativeElement.addEventListener('view-filtered-records', eventSpy);
+            const ev: CustomEventInit = {
+              detail: {
+                recordLink: 'foo/bar'
+              }
+            };
+            component.dataElementClicked(ev);
             expect(eventSpy).toHaveBeenCalled();
         });
 

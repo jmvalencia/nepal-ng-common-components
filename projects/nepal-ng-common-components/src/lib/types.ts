@@ -114,6 +114,10 @@ export interface Widget {
       action?: WidgetButtonAction;
     };
     settings?: string;
+    drilldown?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
   };
 }
 
@@ -155,6 +159,7 @@ export interface TableListBody {
      * Define the type of table, used for styling
      */
     type?: string;
+    recordLink?: string;
 }
 
 export interface TableListConfig {

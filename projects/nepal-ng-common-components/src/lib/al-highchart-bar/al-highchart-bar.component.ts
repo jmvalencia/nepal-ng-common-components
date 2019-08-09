@@ -48,7 +48,7 @@ export class AlHighchartBarComponent implements OnChanges {
                     events: {
                         // tslint:disable-next-line
                         click: function(event) {
-                          event.target.dispatchEvent(new CustomEvent('segment-clicked', {
+                          event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
                             detail: {
                               segment: event.point
                             },

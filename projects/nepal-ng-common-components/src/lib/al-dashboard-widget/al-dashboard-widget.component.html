@@ -7,7 +7,7 @@
         <!--   TODO - - PUT BACK IN WHEN SETTINGS HAS BEEN DEFINED <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a> -->
         <!-- </div> -->
     </header>
-    <div class="content" [class.auto-scroll]="config.content?.type === contentType.TableListSummary" (segment-clicked)="chartSegmentClicked()">
+    <div class="content" [class.auto-scroll]="config.content?.type === contentType.TableListSummary" (data-element-clicked)="dataElementClicked($event)">
         <ng-content></ng-content>
     </div>
     <footer *ngIf="hasActions">
