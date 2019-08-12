@@ -722,3 +722,10 @@ al-app-header {
   stroke: white;
   fill: white;
 }
+
+.bubble-container {
+  .highcharts-data-labels {
+    text-align: center;
+  }
+}
+
