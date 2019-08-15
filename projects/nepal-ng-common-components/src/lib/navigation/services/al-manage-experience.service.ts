@@ -10,7 +10,7 @@ import { AlExperiencePreferencesService } from './al-experience-preferences.serv
 import { AlNavigationService } from './al-navigation.service';
 import { AlToastService } from '../../al-toast/al-toast.service';
 import { AlFeedbackComponent } from '../../al-feedback/al-feedback.component';
-import { AlTutorialComponent } from '../../al-tutorial/al-tutorial.component';
+import { AlDialogCarrouselComponent } from '../../al-dialog-carrousel/al-dialog-carrousel.component';
 import { AlGlobalizer } from '@al/common';
 import { ALSession, AlSessionEndedEvent } from '@al/session';
 import { AlEntitlementCollection } from '@al/subscriptions';
@@ -124,7 +124,7 @@ export class AlManageExperienceService {
         this.feedback = feedback;
     }
 
-    public setBetaTutorial(tutorial: AlTutorialComponent){
+    public setBetaTutorial(tutorial: AlDialogCarrouselComponent){
         this.betaTutorial  = tutorial;
     }
 

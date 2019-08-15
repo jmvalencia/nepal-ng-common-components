@@ -3,14 +3,14 @@ import { Car } from '../../../types/car';
 import { CarService } from '../../../service/carservice';
 import { ConfirmationService } from 'primeng/primeng';
 import { BreadcrumbService } from '../../../breadcrumb.service';
-import { AlTutorialComponent } from 'nepal-ng-common-components';
+import { AlDialogCarrouselComponent } from 'nepal-ng-common-components';
 
 @Component({
   templateUrl: './overlay-examples.component.html',
   providers: [ConfirmationService]
 })
 export class OverlayExamplesComponent implements OnInit {
-  @ViewChild('tutorial') tutorial: AlTutorialComponent;
+  @ViewChild('tutorial') tutorial: AlDialogCarrouselComponent;
 
   cars: Car[];
 

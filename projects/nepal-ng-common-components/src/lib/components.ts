@@ -14,7 +14,7 @@ import { AlIdentityIconComponent } from './al-identity-icon/al-identity-icon.com
 import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-zero-data.component';
 import { AlToastComponent } from './al-toast/al-toast.component';
 import { AlFeedbackComponent } from './al-feedback/al-feedback.component';
-import { AlTutorialComponent } from './al-tutorial/al-tutorial.component';
+import { AlDialogCarrouselComponent } from './al-dialog-carrousel/al-dialog-carrousel.component';
 
 const ALL_COMPONENTS = [
   AlHighchartBubbleComponent,
@@ -33,7 +33,7 @@ const ALL_COMPONENTS = [
   AlZeroContentDataComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlTutorialComponent
+  AlDialogCarrouselComponent
 ];
 
 export {
@@ -52,5 +52,5 @@ export {
   AlHighchartBarComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlTutorialComponent
+  AlDialogCarrouselComponent
 };

@@ -1,7 +1,7 @@
 import { Input, Component, AfterViewInit, ViewChild } from '@angular/core';
 import { AlManageExperienceService } from '../../navigation/services/al-manage-experience.service';
 import { AlFeedbackComponent } from '../../al-feedback/al-feedback.component';
-import { AlTutorialComponent } from '../../al-tutorial/al-tutorial.component';
+import { AlDialogCarrouselComponent } from '../../al-dialog-carrousel/al-dialog-carrousel.component';
 
 @Component({
     selector: 'al-navigation-overlays',
@@ -12,7 +12,7 @@ import { AlTutorialComponent } from '../../al-tutorial/al-tutorial.component';
 export class AlNavigationOverlaysComponent implements AfterViewInit {
 
     @ViewChild(AlFeedbackComponent) feedback: AlFeedbackComponent;
-    @ViewChild(AlTutorialComponent) betaTutorial: AlTutorialComponent;
+    @ViewChild(AlDialogCarrouselComponent) betaTutorial: AlDialogCarrouselComponent;
 
     constructor(public experienceManager: AlManageExperienceService) { }
 

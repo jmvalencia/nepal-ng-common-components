@@ -5,12 +5,12 @@ declare var Snap: any;
 declare var mina: any;
 
 @Component({
-  selector: 'al-tutorial',
-  templateUrl: './al-tutorial.component.html',
-  styleUrls: ['./al-tutorial.component.scss'],
+  selector: 'al-dialog-carrousel',
+  templateUrl: './al-dialog-carrousel.component.html',
+  styleUrls: ['./al-dialog-carrousel.component.scss'],
   providers: []
 })
-export class AlTutorialComponent implements OnInit {
+export class AlDialogCarrouselComponent implements OnInit {
   @ViewChild('carousel') carousel: Carousel;
   display: boolean = false;
   tutorialSteps: any[] = [];
