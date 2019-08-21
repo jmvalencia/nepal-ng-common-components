@@ -15,6 +15,7 @@ import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-ze
 import { AlToastComponent } from './al-toast/al-toast.component';
 import { AlFeedbackComponent } from './al-feedback/al-feedback.component';
 import { AlDialogCarrouselComponent } from './al-dialog-carrousel/al-dialog-carrousel.component';
+import { AlBetaGetStartedComponent } from './al-beta-get-started/al-beta-get-started.component';
 
 const ALL_COMPONENTS = [
   AlHighchartBubbleComponent,
@@ -33,7 +34,8 @@ const ALL_COMPONENTS = [
   AlZeroContentDataComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlDialogCarrouselComponent
+  AlDialogCarrouselComponent,
+  AlBetaGetStartedComponent
 ];
 
 export {
@@ -52,5 +54,6 @@ export {
   AlHighchartBarComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlDialogCarrouselComponent
+  AlDialogCarrouselComponent,
+  AlBetaGetStartedComponent
 };
