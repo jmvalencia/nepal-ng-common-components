@@ -8,7 +8,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { AlHighchartsActivityGaugeService } from './al-highchart-activity-gauge.service';
 import * as Highcharts from 'highcharts/highcharts';
+// tslint:disable-next-line: import-name
 import HighchartsMore from 'highcharts/highcharts-more';
+// tslint:disable-next-line: import-name
 import HighchartsSolidGauge from 'highcharts/modules/solid-gauge';
 import { ActivityGaugeConfig } from '../types';
 
@@ -29,7 +31,6 @@ export class AlHighchartsActivityGaugeComponent implements OnInit {
      */
     public chart: Highcharts.Chart;
 
-    public themeToggle = false;
     /*
      *  Elements
      */
@@ -53,41 +54,6 @@ export class AlHighchartsActivityGaugeComponent implements OnInit {
      */
     ngOnInit() {
         this.chart = Highcharts.chart(this.chartTarget.nativeElement, this.gaugeService.getConfig(this.config));
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.chart.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                plotOptions: {
-                    solidgauge: {
-                        dataLabels: {
-                           color: '#EDEDED'
-                        },
-                    }
-                },
-            });
-        } else {
-            this.chart.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                plotOptions: {
-                    solidgauge: {
-                        dataLabels: {
-                           color: '#3C3C3C'
-                        },
-                    }
-                },
-            });
-        }
     }
 }
 

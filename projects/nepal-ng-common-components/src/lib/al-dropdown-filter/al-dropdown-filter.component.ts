@@ -4,18 +4,18 @@ import { ObjectValue, ObjectDetails } from './al-dropdown-filter.types';
 @Component({
   selector: 'al-dropdown-filter',
   templateUrl: './al-dropdown-filter.component.html',
-  styleUrls: ['./al-dropdown-filter.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./al-dropdown-filter.component.scss']
 })
 
 export class AlDropdownFilterComponent implements OnInit {
-    public  options: any;
+    public options: any;
     public defaultWidth: string;
 
     /**
      * List of dashboard options
      */
     @Input() filterOptions: ObjectValue[];
+    @Input() selectedOption: ObjectValue;
 
     /**
      * Optional width setting

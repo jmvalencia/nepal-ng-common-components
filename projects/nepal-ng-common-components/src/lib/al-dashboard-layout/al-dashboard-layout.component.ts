@@ -5,14 +5,8 @@
  * @copyright Alert Logic, 2019
  *
  */
-import { Component, Input, ViewChild, ViewChildren, QueryList, AfterViewInit, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Widget, WidgetContentType } from '../types';
-import { AlHighchartColumnComponent } from '../al-highchart-column/al-highchart-column.component';
-import { AlHighchartSemiCircleComponent } from '../al-highchart-semi-circle/al-highchart-semi-circle.component';
-import { AlHighchartsActivityGaugeComponent } from '../al-highchart-activity-gauge/al-highchart-activity-gauge.component';
-import { AlHighchartTreeMapComponent } from '../al-highchart-treemap/al-highchart-treemap.component';
-import { AlCountSummaryComponent } from '../al-count-summary/al-count-summary.component';
-import { AlDetailedTableListComponent } from '../al-detailed-table-list/al-detailed-table-list.component';
 
 @Component({
   selector: 'al-dashboard-layout',
@@ -20,7 +14,7 @@ import { AlDetailedTableListComponent } from '../al-detailed-table-list/al-detai
   styleUrls: ['./al-dashboard-layout.component.scss']
 })
 
-export class AlDashboardLayoutComponent {
+export class AlDashboardLayoutComponent implements OnInit {
 
   // For use in template
   public contentType: typeof WidgetContentType = WidgetContentType;
@@ -28,28 +22,38 @@ export class AlDashboardLayoutComponent {
   // Inputs
   @Input() config: Widget[];
 
-  @ViewChildren(AlHighchartColumnComponent) columnChart: QueryList<AlHighchartColumnComponent>;
-  @ViewChildren(AlHighchartSemiCircleComponent) semiCircle: QueryList<AlHighchartSemiCircleComponent>;
-  @ViewChildren(AlHighchartsActivityGaugeComponent) activityGague: QueryList<AlHighchartsActivityGaugeComponent>;
-  @ViewChildren(AlHighchartTreeMapComponent) treeMap: QueryList<AlHighchartTreeMapComponent>;
-  @ViewChildren(AlCountSummaryComponent) countSummary: QueryList<AlCountSummaryComponent>;
-  @ViewChildren(AlDetailedTableListComponent) tableList: QueryList<AlDetailedTableListComponent>;
+  // Outputs
+  @Output() resizeStart: EventEmitter<any> = new EventEmitter();
+  @Output() resizeEnd: EventEmitter<any> = new EventEmitter();
 
-  @HostListener('document:keypress', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 't' && event.ctrlKey === true) {
-      this.toggleTheme();
+  private isResizing = false;
+  private timeoutHnd;
+
+  /*
+   *
+   */
+  ngOnInit() {
+    window.addEventListener('resize', () => {
+      this.resize();
+    });
+  }
+
+  /*
+   *
+   */
+  private resize = (): void => {
+    if (!this.isResizing) {
+      this.isResizing = true;
+      this.resizeStart.emit();
+    } else {
+      clearTimeout(this.timeoutHnd);
     }
+
+    this.timeoutHnd = setTimeout(() => {
+      this.isResizing = false;
+      this.resizeEnd.emit();
+    }, 1000);
   }
 
-  // TODO - remove this test code
-  private toggleTheme(): void {
-     this.columnChart.forEach(instance => instance.toggleTheme());
-     this.semiCircle.forEach(instance => instance.toggleTheme());
-     this.activityGague.forEach(instance => instance.toggleTheme());
-     this.treeMap.forEach(instance => instance.toggleTheme());
-     this.countSummary.forEach(instance => instance.toggleTheme());
-     this.tableList.forEach(instance => instance.toggleTheme());
-  }
 }
 

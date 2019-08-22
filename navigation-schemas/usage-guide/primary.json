@@ -1,0 +1,156 @@
+{
+    "caption": "Primary Navigation Menu",
+    "description": "Note that this menu refers to itself as being usage-guide.  This is a polite fiction; please ignore.",
+    "children": [
+        {
+            "caption": "Home",
+            "action": {
+                "location": "usage-guide",
+                "path": "/#/"
+            },
+            "properties": {
+                "iconClass": "home"
+            }
+        },
+        {
+            "caption": "Theming",
+            "children": [
+                {
+                    "caption": "Typography",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/typography"
+                    },
+                    "properties": {
+                        "iconClass": "format-size"
+                    }
+                },
+                {
+                    "caption": "Color Palette",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/colour-palettes"
+                    },
+                    "properties": {
+                        "iconClass": "palette"
+                    }
+                }
+            ]
+        },
+        {
+            "caption": "Base Components",
+            "children": [
+                {
+                    "caption": "Forms",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/form-examples"
+                    },
+                    "properties": {
+                        "iconClass": "create"
+                    }
+                },
+                {
+                    "caption": "Data",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/data-examples"
+                    },
+                    "properties": {
+                        "iconClass": "sync"
+                    }
+                },
+                {
+                    "caption": "Panels",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/panel-examples"
+                    },
+                    "properties": {
+                        "iconClass": "content-copy"
+                    }
+                },
+                {
+                    "caption": "Overlays",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/overlay-examples"
+                    },
+                    "properties": {
+                        "iconClass": "flip-to-front"
+                    }
+                },
+                {
+                    "caption": "Menus",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/menu-examples"
+                    },
+                    "properties": {
+                        "iconClass": "menu"
+                    }
+                },
+                {
+                    "caption": "Messages",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/messages"
+                    },
+                    "properties": {
+                        "iconClass": "message"
+                    }
+                },
+                {
+                    "caption": "Utilities",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/utilities"
+                    },
+                    "properties": {
+                        "iconClass": "build"
+                    }
+                }
+            ]
+        },
+        {
+            "caption": "Visualizations",
+            "children": [
+                {
+                    "caption": "Highcharts",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/highcharts"
+                    },
+                    "properties": {
+                        "iconClass": "insert-chart"
+                    }
+                },
+                {
+                    "caption": "Table Charts",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/table-charts"
+                    },
+                    "properties": {
+                        "iconClass": "grid-on"
+                    }
+                }
+            ]
+        },
+        {
+            "caption": "Examples",
+            "children": [
+                {
+                    "caption": "Dashboard Examples",
+                    "action": {
+                        "location": "usage-guide",
+                        "path": "/#/dashboard-examples"
+                    },
+                    "properties": {
+                        "iconClass": "dashboard"
+                    }
+                }
+            ]
+        }
+    ]
+}

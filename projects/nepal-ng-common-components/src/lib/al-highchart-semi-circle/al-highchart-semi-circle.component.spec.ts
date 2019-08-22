@@ -26,11 +26,24 @@ describe('AlHighchartSemiCircleComponent', () => {
 
   });
 
-  describe('When the theme is toggled', () => {
-    it('Should change the value of the themeToggle variable', () => {
-        component.themeToggle = false;
-        component.toggleTheme();
-        expect(component.themeToggle).toBe(true);
+  describe('When the component detects input changes', () => {
+    describe('And there is a config object present', () => {
+      it('Should call to populate the components configuration', () => {
+        const mySpy = spyOn<any>(component, 'populateConfig');
+        component.ngOnChanges({
+          config: new SimpleChange(undefined, config, true)
+        });
+        expect(mySpy).toHaveBeenCalled();
+      });
+    });
+    describe('And the config is undefined', () => {
+      it('Should call to update the components series', () => {
+        const mySpy = spyOn<any>(component, 'updateSeries');
+        component.ngOnChanges({
+          config: new SimpleChange(undefined, undefined, true)
+        });
+        expect(mySpy).toHaveBeenCalled();
+      });
     });
   });
 });

@@ -13,7 +13,6 @@ import * as Highcharts from 'highcharts';
 })
 export class AlHighchartAreaGraphComponent implements OnChanges {
     public areaGraphItem: any;
-    public themeToggle = false;
 
     @ViewChild('areaGraph') areaGraph: ElementRef;
     /**
@@ -22,10 +21,21 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
      */
     @Input() config: any;
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.config) {
+            if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
+              this.populateConfig();
+            } else {
+              this.updateSeries();
+            }
+        }
+    }
+
     private populateConfig = (): void => {
         this.areaGraphItem = Highcharts.chart(this.areaGraph.nativeElement, {
             chart: {
-                type: 'area'
+                type: 'area',
+                styledMode: true
             },
             title: {
                 text: ''
@@ -65,7 +75,8 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
                 type: 'area',
                 name: this.config.name,
                 color: this.config.color,
-                data: this.config.data
+                data: this.config.data,
+                className: this.config.className
             }]
         });
     }
@@ -76,72 +87,5 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
                 data: this.config.data
             }
         });
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.config) {
-            if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
-              this.populateConfig();
-            } else {
-              this.updateSeries();
-            }
-        }
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.areaGraphItem.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                yAxis: {
-                    gridLineColor: '#3C3C3C',
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    },
-                    categories: {
-                        color: '#EDEDED',
-                    }
-                },
-            });
-        } else  {
-            this.areaGraphItem.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                yAxis: {
-                    gridLineColor: '#e6e6e6',
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    },
-                    categories: {
-                        color: '#666666',
-                    }
-                },
-            });
-        }
     }
 }

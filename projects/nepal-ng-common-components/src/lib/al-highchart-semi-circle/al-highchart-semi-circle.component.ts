@@ -13,104 +13,126 @@ import * as Highcharts from 'highcharts';
 })
 export class AlHighchartSemiCircleComponent implements OnChanges {
 
-    public semiCircle: any;
-    public themeToggle = false;
-    @ViewChild('semiCircle') semiCircleEl: ElementRef;
 
-    /**
-     * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
-     * an interface
-     */
-    @Input() config: any;
+  public containerWidth: number;
+  public containerHeight: number;
 
-    /*
-     *
-     */
-    private populateConfig = (): void => {
-      this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: 0,
-          plotShadow: false
-        },
-        credits: {
-          enabled: false
-        },
-        title: {
-          text: this.config.title || ''
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
-        },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              enabled: false,
-            },
-            showInLegend: true,
-            startAngle: -90,
-            endAngle: 90,
-            center: ['50%', '75%'],
-            size: '110%'
-          }
-        },
-        series: this.config.series || []
-      });
-    }
+  public semiCircle: any;
+  @ViewChild('semiCircle') semiCircleEl: ElementRef;
+  @ViewChild('semiCircleContainer') semiCircleContainer: ElementRef;
 
-    /*
-     *
-     */
-    private updateSeries = (): void => {
-      this.semiCircle.update({
-        series: this.config.series
-      });
-    }
+  /**
+   * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
+   * an interface
+   */
+  @Input() config: any;
 
-    /*
-     *
-     */
-    ngOnChanges(changes: SimpleChanges): void {
-      if (this.config) {
-        if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
-          this.populateConfig();
-        } else {
-          this.updateSeries();
-        }
+  /*
+   *
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    this.reflow();
+    if (this.config) {
+      if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
+        this.populateConfig();
+      } else {
+        this.updateSeries();
       }
     }
+  }
 
-    /*
-     *
-     */
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    public toggleDarkTheme(): void {
-        if ( this.themeToggle ) {
-            this.semiCircle.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                plotOptions: {
-                    pie: {
-                        borderColor: '#3C3C3C'
-                    }
+  /*
+   *
+   */
+  private populateConfig = (): void => {
+    this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        styledMode: true,
+        width: this.containerWidth,
+        height: this.containerHeight,
+        marginLeft: 50,
+        marginRight: 50,
+        marginBottom: 0,
+        spacingLeft: 0,
+        spacingRight: 0,
+        spacingBottom: 40,
+        spacingTop: 10
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: this.config.title || ''
+      },
+      tooltip: {
+        pointFormat: '{point.y:.0f}',
+        headerFormat: '',
+        followPointer: false,
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            softConnector: false,
+            distance: 15,
+            // tslint:disable-next-line
+            formatter: function() {
+              if ( this.point.y === 0 ) {
+                return null;
+              } else {
+                let count: string;
+                if ( this.point.y > 1000 ) {
+                  count = this.point.y > 1000000 ?
+                    Highcharts.numberFormat( this.point.y / 1000000, 1 ) + 'M' :
+                    Highcharts.numberFormat( this.point.y / 1000, 1 ) + 'K';
+                } else {
+                  count = String(this.point.y);
                 }
-            });
-        } else {
-            this.semiCircle.update({
-                chart: {
-                    backgroundColor: '#ffffff',
+                return count;
+              }
+            }
+          },
+          showInLegend: true,
+          startAngle: -90,
+          endAngle: 90,
+          center: ['50%', '65%'],
+          size: '120%'
+        },
+        series: {
+          events: {
+            // tslint:disable-next-line
+            click: function(event) {
+              event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                detail: {
+                  segment: event.point
                 },
-                plotOptions: {
-                    pie: {
-                        borderColor: '#ffffff'
-                    }
-                }
-            });
+                bubbles: true
+              }));
+            }
+          }
         }
-    }
+      },
+      series: this.config.series || []
+    });
+  }
+
+  /*
+   *
+   */
+  private updateSeries = (): void => {
+    this.semiCircle.update({
+      series: this.config.series
+    });
+  }
+
+  /*
+   *
+   */
+  private reflow(): void {
+    this.containerWidth = this.semiCircleContainer.nativeElement.offsetWidth;
+    this.containerHeight = this.semiCircleContainer.nativeElement.offsetHeight;
+  }
 }

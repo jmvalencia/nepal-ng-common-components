@@ -1,0 +1,16 @@
+{
+    "menus": {
+        "primary": {
+            "description": "Primary Navigation Menu for Usage Guide",
+            "structure": {
+                "@import": "primary.json"
+            }
+        },
+        "user": {
+            "description": "Placeholder user menu",
+            "structure": {
+                "@import": "user.json"
+            }
+        }
+    }
+}

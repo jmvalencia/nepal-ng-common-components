@@ -8,28 +8,29 @@ xdescribe('AlHighchartTreeMapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlHighchartTreeMapComponent ]
-    })
-    .compileComponents();
+      declarations: [AlHighchartTreeMapComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AlHighchartTreeMapComponent);
     component = fixture.componentInstance;
     component.config = [
-        {
-            id: '1',
-            name: 'High',
-            color: '#EF534F'
-        }, {
-            id: '2',
-            name: 'Medium',
-            color: '#FFB840'
-        }, {
-            id: '3',
-            name: 'Info',
-            color: '#EDEDED'
-        }
+      {
+        id: '1',
+        name: 'High',
+        color: '#EF534F'
+      },
+      {
+        id: '2',
+        name: 'Medium',
+        color: '#FFB840'
+      },
+      {
+        id: '3',
+        name: 'Info',
+        color: '#EDEDED'
+      }
     ];
     fixture.detectChanges();
 
@@ -37,16 +38,8 @@ xdescribe('AlHighchartTreeMapComponent', () => {
 
   describe('When the component is initiated', () => {
     it('Should build the component', () => {
-        component.ngOnInit();
-        expect(component).toBeTruthy();
-    });
-  });
-
-  describe('When the theme is toggled', () => {
-    it('Should change the value of the themeToggle variable', () => {
-        component.themeToggle = false;
-        component.toggleTheme();
-        expect(component.themeToggle).toBe(true);
+      component.ngOnInit();
+      expect(component).toBeTruthy();
     });
   });
 });

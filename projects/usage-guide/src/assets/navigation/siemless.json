@@ -1,0 +1,203 @@
+{
+    "name": "Navigation Schema",
+    "description": "Compiled from navigation-schemas/siemless/main.json on Wed Jul 03 2019 06:56:34 GMT-0700 (Pacific Daylight Time)",
+    "menus": {
+        "primary": {
+            "caption": "primary",
+            "children": [
+                {
+                    "caption": "Dashboards",
+                    "properties": {
+                        "iconClass": "dashboard"
+                    },
+                    "action": {
+                        "type": "link",
+                        "location": "cd19:dashboards",
+                        "path": "/#/"
+                    }
+                },
+                {
+                    "caption": "Respond",
+                    "properties": {
+                        "iconClass": "security"
+                    },
+                    "children": [
+                        {
+                            "caption": "Incidents",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:incidents",
+                                "path": "/#/"
+                            }
+                        },
+                        {
+                            "caption": "Health",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:health",
+                                "path": "/#/"
+                            }
+                        },
+                        {
+                            "caption": "Exposures",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:remediations",
+                                "path": "/#/remediations/:accountId"
+                            }
+                        },
+                        {
+                            "caption": "PCI Disputes",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:disputes",
+                                "path": "/#/"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "caption": "Investigate",
+                    "properties": {
+                        "iconClass": "search"
+                    },
+                    "children": [
+                        {
+                            "caption": "Search",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:search",
+                                "path": "/#/"
+                            }
+                        },
+                        {
+                            "caption": "Observations",
+                            "properties": {}
+                        },
+                        {
+                            "caption": "Assets",
+                            "properties": {}
+                        },
+                        {
+                            "caption": "Content Coverage",
+                            "properties": {}
+                        }
+                    ]
+                },
+                {
+                    "caption": "Validate",
+                    "properties": {
+                        "iconClass": "check_circle"
+                    },
+                    "children": [
+                        {
+                            "caption": "Reports",
+                            "properties": {}
+                        },
+                        {
+                            "caption": "Activity",
+                            "properties": {}
+                        }
+                    ]
+                },
+                {
+                    "caption": "Configure",
+                    "properties": {
+                        "iconClass": "settings"
+                    },
+                    "children": [
+                        {
+                            "caption": "Deployments",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:config",
+                                "path": "/#/deployments/:accountId"
+                            }
+                        },
+                        {
+                            "caption": "Endpoints",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:endpoints",
+                                "path": "/#/dashboard/:accountId"
+                            }
+                        },
+                        {
+                            "caption": "PCI Scanning",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:overview",
+                                "path": "/#/exposures/scans/:accountId"
+                            }
+                        },
+                        {
+                            "caption": "Automation",
+                            "properties": {}
+                        }
+                    ]
+                },
+                {
+                    "caption": "Manage",
+                    "properties": {
+                        "iconClass": "supervised_user_circle"
+                    },
+                    "children": [
+                        {
+                            "caption": "Users",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:accounts",
+                                "path": "/#/aims/users"
+                            }
+                        },
+                        {
+                            "caption": "Accounts",
+                            "properties": {}
+                        },
+                        {
+                            "caption": "Notifications",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:accounts",
+                                "path": "/#/notifications/subscriptions/incidents"
+                            }
+                        },
+                        {
+                            "caption": "Integrations",
+                            "properties": {},
+                            "action": {
+                                "type": "link",
+                                "location": "cd17:accounts",
+                                "path": "/users/developer/index.html"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "user": {
+            "caption": "user",
+            "children": [
+                {
+                    "caption": "Logout",
+                    "properties": {},
+                    "action": {
+                        "type": "trigger",
+                        "trigger": "Navigation.User.Signout"
+                    }
+                }
+            ]
+        }
+    },
+    "namedRoutes": {}
+}

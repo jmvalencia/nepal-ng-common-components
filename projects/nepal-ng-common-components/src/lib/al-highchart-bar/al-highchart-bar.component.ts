@@ -15,17 +15,27 @@ export class AlHighchartBarComponent implements OnChanges {
     @ViewChild('barChart') chart: ElementRef;
 
     public barChart: any;
-    public themeToggle = false;
     /**
      * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
      * an interface
      */
     @Input() config: any;
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.config) {
+            if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
+              this.populateConfig();
+            } else {
+              this.updateSeries();
+            }
+        }
+    }
+
     private populateConfig = (): void => {
         this.barChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
-                type: 'bar'
+                type: 'bar',
+                styledMode: true
             },
             title: {
                 text: ''
@@ -45,6 +55,17 @@ export class AlHighchartBarComponent implements OnChanges {
             plotOptions: {
                 series: {
                     stacking: 'normal',
+                    events: {
+                        // tslint:disable-next-line
+                        click: function(event) {
+                          event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                            detail: {
+                              segment: event.point
+                            },
+                            bubbles: true
+                          }));
+                        }
+                    }
                 }
             },
             series: this.config.series
@@ -55,52 +76,5 @@ export class AlHighchartBarComponent implements OnChanges {
         this.barChart.update({
             series: this.config.series
         });
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (this.config) {
-            if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
-              this.populateConfig();
-            } else {
-              this.updateSeries();
-            }
-        }
-    }
-
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
-    }
-
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.barChart.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                yAxis: {
-                    gridLineColor: '#3C3C3C',
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#3C3C3C'
-                    }
-                }
-            });
-        } else  {
-            this.barChart.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                yAxis: {
-                    gridLineColor: '#e6e6e6',
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#ffffff'
-                    }
-                },
-            });
-        }
     }
 }

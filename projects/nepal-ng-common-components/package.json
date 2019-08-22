@@ -1,6 +1,6 @@
 {
   "name": "@al/ng-common-components",
-  "version": "0.1.0",
+  "version": "0.2.6",
   "license": "MIT",
   "description": "Alert Logic Component Library for Angular projects",
   "author": {
@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "@al/design": "^0.1.2",
-    "@al/session": "^1.0.0-beta.6",
+    "@al/session": "^1.0.0",
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
     "@ng-select/ng-select": "^2.20.0",

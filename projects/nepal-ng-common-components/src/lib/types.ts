@@ -1,3 +1,5 @@
+import { PlotBoxplotTooltipDateTimeLabelFormatsOptions } from 'highcharts';
+
 /*
  * @author Stephen Jones <stephen.jones@alertlogic.com>
  * @copyright Alert Logic, Inc 2019
@@ -34,6 +36,7 @@ export enum WidgetClickType {
   Primary,
   Link1,
   Link2,
+  DrillDown
 }
 
 /*
@@ -49,7 +52,27 @@ export enum WidgetContentType {
   ActivityGauge,
   Bar,
   Area,
+  Bubble
 }
+
+
+/*
+ * Zero state reason for not displaying a chart
+ */
+export enum ZeroStateReason {
+  API,
+  Entitlement,
+  Zero
+}
+
+/*
+ *
+ */
+export interface ZeroState {
+  nodata: boolean;
+  reason: ZeroStateReason;
+}
+
 
 /*
  * Widget content - can be anything such as a chart, grid, number etc
@@ -77,11 +100,40 @@ export interface Widget {
   hideSettings?: boolean;
   content?: WidgetContent;
   metrics: WidgetMetrics;
-  actionLabels?: {
-    primary?: string;
-    link1?: string;
-    link2?: string;
+  actions?: {
+    primary?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
+    link1?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
+    link2?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
+    settings?: string;
+    drilldown?: {
+      name: string,
+      action?: WidgetButtonAction;
+    };
   };
+}
+
+export enum WidgetButtonActionMethods {
+  ExportCSV = 1,
+  NoData,
+  Support,
+  Refresh,
+}
+
+export interface WidgetButtonAction {
+  target_app?: string;
+  path?: string;
+  url?: string;
+  noData?: boolean;
+  method?: WidgetButtonActionMethods;
 }
 
 /**
@@ -107,6 +159,8 @@ export interface TableListBody {
      * Define the type of table, used for styling
      */
     type?: string;
+    recordLink?: string;
+    class?: string;
 }
 
 export interface TableListConfig {
@@ -129,7 +183,7 @@ export interface ActivityGaugeConfig {
     text1: string;
     text2: string;
     title?: string;
-    color?: string;
+    className?: string;
     backgroundColor?: string;
 }
 

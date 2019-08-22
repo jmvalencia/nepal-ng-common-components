@@ -231,8 +231,31 @@
               <div class="ui-g-12"><a href="http://www.primefaces.org" target="_blank">Link (to Homepage)</a></div>
 
           </div>
+
+      </div>
+
+      <div class="card card-w-title">
+          <h1>Buttons</h1>
+
+          <div class="ui-g">
+
+            <div class="ui-g-12">
+                <div class="card no-margin">
+                    <h1>Al-Toast</h1>
+                    <al-toast key="myToast"></al-toast>
+                    <!-- <al-toast (buttonClicked)="closeAlToast($event)"></al-toast> -->
+
+                    <button type="button" pButton (click)="showAlToast('custom')" label="Custom" class="ui-button-info"></button>
+                    <!-- <button type="button" pButton (click)="showAlToast('buttons')" label="Confirmation" class="ui-button-info"></button>
+                    <button type="button" pButton (click)="showAlToast('message')" label="Info" class="ui-button-info"></button> -->
+                </div>
+            </div>
+
+
+
+          </div>
+
       </div>
 
   </div>
 </div>
-   

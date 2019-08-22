@@ -6,7 +6,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import {HomeComponent} from './components/home/home.component';
 
-import { NepalNgCommonComponentsModule } from 'nepal-ng-common-components';
+import {
+    NepalNgCommonComponentsModule,
+    NepalNgNavigationModule
+} from 'nepal-ng-common-components';
 import { TypographyComponent } from './components/typography/typography.component';
 import { ColourPalettesComponent } from './components/colour-palettes/colour-palettes.component';
 import { DashboardExamplesComponent } from './components/dashboard-examples/dashboard-examples.component';
@@ -33,7 +36,6 @@ import { AppMenuComponent, AppSubMenuComponent } from './app.menu.component';
 
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import { CodeHighlighterDirective } from './pcode.directive';
-
 
 const appRoutes: Routes = [
   {
@@ -115,7 +117,8 @@ const appRoutes: Routes = [
     ChartModule,
     BrowserModule,
     NepalNgCommonComponentsModule,
-    RouterModule.forRoot(appRoutes),
+    NepalNgNavigationModule,
+    RouterModule.forRoot(appRoutes, { useHash: true } ),
     HttpClientModule,
     CodeHighlighterModule
   ],

@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import {PrimeNgModule} from './primeng.module';
+import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PrimeNgModule } from './primeng/primeng.module';
 
 import * as components from './components';
+import { AlToastService } from './al-toast/al-toast.service';
 
 @NgModule({
   declarations: [
-    components.ALL_COMPONENTS
+    components.ALL_COMPONENTS,
   ],
   imports: [
-    BrowserAnimationsModule,
-    PrimeNgModule,
-    NgSelectModule
+    CommonModule,
+    NgSelectModule,
+    PrimeNgModule
   ],
   exports: [
     ...components.ALL_COMPONENTS,
-    PrimeNgModule,
-    NgSelectModule
+    NgSelectModule,
+    PrimeNgModule
+  ],
+  providers: [
+    AlToastService
   ]
 })
 export class NepalNgCommonComponentsModule { }

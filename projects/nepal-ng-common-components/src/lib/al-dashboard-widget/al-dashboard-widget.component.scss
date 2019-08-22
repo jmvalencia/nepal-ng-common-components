@@ -16,27 +16,27 @@ $separator-color: #ededed;
     .content {
         height: 0;
         flex: 1;
+        &.auto-scroll {
+          overflow: auto;
+        }
     }
 
     button, a {
         font-size: 14px;
         text-transform: uppercase;
         margin-left: 16px;
-        &.link {
-            background-color: $background;
-        }
-        &[pbutton] {
-            background-color: $accent-color;
-            border-color: $accent-color;
-        }
     }
 
     a {
         color: $accent-color;
         text-decoration: none;
         cursor: pointer;
+        &[pbutton] {
+          color: $background;
+          padding: 0 16px;
+      }
     }
-    
+
     header, footer {
         display: flex;
         flex-direction: row;
@@ -44,22 +44,30 @@ $separator-color: #ededed;
         padding-right: 12px;
         padding-left: 24px;
     }
-    
+
     header {
         height: $header-height;
         justify-content: space-between;
         border-bottom: 1px solid $separator-color;
-        h1 {
-            color: $accent-color;
-            font-size: 18px;
-            font-weight: normal;
+        &>div {
+          flex: 1;
+          min-width: 0;
+          display: inline-grid;
+          h1 {
+              color: $accent-color;
+              font-size: 18px;
+              font-weight: normal;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+          }
         }
         a {
             color: $accent-color;
             font-size: 24px;
         }
     }
-    
+
     footer {
         height: $footer-height;
         justify-content: flex-end;

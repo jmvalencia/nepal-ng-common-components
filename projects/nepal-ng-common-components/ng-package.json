@@ -6,7 +6,13 @@
     "cssUrl": "inline",
     "umdModuleIds": {
       "@al/session" : "@al/session",
+      "@al/aims" : "@al/aims",
+      "@al/subscriptions" : "@al/subscriptions",
+      "@al/common/locator" : "@al/common/locator",
+      "@al/common/schema-validator" : "@al/common/utility",
+      "@al/common" : "@al/common",
       "primeng/accordion" : "primeng/accordion",
+      "primeng/api" : "primeng/api",
       "primeng/autocomplete" : "primeng/autocomplete",
       "primeng/breadcrumb" : "primeng/breadcrumb",
       "primeng/button" : "primeng/button",

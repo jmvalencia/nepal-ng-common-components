@@ -1,6 +1,4 @@
-import { ALAppHeaderComponent } from './al-app-header/al-app-header.component';
-import { ALNavHeaderComponent } from './al-nav-header/al-nav-header.component';
-import { ALSideNavComponent } from './al-sidenav/al-sidenav.component';
+import { AlHighchartBubbleComponent } from './al-highchart-bubble/al-highchart-bubble.component';
 import { AlHighchartColumnComponent } from './al-highchart-column/al-highchart-column.component';
 import { AlHighchartSemiCircleComponent } from './al-highchart-semi-circle/al-highchart-semi-circle.component';
 import { AlHighchartTreeMapComponent } from './al-highchart-treemap/al-highchart-treemap.component';
@@ -12,24 +10,47 @@ import { AlDropdownFilterComponent } from './al-dropdown-filter/al-dropdown-filt
 import { AlCountSummaryComponent } from './al-count-summary/al-count-summary.component';
 import { AlHighchartAreaGraphComponent } from './al-highchart-area-graph/al-highchart-area-graph.component';
 import { AlHighchartBarComponent } from './al-highchart-bar/al-highchart-bar.component';
+import { AlIdentityIconComponent } from './al-identity-icon/al-identity-icon.component';
+import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-zero-data.component';
+import { AlToastComponent } from './al-toast/al-toast.component';
+import { AlFeedbackComponent } from './al-feedback/al-feedback.component';
+import { AlTutorialComponent } from './al-tutorial/al-tutorial.component';
 
 const ALL_COMPONENTS = [
+  AlHighchartBubbleComponent,
   AlHighchartColumnComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
   AlDetailedTableListComponent,
   AlDashboardWidgetComponent,
-  ALAppHeaderComponent,
-  ALNavHeaderComponent,
-  ALSideNavComponent,
   AlHighchartsActivityGaugeComponent,
   AlDashboardLayoutComponent,
   AlDropdownFilterComponent,
   AlCountSummaryComponent,
   AlHighchartAreaGraphComponent,
-  AlHighchartBarComponent
+  AlHighchartBarComponent,
+  AlIdentityIconComponent,
+  AlZeroContentDataComponent,
+  AlToastComponent,
+  AlFeedbackComponent,
+  AlTutorialComponent
 ];
 
 export {
-  ALL_COMPONENTS
+  ALL_COMPONENTS,
+  AlHighchartBubbleComponent,
+  AlHighchartColumnComponent,
+  AlHighchartSemiCircleComponent,
+  AlHighchartTreeMapComponent,
+  AlDetailedTableListComponent,
+  AlDashboardWidgetComponent,
+  AlHighchartsActivityGaugeComponent,
+  AlDashboardLayoutComponent,
+  AlDropdownFilterComponent,
+  AlCountSummaryComponent,
+  AlHighchartAreaGraphComponent,
+  AlHighchartBarComponent,
+  AlToastComponent,
+  AlFeedbackComponent,
+  AlTutorialComponent
 };

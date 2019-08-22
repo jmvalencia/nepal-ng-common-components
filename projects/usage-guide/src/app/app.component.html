@@ -1,21 +1,3 @@
-
-<div class="layout-wrapper layout-wrapper-static"
-[ngClass]="{'layout-wrapper-active': mobileMenuActive,
-            'layout-menu-horizontal': layoutMode === 'horizontal',
-            'layout-rtl': isRTL}">
-
-
-  <app-menu [reset]="resetMenu"></app-menu>
-  <div class="layout-main">
-    <p-toolbar styleClass="test">
-      <div class="ui-toolbar-group-left">
-          <span>Alert Logic Component Library for Angular Applications</span>
-      </div>
-    </p-toolbar>
-    <app-breadcrumb></app-breadcrumb>
-    <div style="padding: 24px;">
-        <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
-
+<al-navigation-frame [schema]="'usage-guide'" [experience]="'default'">
+    <router-outlet></router-outlet>
+</al-navigation-frame>

@@ -1,14 +1,21 @@
 <div class="dashboard-widget" id="db-widget-${{config.id}{">
     <header>
-        <h1 title="{{config.title}}">{{config.title}}</h1>
-        <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a>
+        <div>
+          <h1 title="{{config.title}}">{{config.title}}</h1>
+        </div>
+        <!-- <div> -->
+        <!--   TODO - - PUT BACK IN WHEN SETTINGS HAS BEEN DEFINED <a *ngIf="!config.hideSettings === true" (click)="settingsClicked()" class="link"><i class="pi pi-cog"></i></a> -->
+        <!-- </div> -->
     </header>
-    <div class="content">
+    <div class="content" [class.auto-scroll]="config.content?.type === contentType.TableListSummary" (data-element-clicked)="dataElementClicked($event)">
         <ng-content></ng-content>
     </div>
     <footer *ngIf="hasActions">
-        <a (click)="link2Clicked()" *ngIf="config.actionLabels.link2" class="link">{{config.actionLabels.link2}}</a>
-        <a (click)="link1Clicked()" *ngIf="config.actionLabels.link1" class="link">{{config.actionLabels.link1}}</a>
-        <button pButton (click)="primaryClicked()" *ngIf="config.actionLabels.primary" label="{{config.actionLabels.primary}}"></button>
+        <button pButton (click)="link2Clicked()" *ngIf="config.actions.link2" label="{{config.actions.link2.name}}" class="flat ui-button"></button>
+        <button pButton (click)="link1Clicked()" *ngIf="config.actions.link1" label="{{config.actions.link1.name}}" class="flat ui-button"></button>
+        <ng-template [ngIf]="config.actions.primary && config.actions.primary.action">
+          <button pButton (click)="primaryClicked()" *ngIf="!config.actions.primary.action.url" label="{{config.actions.primary.name}}"></button>
+          <a pButton href="{{config.actions.primary.action.url}}" *ngIf="config.actions.primary.action.url">{{config.actions.primary.name}}</a>
+        </ng-template>
     </footer>
 </div>

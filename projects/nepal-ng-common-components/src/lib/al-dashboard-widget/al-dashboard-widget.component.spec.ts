@@ -51,10 +51,16 @@ describe('AlDashboardWidgetComponent', () => {
             expect(component.hasActions).toEqual(false);
         });
 
-        it('should ste hasActions to true when an action label is passed in', () => {
+        it('should set hasActions to true when an action label is passed in', () => {
             Object.assign(component.config, {
-                actionLabels: {
-                    primary: 'Primary'
+                actions: {
+                    primary: {
+                      name: 'Primary',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
@@ -69,8 +75,14 @@ describe('AlDashboardWidgetComponent', () => {
     describe('when clicking the action buttons / links', () => {
         it('should emit the primary event when the primary button is clicked', () => {
             Object.assign(component.config, {
-                actionLabels: {
-                    primary: 'Primary'
+                actions: {
+                    primary: {
+                      name: 'Primary',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
@@ -80,9 +92,33 @@ describe('AlDashboardWidgetComponent', () => {
             expect(eventSpy).toHaveBeenCalled();
         });
 
-        it('should emit the settings event when the settings button is clicked', () => {
+        it('should emit the primary event when the drill down button is clicked', () => {
             Object.assign(component.config, {
-                actionLabels: {
+                actions: {
+                    drilldown: {
+                      name: '',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
+                }
+            });
+
+            const eventSpy = jasmine.createSpy();
+            fixture.nativeElement.addEventListener('view-filtered-records', eventSpy);
+            const ev: CustomEventInit = {
+              detail: {
+                recordLink: 'foo/bar'
+              }
+            };
+            component.dataElementClicked(ev);
+            expect(eventSpy).toHaveBeenCalled();
+        });
+
+        xit('should emit the settings event when the settings button is clicked', () => {
+            Object.assign(component.config, {
+                actions: {
                     settings: 'Settings'
                 }
             });
@@ -95,8 +131,14 @@ describe('AlDashboardWidgetComponent', () => {
 
         it('should emit the link 1 event when the link 1 link is clicked', () => {
             Object.assign(component.config, {
-                actionLabels: {
-                    link1: 'Link 1'
+                actions: {
+                    link1: {
+                      name: 'Link 1',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 
@@ -108,8 +150,14 @@ describe('AlDashboardWidgetComponent', () => {
 
         it('should emit the link 2 event when the link 2 link is clicked', () => {
             Object.assign(component.config, {
-                actionLabels: {
-                    link2: 'Link 2'
+                actions: {
+                    link2: {
+                      name: 'Link 2',
+                      action: {
+                        target_app: 'foo',
+                        path: 'bar'
+                      }
+                    }
                 }
             });
 

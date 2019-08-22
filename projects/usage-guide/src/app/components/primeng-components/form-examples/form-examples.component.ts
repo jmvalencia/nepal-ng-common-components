@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SelectItem, MenuItem } from 'primeng/primeng';
 import { CountryService } from '../../../service/countryservice';
 import { BreadcrumbService } from '../../../breadcrumb.service';
+import { AlToastMessage } from 'projects/nepal-ng-common-components/src/lib/al-toast/types';
+import { AlToastService } from 'projects/nepal-ng-common-components/src/lib/al-toast/al-toast.service';
 
 @Component({
   selector: 'app-form-examples',
@@ -55,11 +57,17 @@ export class FormExamplesComponent implements OnInit {
 
   color: string;
 
-  constructor(private breadcrumbService: BreadcrumbService) {
+  constructor(private breadcrumbService: BreadcrumbService,
+    private alToastService: AlToastService) {
     this.breadcrumbService.setItems([
       { label: 'Base Components' },
       { label: 'Forms', routerLink: ['/form-examples'] }
     ]);
+    this.alToastService.getButtonEmitter('myToast').subscribe(
+      (button) => {
+        this.alToastService.clearMessages('myToast');
+      }
+    );
   }
 
   ngOnInit() {
@@ -132,5 +140,46 @@ export class FormExamplesComponent implements OnInit {
     setTimeout(() => {
       this.filteredBrands = this.brands;
     }, 100);
+  }
+
+  showAlToast(key: string) {
+    switch (key) {
+      case 'custom':
+        const alToastMessage: AlToastMessage = {
+          sticky: true,
+          closable: false,
+          data: {
+            title: 'This is the title',
+            message: 'This is a test message, here you can put whatever you want, choose wisely your words',
+            iconClass: 'pi-exclamation-triangle',
+            buttons: [
+              {
+                key: 'dont-show',
+                label: 'don\'t show this message again',
+                class: 'p-col secondaryButton',
+                textAlign: 'left'
+              },
+              {
+                key: 'close',
+                label: 'not right now',
+                class: 'p-col-fixed',
+                textAlign: 'right'
+              },
+              {
+                key: 'upgrade',
+                label: 'hell yeah!',
+                class: 'p-col-fixed',
+                textAlign: 'right'
+              }
+            ]
+          }
+        };
+        this.alToastService.showMessage('myToast', alToastMessage);
+        break;
+    }
+  }
+
+  clearAlToast() {
+    this.alToastService.clearMessages('myToast');
   }
 }

@@ -16,7 +16,7 @@ export class TableChartsComponent {
             { name: 'Deployment1', field: 'deployment'}
         ],
         body: [
-            { summary: '123.234.45', count: '12.3k', deployment: 'AWS Account' },
+            { summary: '123.234.45', count: '12.3k', deployment: 'AWS Account', recordLink: 'bla/123' },
             { summary: '123.234.456', count: '12.36', deployment: 'AWS Account2' },
             { summary: '123.4.45', count: '12', deployment: 'AWS Account 1' }
         ]

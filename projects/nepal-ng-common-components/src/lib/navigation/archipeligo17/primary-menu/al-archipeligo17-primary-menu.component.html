@@ -1,0 +1,35 @@
+<div class="primary-navigation">
+  <section class="navigation-bar" *ngIf="viewReady">
+    <aside>
+      <nav class="mainNav">
+        <ul *ngIf="primaryItems.length">
+          <ng-template ngFor let-menuItem [ngForOf]="primaryItems">
+            <li *ngIf="menuItem.visible"
+                [ngClass]="menuItem.properties.consolidated_css_classes"
+                (click)="onClick(menuItem,$event)"
+                (mouseover)="onHoverStart(menuItem,$event)">
+                <a [ngClass]="{'active':menuItem.activated}" 
+                    [href]="menuItem.href || ''"
+                    (click)="onClick(menuItem,$event)">{{menuItem.caption}}</a>
+            </li>
+          </ng-template>
+        </ul>
+      </nav>
+      <nav class="subNav" *ngIf="secondaryItems.length">
+        <ul>
+            <ng-template ngFor let-menuItem [ngForOf]="secondaryItems">
+                <li *ngIf="menuItem.visible"
+                    (click)="onClick(menuItem,$event)"
+                    [ngClass]="menuItem.properties.consolidated_css_classes"
+                    (mouseover)="onHoverStart(menuItem,$event)">
+                  <a [ngClass]="{'active': menuItem.activated}"
+                      [href]="menuItem.href || ''"
+                      [target]="menuItem.properties.target || ''"
+                      (click)="onClick(menuItem,$event)">{{menuItem.caption}} <i *ngIf="menuItem.properties.target === '_blank'" class="material-icons">launch</i></a>
+              </li>
+            </ng-template>
+        </ul>
+      </nav>
+    </aside>
+  </section>
+</div>

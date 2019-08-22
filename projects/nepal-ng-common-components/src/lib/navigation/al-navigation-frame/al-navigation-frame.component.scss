@@ -1,0 +1,82 @@
+@import "~@al/design/styles/palette.scss";
+@import "~@al/design/styles/variables.scss";
+@import "~@al/design/styles/utility.scss";
+
+::ng-deep .al-sidenav {
+  top:unset;
+  padding: 0!important; //blerghh
+  // TOD - below could be in a mixin??
+  -webkit-box-shadow: 5.5px 0px 5px 0px rgba(0,0,0,0.24);
+  -moz-box-shadow: 5.5px 0px 5px 0px rgba(0,0,0,0.24);
+  box-shadow: 5.5px 0px 5px 0px rgba(0,0,0,0.24);
+  width: 248px;
+}
+
+.sidenav-container {
+
+  height: 100%;
+  font-size: 14px;
+  color: al-color($al-gray, 500);
+  .sidenav-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 60px;
+      border-bottom: 1px solid rgba(0,0,0, 0.16);
+      padding-left: 24px;
+  }
+
+  .sidenav-items {
+      .menu-item-parent {
+          display: flex;
+          align-items: center;
+          margin: 12px 24px 12px 60px;
+
+          &.active {
+              font-weight: bold;
+          }
+
+          > span {
+              margin-left: 12px;
+              &:hover {
+                  font-weight: bold;
+                  cursor: pointer;
+              }
+          }
+      }
+
+      .menu-item-children-container {
+          margin-left: 24px;
+          margin-right: 24px;
+
+          .menu-item-child{
+              margin-left: 46px;
+              border-left: 2px solid rgba(0,0,0, 0.16);
+              height: 36px;
+              display: flex;
+              align-items: center;
+              &:hover {
+                  font-weight: bold;
+                  border-left: 3px solid al-color($al-gray, 500);
+                  cursor: pointer;
+              }
+              > span {
+                  margin-left: 24px;
+              }
+          }
+      }
+  }
+}
+
+:host {
+    .navigation-frame-container {
+        .nav-container {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        .mainContent {
+            padding-top: 100px;
+        }
+    }
+}

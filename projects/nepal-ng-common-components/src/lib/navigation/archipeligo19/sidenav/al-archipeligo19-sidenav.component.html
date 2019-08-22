@@ -1,0 +1,24 @@
+<p-sidebar [(visible)]="displayNav" styleClass="al-sidenav" [modal]="false" [showCloseIcon]="false">
+    <div class="sidenav-container">
+        <div class="sidenav-items" *ngIf="menu">
+            <div class="top-items">
+                <ng-template ngFor let-menuItem [ngForOf]="menu.children">
+                    <div class="menu-item-container" *ngIf="menuItem.visible">
+                        <div class="menu-item-parent" (click)="toggleItemExpanded(menuItem);"><i class="material-icons">{{menuItem.properties.iconClass}}</i><span>{{menuItem.caption}}</span></div>
+                        <div class="menu-item-children-container" [hidden]="!menuItem.properties.expanded" *ngIf="menuItem.children">
+                            <ng-template ngFor let-childItem [ngForOf]="menuItem.children">
+                                <div class="menu-item-child" *ngIf="childItem.visible">
+                                    <span (click)="dispatch(childItem,$event)">{{childItem.caption}}</span>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="bottom-elements p-grid p-dir-col p-nogutter">
+                <div (click)="leaveBeta()" class="menu-item-parent bottom-border"><i class="material-icons">subdirectory_arrow_left</i><span>Leave BETA</span></div>
+                <div class="menu-item-parent"><i class="fa fa-question-circle"></i><span>Support</span></div>
+            </div>
+        </div>
+    </div>
+</p-sidebar>

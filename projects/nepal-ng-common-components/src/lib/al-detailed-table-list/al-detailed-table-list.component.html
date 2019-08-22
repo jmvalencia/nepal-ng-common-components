@@ -1,15 +1,15 @@
-<p-table [columns]="tableConfig.headers" [value]="tableConfig.body" [ngClass]="{'darkMode': themeToggle }">
+<p-table [columns]="tableConfig.headers" [value]="tableConfig.body">
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let col of tableConfig.headers"
-            [class]='col.style ? col.style + " " + col.field : col.field'>{{col.name}}</th>
+            [class]='col.style ? col.style + " " + col.class : col.class'>{{col.name}}</th>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-body>
-       <tr>
+       <tr (click)="onDataRowClick(body)">
            <td *ngFor="let col of tableConfig.headers"
-            [class]='col.style ? col.field + " " + col.style : col.field'
+            [class]='col.style ? col.style + " " + col.class : col.class'
             [ngClass]='body.status ? body.status : ""'>{{body[col.field]}}</td>
        </tr>
     </ng-template>

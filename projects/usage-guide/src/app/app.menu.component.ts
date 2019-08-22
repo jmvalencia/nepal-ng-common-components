@@ -24,42 +24,43 @@ export class AppMenuComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.model = [{
-      label: 'Home', icon: 'home', routerLink: ['']
-    },
-    {
-      label: 'Theming',
-      items: [
-        { label: 'Typography', icon: 'format-size', routerLink: ['/typography'] },
-        { label: 'Colour Palettes', icon: 'palette', routerLink: ['/colour-palettes'] }
-      ]
-    },
-    {
-      label: 'Base Components',
-      items: [
-        { label: 'Forms', icon: 'create', routerLink: ['/form-examples']},
-        { label: 'Data', icon: 'sync', routerLink: ['/data-examples'] },
-        { label: 'Panels', icon: 'content-copy', routerLink: ['/panel-examples'] },
-        { label: 'Overlays', icon: 'flip-to-front', routerLink: ['/overlay-examples']},
-        { label: 'Menus', icon: 'menu', routerLink: ['/menu-examples'] },
-        { label: 'Messages', icon: 'message', routerLink: ['/message-examples']},
-        { label: 'Utilities', icon: 'build', routerLink: ['/utilities'] }
-      ]
-    },
-    {
-      label: 'Visualisations',
-      items: [
-        { label: 'Highcharts', icon: 'insert-chart', routerLink: ['/highcharts']},
-        { label: 'Table Charts', icon: 'grid-on', routerLink: ['/table-charts']},
-      ]
-    },
-    {
-      label: 'Examples',
-      items: [
-        { label: 'Dashboard Examples', icon: 'dashboard', routerLink: ['/dashboard-examples']},
-      ]
-    }];
-    }
+    this.model = [
+      {
+        label: 'Home', icon: 'home', routerLink: ['']
+      },
+      {
+        label: 'Theming',
+        items: [
+          { label: 'Typography', icon: 'format-size', routerLink: ['/typography'] },
+          { label: 'Colour Palettes', icon: 'palette', routerLink: ['/colour-palettes'] }
+        ]
+      },
+      {
+        label: 'Base Components',
+        items: [
+          { label: 'Forms', icon: 'create', routerLink: ['/form-examples'] },
+          { label: 'Data', icon: 'sync', routerLink: ['/data-examples'] },
+          { label: 'Panels', icon: 'content-copy', routerLink: ['/panel-examples'] },
+          { label: 'Overlays', icon: 'flip-to-front', routerLink: ['/overlay-examples'] },
+          { label: 'Menus', icon: 'menu', routerLink: ['/menu-examples'] },
+          { label: 'Messages', icon: 'message', routerLink: ['/message-examples'] },
+          { label: 'Utilities', icon: 'build', routerLink: ['/utilities'] }
+        ]
+      },
+      {
+        label: 'Visualisations',
+        items: [
+          { label: 'Highcharts', icon: 'insert-chart', routerLink: ['/highcharts'] },
+          { label: 'Table Charts', icon: 'grid-on', routerLink: ['/table-charts'] },
+        ]
+      },
+      {
+        label: 'Examples',
+        items: [
+          { label: 'Dashboard Examples', icon: 'dashboard', routerLink: ['/dashboard-examples'] },
+        ]
+      }];
+  }
 }
 
 @Component({
@@ -163,7 +164,7 @@ export class AppSubMenuComponent {
 
     // execute command
     if (item.command) {
-      item.command({ originalEvent: event, item });
+      item.command({ item, originalEvent: event });
     }
 
     // prevent hash change

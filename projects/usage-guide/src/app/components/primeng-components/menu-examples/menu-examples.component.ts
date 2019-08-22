@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
-import {BreadcrumbService} from '../../../breadcrumb.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MenuItem } from 'primeng/primeng';
+import { BreadcrumbService } from '../../../breadcrumb.service';
 
 @Component({
     templateUrl: './menu-examples.component.html',
@@ -29,52 +29,53 @@ export class MenuExamplesComponent implements OnInit {
 
     constructor(private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
-            {label: 'Components'},
-            {label: 'Menus', routerLink: ['/menus']}
+            { label: 'Components' },
+            { label: 'Menus', routerLink: ['/menus'] }
         ]);
     }
 
     ngOnInit() {
         this.breadcrumbItems = [];
-        this.breadcrumbItems.push({label: 'Categories'});
-        this.breadcrumbItems.push({label: 'Sports'});
-        this.breadcrumbItems.push({label: 'Football'});
-        this.breadcrumbItems.push({label: 'Countries'});
-        this.breadcrumbItems.push({label: 'Spain'});
-        this.breadcrumbItems.push({label: 'F.C. Barcelona'});
-        this.breadcrumbItems.push({label: 'Squad'});
-        this.breadcrumbItems.push({label: 'Lionel Messi', url: 'https://en.wikipedia.org/wiki/Lionel_Messi'});
+        this.breadcrumbItems.push({ label: 'Categories' });
+        this.breadcrumbItems.push({ label: 'Sports' });
+        this.breadcrumbItems.push({ label: 'Football' });
+        this.breadcrumbItems.push({ label: 'Countries' });
+        this.breadcrumbItems.push({ label: 'Spain' });
+        this.breadcrumbItems.push({ label: 'F.C. Barcelona' });
+        this.breadcrumbItems.push({ label: 'Squad' });
+        this.breadcrumbItems.push({ label: 'Lionel Messi', url: 'https://en.wikipedia.org/wiki/Lionel_Messi' });
 
         this.tabMenuItems = [
-            {label: 'Stats', icon: 'ui-icon-insert-chart'},
-            {label: 'Calendar', icon: 'ui-icon-date-range'},
-            {label: 'Documentation', icon: 'ui-icon-book'},
-            {label: 'Support', icon: 'ui-icon-help-outline'},
-            {label: 'Social', icon: 'ui-icon-public'}
+            { label: 'Stats', icon: 'ui-icon-insert-chart' },
+            { label: 'Calendar', icon: 'ui-icon-date-range' },
+            { label: 'Documentation', icon: 'ui-icon-book' },
+            { label: 'Support', icon: 'ui-icon-help-outline' },
+            { label: 'Social', icon: 'ui-icon-public' }
         ];
 
         this.tieredItems = [
             {
                 label: 'File',
                 icon: 'ui-icon-folder',
-                items: [{
+                items: [
+                    {
                         label: 'New',
                         icon: 'ui-icon-add',
                         items: [
-                            {label: 'Project'},
-                            {label: 'Other'},
+                            { label: 'Project' },
+                            { label: 'Other' },
                         ]
                     },
-                    {label: 'Open'},
-                    {label: 'Quit'}
+                    { label: 'Open' },
+                    { label: 'Quit' }
                 ]
             },
             {
                 label: 'Edit',
                 icon: 'ui-icon-edit',
                 items: [
-                    {label: 'Undo', icon: 'ui-icon-undo'},
-                    {label: 'Redo', icon: 'ui-icon-redo'}
+                    { label: 'Undo', icon: 'ui-icon-undo' },
+                    { label: 'Redo', icon: 'ui-icon-redo' }
                 ]
             },
             {
@@ -99,7 +100,8 @@ export class MenuExamplesComponent implements OnInit {
                             {
                                 label: 'File'
                             }
-                    ]}
+                        ]
+                    }
                 ]
             },
             {
@@ -110,15 +112,15 @@ export class MenuExamplesComponent implements OnInit {
                         label: 'Edit',
                         icon: 'ui-icon-refresh',
                         items: [
-                            {label: 'Save', icon: 'ui-icon-save'},
-                            {label: 'Update', icon: 'ui-icon-update'},
+                            { label: 'Save', icon: 'ui-icon-save' },
+                            { label: 'Update', icon: 'ui-icon-update' },
                         ]
                     },
                     {
                         label: 'Other',
                         icon: 'ui-icon-call',
                         items: [
-                            {label: 'Delete', icon: 'ui-icon-delete'}
+                            { label: 'Delete', icon: 'ui-icon-delete' }
                         ]
                     }
                 ]
@@ -128,20 +130,21 @@ export class MenuExamplesComponent implements OnInit {
             }
         ];
 
-        this.items = [{
-            label: 'File',
-            items: [
-                {label: 'New', icon: 'ui-icon-add'},
-                {label: 'Open', icon: 'ui-icon-open-in-browser'}
-            ]
-        },
-        {
-            label: 'Edit',
-            items: [
-                {label: 'Undo', icon: 'ui-icon-undo'},
-                {label: 'Redo', icon: 'ui-icon-redo'}
-            ]
-        }];
+        this.items = [
+            {
+                label: 'File',
+                items: [
+                    { label: 'New', icon: 'ui-icon-add' },
+                    { label: 'Open', icon: 'ui-icon-open-in-browser' }
+                ]
+            },
+            {
+                label: 'Edit',
+                items: [
+                    { label: 'Undo', icon: 'ui-icon-undo' },
+                    { label: 'Redo', icon: 'ui-icon-redo' }
+                ]
+            }];
 
         this.megaMenuItems = [
             {
@@ -150,21 +153,21 @@ export class MenuExamplesComponent implements OnInit {
                     [
                         {
                             label: 'TV 1',
-                            items: [{label: 'TV 1.1'}, {label: 'TV 1.2'}]
+                            items: [{ label: 'TV 1.1' }, { label: 'TV 1.2' }]
                         },
                         {
                             label: 'TV 2',
-                            items: [{label: 'TV 2.1'}, {label: 'TV 2.2'}]
+                            items: [{ label: 'TV 2.1' }, { label: 'TV 2.2' }]
                         }
                     ],
                     [
                         {
                             label: 'TV 3',
-                            items: [{label: 'TV 3.1'}, {label: 'TV 3.2'}]
+                            items: [{ label: 'TV 3.1' }, { label: 'TV 3.2' }]
                         },
                         {
                             label: 'TV 4',
-                            items: [{label: 'TV 4.1'}, {label: 'TV 4.2'}]
+                            items: [{ label: 'TV 4.1' }, { label: 'TV 4.2' }]
                         }
                     ]
                 ]
@@ -175,32 +178,32 @@ export class MenuExamplesComponent implements OnInit {
                     [
                         {
                             label: 'Sports 1',
-                            items: [{label: 'Sports 1.1'}, {label: 'Sports 1.2'}]
+                            items: [{ label: 'Sports 1.1' }, { label: 'Sports 1.2' }]
                         },
                         {
                             label: 'Sports 2',
-                            items: [{label: 'Sports 2.1'}, {label: 'Sports 2.2'}]
+                            items: [{ label: 'Sports 2.1' }, { label: 'Sports 2.2' }]
                         },
 
                     ],
                     [
                         {
                             label: 'Sports 3',
-                            items: [{label: 'Sports 3.1'}, {label: 'Sports 3.2'}]
+                            items: [{ label: 'Sports 3.1' }, { label: 'Sports 3.2' }]
                         },
                         {
                             label: 'Sports 4',
-                            items: [{label: 'Sports 4.1'}, {label: 'Sports 4.2'}]
+                            items: [{ label: 'Sports 4.1' }, { label: 'Sports 4.2' }]
                         }
                     ],
                     [
                         {
                             label: 'Sports 5',
-                            items: [{label: 'Sports 5.1'}, {label: 'Sports 5.2'}]
+                            items: [{ label: 'Sports 5.1' }, { label: 'Sports 5.2' }]
                         },
                         {
                             label: 'Sports 6',
-                            items: [{label: 'Sports 6.1'}, {label: 'Sports 6.2'}]
+                            items: [{ label: 'Sports 6.1' }, { label: 'Sports 6.2' }]
                         }
                     ]
                 ]
@@ -211,21 +214,21 @@ export class MenuExamplesComponent implements OnInit {
                     [
                         {
                             label: 'Entertainment 1',
-                            items: [{label: 'Entertainment 1.1'}, {label: 'Entertainment 1.2'}]
+                            items: [{ label: 'Entertainment 1.1' }, { label: 'Entertainment 1.2' }]
                         },
                         {
                             label: 'Entertainment 2',
-                            items: [{label: 'Entertainment 2.1'}, {label: 'Entertainment 2.2'}]
+                            items: [{ label: 'Entertainment 2.1' }, { label: 'Entertainment 2.2' }]
                         }
                     ],
                     [
                         {
                             label: 'Entertainment 3',
-                            items: [{label: 'Entertainment 3.1'}, {label: 'Entertainment 3.2'}]
+                            items: [{ label: 'Entertainment 3.1' }, { label: 'Entertainment 3.2' }]
                         },
                         {
                             label: 'Entertainment 4',
-                            items: [{label: 'Entertainment 4.1'}, {label: 'Entertainment 4.2'}]
+                            items: [{ label: 'Entertainment 4.1' }, { label: 'Entertainment 4.2' }]
                         }
                     ]
                 ]
@@ -236,17 +239,17 @@ export class MenuExamplesComponent implements OnInit {
                     [
                         {
                             label: 'Technology 1',
-                            items: [{label: 'Technology 1.1'}, {label: 'Technology 1.2'}]
+                            items: [{ label: 'Technology 1.1' }, { label: 'Technology 1.2' }]
                         },
                         {
                             label: 'Technology 2',
-                            items: [{label: 'Technology 2.1'}, {label: 'Technology 2.2'}]
+                            items: [{ label: 'Technology 2.1' }, { label: 'Technology 2.2' }]
                         },
                     ],
                     [
                         {
                             label: 'Technology 4',
-                            items: [{label: 'Technology 3.1'}, {label: 'Technology 3.2'}]
+                            items: [{ label: 'Technology 3.1' }, { label: 'Technology 3.2' }]
                         }
                     ]
                 ]
@@ -257,24 +260,25 @@ export class MenuExamplesComponent implements OnInit {
             {
                 label: 'File',
                 icon: 'ui-icon-insert-drive-file',
-                items: [{
+                items: [
+                    {
                         label: 'New',
                         icon: 'ui-icon-add',
                         items: [
-                            {label: 'Project'},
-                            {label: 'Other'},
+                            { label: 'Project' },
+                            { label: 'Other' },
                         ]
                     },
-                    {label: 'Open'},
-                    {label: 'Quit'}
+                    { label: 'Open' },
+                    { label: 'Quit' }
                 ]
             },
             {
                 label: 'Edit',
                 icon: 'ui-icon-edit',
                 items: [
-                    {label: 'Undo', icon: 'ui-icon-undo'},
-                    {label: 'Redo', icon: 'ui-icon-redo'}
+                    { label: 'Undo', icon: 'ui-icon-undo' },
+                    { label: 'Redo', icon: 'ui-icon-redo' }
                 ]
             },
             {
@@ -299,7 +303,8 @@ export class MenuExamplesComponent implements OnInit {
                             {
                                 label: 'File'
                             }
-                    ]}
+                        ]
+                    }
                 ]
             },
             {
@@ -310,15 +315,15 @@ export class MenuExamplesComponent implements OnInit {
                         label: 'Edit',
                         icon: 'ui-icon-edit',
                         items: [
-                            {label: 'Save', icon: 'ui-icon-save'},
-                            {label: 'Update', icon: 'ui-icon-update'},
+                            { label: 'Save', icon: 'ui-icon-save' },
+                            { label: 'Update', icon: 'ui-icon-update' },
                         ]
                     },
                     {
                         label: 'Other',
                         icon: 'ui-icon-list',
                         items: [
-                            {label: 'Delete', icon: 'ui-icon-delete'}
+                            { label: 'Delete', icon: 'ui-icon-delete' }
                         ]
                     }
                 ]

@@ -15,46 +15,11 @@ export class AlHighchartColumnComponent implements OnChanges {
     @ViewChild('chart') chart: ElementRef;
 
     public columnChart: any;
-    public themeToggle = false;
     /**
      * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
      * an interface
      */
     @Input() config: any;
-
-    private populateConfig = (): void => {
-        this.columnChart = Highcharts.chart(this.chart.nativeElement, {
-            chart: {
-                type: 'column',
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: this.config.title
-            },
-            xAxis: {
-                categories: this.config.dateOptions,
-            },
-            yAxis: {
-                title: {
-                    text: this.config.description
-                },
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal'
-                }
-            },
-            series: this.config.series
-        });
-    }
-
-    private updateSeries = (): void => {
-        this.columnChart.update({
-            series: this.config.series
-        });
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
@@ -66,80 +31,62 @@ export class AlHighchartColumnComponent implements OnChanges {
         }
     }
 
-    toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-        this.toggleDarkTheme();
+    private populateConfig = (): void => {
+        this.columnChart = Highcharts.chart(this.chart.nativeElement, {
+            chart: {
+                type: 'column',
+                styledMode: true
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: this.config.title
+            },
+            tooltip: {
+                headerFormat: '',
+                shadow: false,
+                useHTML: true,
+                pointFormat: `
+                    <span class="detail">{point.category}</span><br>
+                    <span class="description">{series.name}:</span> <span class="detail">{point.y}</span><br>
+                    <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
+                `,
+            },
+            xAxis: {
+                categories: this.config.dateOptions,
+            },
+            yAxis: {
+                gridLineColor: 'transparent',
+                title: {
+                    text: this.config.description
+                },
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                },
+                series: {
+                    events: {
+                      // tslint:disable-next-line
+                      click: function(event) {
+                        event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                          detail: {
+                            segment: event.point
+                          },
+                          bubbles: true
+                        }));
+                      }
+                    }
+                }
+            },
+            series: this.config.series
+        });
     }
 
-    toggleDarkTheme() {
-        if ( this.themeToggle ) {
-            this.columnChart.update({
-                chart: {
-                    backgroundColor: '#3C3C3C',
-                },
-                yAxis: {
-                    gridLineColor: '#3C3C3C',
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#EDEDED'
-                        }
-                    },
-                    categories: {
-                        color: '#EDEDED'
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#3C3C3C'
-                    }
-                },
-                legend:  {
-                    itemStyle: {
-                        color: '#EDEDED'
-                    }
-                }
-            });
-        } else  {
-            this.columnChart.update({
-                chart: {
-                    backgroundColor: '#ffffff',
-                },
-                yAxis: {
-                    gridLineColor: '#e6e6e6',
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    }
-                },
-                xAxis: {
-                    labels: {
-                        style: {
-                            color: '#666666'
-                        }
-                    },
-                    categories: {
-                        color: '#666666'
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        borderColor: '#ffffff'
-                    }
-                },
-                legend:  {
-                    itemStyle: {
-                        color: '#666666'
-                    }
-                }
-            });
-        }
+    private updateSeries = (): void => {
+        this.columnChart.update({
+            series: this.config.series
+        });
     }
 }
