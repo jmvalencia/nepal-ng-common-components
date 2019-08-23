@@ -101,7 +101,7 @@ export class AlNavigationService implements AlNavigationHost
     };
 
     public experience:string                    =   null;
-    protected navigationSchemaId:string         =   null;
+    public navigationSchemaId:string            =   null;
 
     protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
     protected menus:AlRoute[] = [];
