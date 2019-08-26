@@ -6,6 +6,9 @@
 
 <section class="navigation-frame-container">
 
+    <div *ngIf="!experience">
+        <ng-container *ngTemplateOutlet="mainContent"></ng-container>
+    </div>
     <div *ngIf="experience === 'default'">
         <!-- CIE-plus "Universal" Navigation -->
         <div class="mat-sidenav-container">     <!-- this should be a p-sidebar -->
