@@ -100,8 +100,8 @@ export class AlNavigationService implements AlNavigationHost
         }
     };
 
-    public experience:string                    =   null;
-    protected navigationSchemaId:string         =   null;
+    protected experience:string                    =   null;
+    protected navigationSchemaId:string            =   null;
 
     protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
     protected menus:AlRoute[] = [];
@@ -155,6 +155,20 @@ export class AlNavigationService implements AlNavigationHost
             navigate: this.navigate
         } );
         this.listenForSignout();
+    }
+
+    /**
+     * Returns the experience
+     */
+    public getExperience() {
+        return this.experience;
+    }
+
+    /**
+     * Returns the navigation schema id
+     */
+    public getSchema() {
+        return this.navigationSchemaId;
     }
 
     /**
