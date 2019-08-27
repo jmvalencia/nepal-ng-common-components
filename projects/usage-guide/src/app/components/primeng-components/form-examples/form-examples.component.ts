@@ -57,6 +57,8 @@ export class FormExamplesComponent implements OnInit {
 
   color: string;
 
+  multiSelectWithChipsItems:SelectItem[] = [];
+
   constructor(private breadcrumbService: BreadcrumbService,
     private alToastService: AlToastService) {
     this.breadcrumbService.setItems([
@@ -103,6 +105,31 @@ export class FormExamplesComponent implements OnInit {
       { label: 'Delete', icon: 'ui-icon-close' },
       { label: 'Home', icon: 'ui-icon-home', url: 'http://www.primefaces.org/primeng' }
     ];
+
+    this.multiSelectWithChipsItems = [
+      {
+        label: "John Whick",
+        value: {
+            id: "1",
+            name: "Mr. John Whick in Chip" // Specify the field for the chip
+        }
+      },
+      {
+        label: "Steven Castro",
+        value: {
+            id: "2",
+            name: "Mr. Steven Castro in Chip",
+            details: "detailsfor@stevencastro.com" // Example of item with details.
+        }
+      },
+      {
+        label: "Peter Smith",
+        value: {
+            id: "3",
+            name: "Mr. Peter Smith in Chip" // Specify the field for the chip
+        }
+      }
+    ];
   }
 
   filterCountry(event) {
@@ -131,6 +158,10 @@ export class FormExamplesComponent implements OnInit {
         this.filteredBrands.push(brand);
       }
     }
+  }
+
+  selectedOptionsEvent (event:any) {
+    console.log("Multiselect with chips on selected options event example!",event);
   }
 
   handleACDropdownClick(event: Event) {

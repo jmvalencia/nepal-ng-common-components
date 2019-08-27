@@ -1,0 +1,27 @@
+<div class="al-multiselect-chips">
+    <p-multiSelect [defaultLabel]="defaultLabel" [options]="options" [(ngModel)]="selectedOptions" (ngModelChange)="onSelectedOptions($event)">
+        <ng-template let-item pTemplate="item">
+            <div class="option-container" *ngIf="!item.value.details">
+                <div class="option-inner-container">
+                    <div class="option-label">{{item.label}}</div>
+                </div>
+            </div>
+            <div class="option-container-details" *ngIf="item.value.details">
+                <div class="option-inner-container">
+                    <div class="option-label"><b>{{item.label}}</b></div>
+                    <div class="option-details">{{item.value.details}}</div>
+                </div>
+            </div>
+        </ng-template>
+    </p-multiSelect>    
+    <p-chips [(ngModel)]="selectedOptions">
+        <ng-template let-item pTemplate="item">
+            <div *ngIf="item.details" [pTooltip]="item.details" tooltipPosition="top">
+                {{item[field]}} 
+            </div>
+            <div *ngIf="!item.details">
+                {{item[field]}}
+            </div>
+        </ng-template>
+    </p-chips>
+</div>
