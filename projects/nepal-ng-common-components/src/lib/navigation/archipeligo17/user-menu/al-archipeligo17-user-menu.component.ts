@@ -8,6 +8,7 @@ import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationContextChanged } from '../../types';
 import { AlStopwatch, AlTriggerStream, AlSubscriptionGroup } from '@al/common';
+import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
 @Component({
     selector: 'al-archipeligo17-user-menu',
@@ -121,11 +122,13 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                 for ( let i = 0; i < this.menu.children.length; i++ ) {
                     if ( this.menu.children[i].activated ) {
                         activeChild = this.menu.children[i];
+                        break;
                     }
                 }
                 if ( activeChild && activeChild !== this.activeChild ) {
                     this.activeChild = activeChild;
-                    //                    this.alNavigation.events.trigger( "Navigation.SecondaryNavigationActivated", this.activeChild );    //  set
+                    // "Navigation.SecondaryNavigationActivated", this.activeChild
+                    // this.alNavigation.events.trigger(  );    //  set
                 } else if ( ! activeChild && this.activeChild ) {
                     this.activeChild = null;
                     //                      this.alNavigation.events.trigger("Navigation.SecondaryNavigationActivated", null );                 //  clear
@@ -140,31 +143,32 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                         }
                     }
                 }
-                let items = [];
-                this.menu.children.forEach(child => {
-                    let item = {
-                        label: child.caption,
-                        visible: child.visible,
-                        activated: child.activated,
-                        command: (event)=> { this.onClick(child,event); }
-                    };
-                    if (child['href']) {
-                        item['url'] = child.href;
-                    }
-                    if (child.properties.iconClass === 'material-icons') {
-                        item['icon'] = 'ui-icon-' + child.properties.iconText.replace(/(_)/g, '-');
-                    } else {
-                        item['icon'] = child.properties.iconClass;
-                    }
-                    items.push(item);
+                this.menuItems = this.menu.children.map((child: AlRoute) => {
+                    return this.parseToPrimeMenuItem(child);
                 });
-                this.menuItems = items;
-                console.log("parsed menu items", items);
             }
 
         } else {
             this.userMenuAvailable = false;
         }
+    }
+
+    parseToPrimeMenuItem(route: AlRoute) {
+        let menuItem: PrimengMenuItem;
+        menuItem = {
+            label: route.caption,
+            visible: route.visible,
+            command: (event)=> { this.onClick(route,event); }
+        };
+        if (route['href']) {
+            menuItem.url = route.href;
+        }
+        if (route.properties.iconClass === 'material-icons') {
+            menuItem.icon = 'ui-icon-' + route.properties.iconText.replace(/(_)/g, '-');
+        } else {
+            menuItem.icon = route.properties.iconClass;
+        }
+        return menuItem;
     }
 
     refreshUserData = () => {
