@@ -19,6 +19,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
 {
     @Input() menu:AlRoute;
 
+    public menuItems;
     public userMenuAvailable:boolean        =   false;      //  controls visibility of entire authenticated user menu component
 
     public allAccountsData:AIMSAccount[]    = [];
@@ -72,10 +73,14 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         this.subscriptions.cancelAll();
     }
 
-    ngOnChanges(change:SimpleChanges){
+    ngOnChanges(changes: SimpleChanges){
+        if (typeof changes['menu'] !== 'undefined') {
+            this.onNavigationContextChanged();
+        }
     }
 
-    onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
+    onNavigationContextChanged = ( navigationEvent?: AlNavigationContextChanged ) => {
+        console.log("onNavigationContextChanged!");
         if ( ALSession.isActive() ) {
             this.userMenuAvailable = true;
             this.userName = ALSession.getUserName();
@@ -126,16 +131,37 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                     //                      this.alNavigation.events.trigger("Navigation.SecondaryNavigationActivated", null );                 //  clear
                 }
                 // Setting tertiary menu
-                let activeGrandchild:any = null;
-                if ( this.activeChild ) {
-                    for ( let j = 0; j < this.activeChild.children.length; j++ ) {
-                        if ( this.activeChild.children[j].activated ) {
-                            activeGrandchild = this.activeChild.children[j];
+                if (this.activeChild) {
+                    for (let j = 0; j < this.activeChild.children.length; j++) {
+                        if (this.activeChild.children.activated) {
+                            const activeGrandchild = this.activeChild.children;
+                            // this.alNavigation.events.trigger( "Navigation.TertiaryNavigationSelected", activeGrandchild );
+                            break;
                         }
                     }
-                    //  this.alNavigation.events.trigger( "Navigation.TertiaryNavigationSelected", activeGrandchild );
                 }
+                let items = [];
+                this.menu.children.forEach(child => {
+                    let item = {
+                        label: child.caption,
+                        visible: child.visible,
+                        activated: child.activated,
+                        command: (event)=> { this.onClick(child,event); }
+                    };
+                    if (child['href']) {
+                        item['url'] = child.href;
+                    }
+                    if (child.properties.iconClass === 'material-icons') {
+                        item['icon'] = 'ui-icon-' + child.properties.iconText.replace(/(_)/g, '-');
+                    } else {
+                        item['icon'] = child.properties.iconClass;
+                    }
+                    items.push(item);
+                });
+                this.menuItems = items;
+                console.log("parsed menu items", items);
             }
+
         } else {
             this.userMenuAvailable = false;
         }
@@ -175,11 +201,13 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         if ( menuItem.properties.hasOwnProperty( "target" ) && menuItem.properties.target === "_blank" ) {
             return;
         }
-        if ( menuItem.action.type === 'trigger' ) {
+        if ( menuItem.definition.action === 'user:signout' ) {
+            this.alNavigation.navigate.byNamedRoute("user:signout");
             $event.stopPropagation();
             $event.preventDefault();
         }
         if (menuItem.enabled) {
+            console.log("MENU ITEM ALREADY ENABLED");
             menuItem.dispatch();
         }
     }
