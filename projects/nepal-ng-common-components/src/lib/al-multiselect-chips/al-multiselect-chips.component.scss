@@ -1,0 +1,59 @@
+@import "~@al/design/styles/palette";
+@import "~@al/design/styles/utility";
+@import "~@al/design/styles/variables";
+
+:host ::ng-deep {
+    .ui-multiselect {
+        min-width: 300px !important;
+        width: 100% !important;
+    }
+
+    .ui-multiselect-item span {
+        vertical-align: inherit !important;
+    }
+    
+    .ui-multiselect-panel {
+        min-width: 300px !important;
+        width: 100% !important;
+    }
+    
+    .ui-multiselect-filter-container{
+        width: 85% !important;
+        .ui-inputtext {
+            padding-left: 0px !important;
+        }
+    }
+    
+    .ui-inputtext {
+        background-image: none !important;
+        background-size: 0 0px, 100% 0px !important;
+    }
+
+    .ui-chips-token {
+        padding: 0 30px 0 12px !important;
+        color: al-color($al-gray, 500) !important;
+    }
+
+    .option-container-details {
+        display:inline-flex;
+        margin-left: 3px;
+        vertical-align: middle;
+    }
+
+    .option-container {
+        display:inline-flex;
+        margin-left: 3px;
+    }
+
+    .option-inner-container {
+        display:table;
+    }
+
+    .option-label {
+        display:table-row;
+    }
+
+    .option-details {
+        display:table-row;
+    }
+}

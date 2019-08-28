@@ -83,6 +83,11 @@
       </div>
 
       <div class="card card-w-title">
+          <h1>MultiSelect with Chips</h1>
+          <al-multiselect-chips [defaultLabel]="'Choose a user'" [field]="'name'" [options]="multiSelectWithChipsItems" (onSelectedOption)="selectOption($event)"></al-multiselect-chips>
+      </div>
+
+      <div class="card card-w-title">
           <h1>Calendar</h1>
           <p-calendar [inline]="true"></p-calendar>
 
