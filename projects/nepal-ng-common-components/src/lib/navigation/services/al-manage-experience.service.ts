@@ -107,10 +107,10 @@ export class AlManageExperienceService {
                 this.loadPreferences();
             } else {
                 // it doesn't have the entitlement, set default or provided by inputs
-                if (!this.alNavigation.schema) {
+                if (!this.alNavigation.getSchema()) {
                     this.alNavigation.setSchema("cie-plus2");
                 }
-                if (!this.alNavigation.experience) {
+                if (!this.alNavigation.getExperience()) {
                     this.alNavigation.setExperience("default");
                 }
             }
@@ -164,22 +164,22 @@ export class AlManageExperienceService {
                     }
                 } else {
                     // displayBetaNavigation is false, set the default experience
-                    if (!this.alNavigation.schema) {
+                    if (!this.alNavigation.getSchema()) {
                       this.alNavigation.setSchema("cie-plus2");
                     }
-                    if (!this.alNavigation.experience) {
+                    if (!this.alNavigation.getExperience()) {
                         this.alNavigation.setExperience("default");
                     }
                 }
             } else {
                 // offer beta-nav as initial state
-                if (!this.alNavigation.schema) {
+                if (!this.alNavigation.getSchema()) {
                   this.alNavigation.setSchema("cie-plus2");
                 }
-                if (!this.alNavigation.experience) {
+                if (!this.alNavigation.getExperience()) {
                     this.alNavigation.setExperience("default");
                 }
-                if (!this.alNavigation.experience && !this.alNavigation.schema) {
+                if (this.alNavigation.getExperience() === 'default' && this.alNavigation.getSchema() === 'cie-plus2') {
                   this.alToastService.showMessage('global-toast', this.toastBetaNav);
                   this.feedback.hide();
                 }

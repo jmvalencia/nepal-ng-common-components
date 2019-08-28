@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlDialogCarrouselComponent } from '../al-dialog-carrousel/al-dialog-carrousel.component';
 import "snapsvg-cjs";
+import { Paper, Element } from 'snapsvg';
 declare var Snap;
 declare var mina;
 
@@ -12,22 +13,22 @@ declare var mina;
 })
 
 export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implements OnInit {
-  barsSvg: Snap.Paper;
+  barsSvg: Paper;
   barsSVGData: {
-    upperBars: Snap.Element[], lowerBars: Snap.Element[],
+    upperBars: Element[], lowerBars: Element[],
     upperBarXBase: number, upperBarYBase: number, upperBarWidht:number, upperBarHeight:number,
     lowerBarXBase: number, lowerBarYBase: number, lowerBarWidht:number, lowerBarHeight:number
   };
-  wavesSvg: Snap.Paper;
+  wavesSvg: Paper;
   wavesSVGData: {
     minShiftX: number,
     maxShiftX: number,
     borderY: number,
     points: {x: number, y: number}[],
-    waves: Snap.Element[]
+    waves: Element[]
   };
-  compassSvg: Snap.Paper;
-  compassSVGData: { compass: Snap.Element };
+  compassSvg: Paper;
+  compassSVGData: { compass: Element };
   svgChangeRate: number; // In seconds
 
   ngOnInit() {
