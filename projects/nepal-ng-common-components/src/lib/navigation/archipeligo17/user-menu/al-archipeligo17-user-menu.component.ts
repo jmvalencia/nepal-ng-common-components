@@ -20,7 +20,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
 {
     @Input() menu:AlRoute;
 
-    public menuItems;
+    public menuItems: PrimengMenuItem[];
     public userMenuAvailable:boolean        =   false;      //  controls visibility of entire authenticated user menu component
 
     public allAccountsData:AIMSAccount[]    = [];
