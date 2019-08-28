@@ -154,11 +154,10 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     }
 
     parseToPrimeMenuItem(route: AlRoute) {
-        let menuItem: PrimengMenuItem;
-        menuItem = {
+        const menuItem: PrimengMenuItem = {
             label: route.caption,
             visible: route.visible,
-            command: (event)=> { this.onClick(route,event); }
+            command: (event) => { this.onClick(route, event); }
         };
         if (route['href']) {
             menuItem.url = route.href;
