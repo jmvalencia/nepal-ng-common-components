@@ -18,32 +18,34 @@ describe("ALMultiSelectChipsComponent", () => {
     let component: ALMultiSelectChipsComponent;
     let fixture: ComponentFixture<ALMultiSelectChipsComponent>;
 
-    let optionsMock = [
-        <SelectItem> {
-          label: "John Whick",
-          value: {
-              id: "1",
-              name: "Mr. John Whick in Chip" // Specify the field for the chip.
-          }
-        },
-        <SelectItem> {
-          label: "Steven Castro",
-          value: {
-              id: "2",
-              name: "Mr. Steven Castro in Chip",
-              details: "detailsfor@stevencastro.com" // Example of item with details.
-          }
-        },
-        <SelectItem> {
-          label: "Peter Smith",
-          value: {
-              id: "3",
-              name: "Mr. Peter Smith in Chip" // Specify the field for the chip.
-          }
-        }
-      ];
+    let optionsMock = [];
 
     beforeEach(() => {
+        optionsMock = [
+            <SelectItem> {
+              label: "John Whick",
+              value: {
+                  id: "1",
+                  name: "Mr. John Whick in Chip" // Specify the field for the chip.
+              }
+            },
+            <SelectItem> {
+              label: "Steven Castro",
+              value: {
+                  id: "2",
+                  name: "Mr. Steven Castro in Chip",
+                  details: "detailsfor@stevencastro.com" // Example of item with details.
+              }
+            },
+            <SelectItem> {
+              label: "Peter Smith",
+              value: {
+                  id: "3",
+                  name: "Mr. Peter Smith in Chip" // Specify the field for the chip.
+              }
+            }
+        ];
+
         TestBed.configureTestingModule({
             declarations: [ ALMultiSelectChipsComponent ],
             imports: [
