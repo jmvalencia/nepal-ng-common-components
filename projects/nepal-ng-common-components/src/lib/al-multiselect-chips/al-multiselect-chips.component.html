@@ -1,5 +1,5 @@
 <div class="al-multiselect-chips">
-    <p-multiSelect [defaultLabel]="defaultLabel" [options]="options" [(ngModel)]="selectedOptions" (ngModelChange)="onSelectedOptions($event)">
+    <p-multiSelect [defaultLabel]="defaultLabel" [options]="options" [(ngModel)]="selectedOptions" (ngModelChange)="selectOption($event)">
         <ng-template let-item pTemplate="item">
             <div class="option-container" *ngIf="!item.value.details">
                 <div class="option-inner-container">

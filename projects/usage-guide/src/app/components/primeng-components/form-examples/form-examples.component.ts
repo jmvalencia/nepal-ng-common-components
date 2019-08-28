@@ -160,7 +160,7 @@ export class FormExamplesComponent implements OnInit {
     }
   }
 
-  selectedOptionsEvent (event:any) {
+  selectOption (event:any) {
     console.log("Multiselect with chips on selected options event example!",event);
   }
 

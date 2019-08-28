@@ -18,7 +18,7 @@ import {SelectItem} from 'primeng/api';
 Full mode:
 
 ```html
-<al-multiselect-chips [defaultLabel]="'Change the label here'" [field]="'optionalFieldToDisplayForChips'" [options]="yourOptions" (onSelectedOptionsEvent)="selectedOptionsEvent($event)"></al-multiselect-chips>
+<al-multiselect-chips [defaultLabel]="'Change the label here'" [field]="'optionalFieldToDisplayForChips'" [options]="yourOptions" (onSelectedOption)="selectOption($event)"></al-multiselect-chips>
 ```
 
 Simplest mode:
@@ -61,8 +61,8 @@ Use "name" as the field to display in the chips:
 
 ## Selected Options
 
-To grab the selected options you can bind a listener to the "onSelectedOptionsEvent" every time the user select or delete a chip:
+To grab the selected options you can bind a listener to the "onSelectedOption" every time the user select or delete a chip:
 
 ```html
-    <al-multiselect-chips [options]="multiSelectWithChipsItems" (onSelectedOptionsEvent)="selectedOptionsEvent($event)"></al-multiselect-chips>
+    <al-multiselect-chips [options]="multiSelectWithChipsItems" (onSelectedOption)="selectOption($event)"></al-multiselect-chips>
 ```

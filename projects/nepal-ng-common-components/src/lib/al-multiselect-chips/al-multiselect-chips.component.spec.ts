@@ -75,11 +75,11 @@ describe("ALMultiSelectChipsComponent", () => {
     describe("When any change in selection is done should emit the new selected values", () => {
         beforeEach(() => {
             component.options = optionsMock;
-            spyOn(component.onSelectedOptionsEvent,'emit');
+            spyOn(component.onSelectedOption,'emit');
         });
-        it("should delete an item from the list", () => {
-            component.onSelectedOptions(optionsMock);
-            expect(component.onSelectedOptionsEvent.emit).toHaveBeenCalledWith(optionsMock);
+        it("should emit the new selected values", () => {
+            component.selectOption(optionsMock);
+            expect(component.onSelectedOption.emit).toHaveBeenCalledWith(optionsMock);
         });
     });
 });

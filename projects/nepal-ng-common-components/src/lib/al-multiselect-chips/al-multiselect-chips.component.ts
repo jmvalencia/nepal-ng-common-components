@@ -18,11 +18,11 @@ export class ALMultiSelectChipsComponent  {
     @Input() field:string = 'label';
     @Input() options:SelectItem[] = [];
 
-    @Output() onSelectedOptionsEvent:EventEmitter<any> = new EventEmitter();
+    @Output() onSelectedOption:EventEmitter<any[]> = new EventEmitter();
 
     constructor(){}
 
-    onSelectedOptions(newSelectedOptions:any) {
-        this.onSelectedOptionsEvent.emit(newSelectedOptions);
+    selectOption(newSelectedOptions:any[]) {
+        this.onSelectedOption.emit(newSelectedOptions);
     }
 }
