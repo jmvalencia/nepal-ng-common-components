@@ -7,7 +7,7 @@ and chips with tooltips.
 
 ## Requires
 
-Requires **SelectItem** interface from prime:
+Requires **SelectItem** interface from primeng:
 
 ```typescript
 import {SelectItem} from 'primeng/api';

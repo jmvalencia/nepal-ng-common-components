@@ -2,7 +2,7 @@
 @import "~@al/design/styles/utility";
 @import "~@al/design/styles/variables";
 
-:host ::ng-deep .al-multiselect-chips {
+:host ::ng-deep {
     .ui-multiselect {
         min-width: 300px !important;
         width: 100% !important;

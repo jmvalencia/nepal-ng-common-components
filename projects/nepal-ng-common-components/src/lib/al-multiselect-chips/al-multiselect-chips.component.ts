@@ -5,24 +5,31 @@
  * @copyright 2019 Alert Logic, Inc.
  */
 import { Input, Component, Output, EventEmitter } from '@angular/core';
-import { SelectItem } from 'primeng/api';
+
+export interface SelectItem<T> {
+  label?: string;
+  value: T;
+  styleClass?: string;
+  icon?: string;
+  title?: string;
+  disabled?: boolean;
+}
 
 @Component({
     selector: 'al-multiselect-chips',
     templateUrl: './al-multiselect-chips.component.html',
     styleUrls: ['./al-multiselect-chips.component.scss']
 })
-export class ALMultiSelectChipsComponent  {
-
+export class ALMultiSelectChipsComponent<T>  {
     @Input() defaultLabel:string = 'Choose';
     @Input() field:string = 'label';
-    @Input() options:SelectItem[] = [];
+    @Input() options:SelectItem<T>[] = [];
 
-    @Output() onSelectedOption:EventEmitter<any[]> = new EventEmitter();
+    public selectedOptions;
 
-    constructor(){}
+    @Output() onSelectedOption:EventEmitter<T[]> = new EventEmitter();
 
-    selectOption(newSelectedOptions:any[]) {
+    selectOption(newSelectedOptions:T[]) {
         this.onSelectedOption.emit(newSelectedOptions);
     }
 }

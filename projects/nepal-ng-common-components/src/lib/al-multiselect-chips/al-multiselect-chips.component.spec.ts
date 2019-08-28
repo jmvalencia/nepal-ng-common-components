@@ -4,61 +4,63 @@
  * @author Gisler Garces <ggarces@alertlogic.com>
  * @copyright 2019 Alert Logic, Inc.
  */
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ALMultiSelectChipsComponent } from './al-multiselect-chips.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ALMultiSelectChipsComponent, SelectItem} from './al-multiselect-chips.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 // Required primeng dependencies
-import { TooltipModule } from 'primeng/tooltip';
-import { ChipsModule } from 'primeng/chips';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { SelectItem } from 'primeng/api';
+import {TooltipModule} from 'primeng/tooltip';
+import {ChipsModule} from 'primeng/chips';
+import {MultiSelectModule} from 'primeng/multiselect';
+
+interface MockValue {
+    id: string;
+    name: string;
+    details?: string;
+}
 
 describe("ALMultiSelectChipsComponent", () => {
-    let component: ALMultiSelectChipsComponent;
-    let fixture: ComponentFixture<ALMultiSelectChipsComponent>;
-
-    let optionsMock = [];
+    let component: ALMultiSelectChipsComponent<MockValue>;
+    let fixture: ComponentFixture<ALMultiSelectChipsComponent<MockValue>>;
+    let optionsMock: SelectItem<MockValue>[] = [];
 
     beforeEach(() => {
         optionsMock = [
-            <SelectItem> {
-              label: "John Whick",
-              value: {
-                  id: "1",
-                  name: "Mr. John Whick in Chip" // Specify the field for the chip.
-              }
+            {
+                label: "John Whick",
+                value: {
+                    id: "1",
+                    name: "Mr. John Whick in Chip" // Specify the field for the chip.
+                }
             },
-            <SelectItem> {
-              label: "Steven Castro",
-              value: {
-                  id: "2",
-                  name: "Mr. Steven Castro in Chip",
-                  details: "detailsfor@stevencastro.com" // Example of item with details.
-              }
+            {
+                label: "Steven Castro",
+                value: {
+                    id: "2",
+                    name: "Mr. Steven Castro in Chip",
+                    details: "detailsfor@stevencastro.com" // Example of item with details.
+                }
             },
-            <SelectItem> {
-              label: "Peter Smith",
-              value: {
-                  id: "3",
-                  name: "Mr. Peter Smith in Chip" // Specify the field for the chip.
-              }
-            }
-        ];
-
+            {
+                label: "Peter Smith",
+                value: {
+                    id: "3",
+                    name: "Mr. Peter Smith in Chip" // Specify the field for the chip.
+                }
+            }];
         TestBed.configureTestingModule({
-            declarations: [ ALMultiSelectChipsComponent ],
+            declarations: [ALMultiSelectChipsComponent],
             imports: [
                 TooltipModule,
                 ChipsModule,
                 MultiSelectModule
             ],
-            schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-          }).compileComponents();
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ALMultiSelectChipsComponent);
+        fixture = TestBed.createComponent<ALMultiSelectChipsComponent<MockValue>>(ALMultiSelectChipsComponent);
         component = fixture.componentInstance;
     });
 
@@ -77,11 +79,15 @@ describe("ALMultiSelectChipsComponent", () => {
     describe("When any change in selection is done should emit the new selected values", () => {
         beforeEach(() => {
             component.options = optionsMock;
-            spyOn(component.onSelectedOption,'emit');
         });
-        it("should emit the new selected values", () => {
-            component.selectOption(optionsMock);
-            expect(component.onSelectedOption.emit).toHaveBeenCalledWith(optionsMock);
+
+        it("should delete an item from the list", (done: DoneFn) => {
+            const checked = optionsMock.filter(m => m.value.id === '1' || m.value.id === '2').map(m => m.value);
+            component.onSelectedOption.subscribe((data: MockValue[]) => {
+                expect(data).toEqual(checked);
+                done();
+            });
+            component.selectOption(checked);
         });
     });
 });
