@@ -10,14 +10,13 @@ import { Carousel } from 'primeng/primeng';
 export class AlDialogCarrouselComponent {
   @ViewChild('carousel') carousel: Carousel;
   display: boolean = false;
-  tutorialSteps: any[] = [];
-  barsSvg: any;
-  barsSVGData: any = {};
-  wavesSvg: any;
-  wavesSVGData: any = {};
-  compassSvg: any;
-  compassSVGData: any = {};
-  svgChangeRate: number; // In seconds
+  tutorialSteps: {
+    title?: string,
+    text?: string,
+    svg?: string,
+    resource?: string
+    icon?: string
+  }[] = [];
   width: number;
   height: number;
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlDialogCarrouselComponent } from '../al-dialog-carrousel/al-dialog-carrousel.component';
 import "snapsvg-cjs";
-declare var Snap: any;
-declare var mina: any;
+declare var Snap;
+declare var mina;
 
 @Component({
   selector: 'al-beta-get-started',
@@ -12,6 +12,23 @@ declare var mina: any;
 })
 
 export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implements OnInit {
+  barsSvg: Snap.Paper;
+  barsSVGData: {
+    upperBars: Snap.Element[], lowerBars: Snap.Element[],
+    upperBarXBase: number, upperBarYBase: number, upperBarWidht:number, upperBarHeight:number,
+    lowerBarXBase: number, lowerBarYBase: number, lowerBarWidht:number, lowerBarHeight:number
+  };
+  wavesSvg: Snap.Paper;
+  wavesSVGData: {
+    minShiftX: number,
+    maxShiftX: number,
+    borderY: number,
+    points: {x: number, y: number}[],
+    waves: Snap.Element[]
+  };
+  compassSvg: Snap.Paper;
+  compassSVGData: { compass: Snap.Element };
+  svgChangeRate: number; // In seconds
 
   ngOnInit() {
     this.tutorialSteps = [
@@ -59,66 +76,15 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
     this.barsSVGData.upperBarWidht = this.barsSVGData.upperBarXBase-10;
     this.barsSVGData.upperBarHeight = this.height;
 
-    this.barsSVGData.upperBar1 = this.createUpperBar(1);
-    this.barsSVGData.upperBar2 = this.createUpperBar(2);
-    this.barsSVGData.upperBar3 = this.createUpperBar(3);
-    this.barsSVGData.upperBar4 = this.createUpperBar(4);
-    this.barsSVGData.upperBar5 = this.createUpperBar(5);
-    this.barsSVGData.upperBar6 = this.createUpperBar(6);
-    this.barsSVGData.upperBar7 = this.createUpperBar(7);
-    this.barsSVGData.upperBar8 = this.createUpperBar(8);
-    this.barsSVGData.upperBar9 = this.createUpperBar(9);
-    this.barsSVGData.upperBar10  = this.createUpperBar(10);
-    this.barsSVGData.upperBar11  = this.createUpperBar(11);
-    this.barsSVGData.upperBar12  = this.createUpperBar(12);
-
     this.barsSVGData.lowerBarXBase = (this.width/12)|1;
     this.barsSVGData.lowerBarYBase = 0;
     this.barsSVGData.lowerBarWidht = this.barsSVGData.lowerBarXBase-10;
     this.barsSVGData.lowerBarHeight = this.height;
 
-    this.barsSVGData.lowerBar1 = this.createLowerBar(1);
-    this.barsSVGData.lowerBar2 = this.createLowerBar(2);
-    this.barsSVGData.lowerBar3 = this.createLowerBar(3);
-    this.barsSVGData.lowerBar4 = this.createLowerBar(4);
-    this.barsSVGData.lowerBar5 = this.createLowerBar(5);
-    this.barsSVGData.lowerBar6 = this.createLowerBar(6);
-    this.barsSVGData.lowerBar7 = this.createLowerBar(7);
-    this.barsSVGData.lowerBar8 = this.createLowerBar(8);
-    this.barsSVGData.lowerBar9 = this.createLowerBar(9);
-    this.barsSVGData.lowerBar10 = this.createLowerBar(10);
-    this.barsSVGData.lowerBar11 = this.createLowerBar(11);
-    this.barsSVGData.lowerBar12 = this.createLowerBar(12);
-
-    this.barsSVGData.upperBars = [
-      this.barsSVGData.upperBar1,
-      this.barsSVGData.upperBar2,
-      this.barsSVGData.upperBar3,
-      this.barsSVGData.upperBar4,
-      this.barsSVGData.upperBar5,
-      this.barsSVGData.upperBar6,
-      this.barsSVGData.upperBar7,
-      this.barsSVGData.upperBar8,
-      this.barsSVGData.upperBar9,
-      this.barsSVGData.upperBar10,
-      this.barsSVGData.upperBar11,
-      this.barsSVGData.upperBar12
-    ];
-
-    this.barsSVGData.lowerBars = [
-      this.barsSVGData.lowerBar1,
-      this.barsSVGData.lowerBar2,
-      this.barsSVGData.lowerBar3,
-      this.barsSVGData.lowerBar4,
-      this.barsSVGData.lowerBar5,
-      this.barsSVGData.lowerBar6,
-      this.barsSVGData.lowerBar7,
-      this.barsSVGData.lowerBar8,
-      this.barsSVGData.lowerBar9,
-      this.barsSVGData.lowerBar10,
-      this.barsSVGData.lowerBar11,
-      this.barsSVGData.lowerBar12
-    ];
+    for (let i = 1; i <= 12; i++) {
+      this.barsSVGData.upperBars.push(this.createUpperBar(i));
+      this.barsSVGData.lowerBars.push(this.createLowerBar(i));
+    }
   }
 
   animateBars(loop: boolean = false) {
@@ -146,7 +112,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
   getFinalPath() {
     const path = this.wavesSVGData.points.reduce((partialPath, point, index, points) => {
       const curve = this.bezierfy(point, index, points);
-      partialPath += "C " + curve.x1 + "," + curve.y1 + " " + curve.x2 + "," + curve.y2 + " " + curve.x + "," + curve.y + " ";
+      partialPath += `C ${curve.x1},${curve.y1} ${curve.x2},${curve.y2} ${curve.x},${curve.y} `;
       return partialPath;
     }, '');
     return path;
@@ -191,7 +157,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
     }
     this.wavesSVGData.points[this.wavesSVGData.points.length-1].x = this.width;
     const curvesPath = this.getFinalPath();
-    const finalPath =  "M0," + this.height + " V" + initialY + " " + curvesPath + " " + "V" + this.height;
+    const finalPath = `M0, ${this.height} V${initialY} ${curvesPath} V${this.height}`;
     return finalPath;
   }
 
