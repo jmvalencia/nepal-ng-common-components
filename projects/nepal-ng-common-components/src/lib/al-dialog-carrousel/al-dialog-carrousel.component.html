@@ -3,11 +3,15 @@
         <p-carousel #carousel [value]="tutorialSteps" numVisible="1">
             <ng-template let-step pTemplate="item">
                 <div class="template-content ui-g-12">
-                    <div>
-                        <img src="{{step.resource}}" />
+                    <div class="source-content">
+                        <img *ngIf="step.resource" src="{{step.resource}}" />
+                        <div class="icon" *ngIf="step.icon">
+                            <i class="fa ui-icon-explore fa-10x"></i>
+                        </div>
+                        <svg *ngIf="step.svg" id="{{step.svg}}" width="400" height="200" viewBox="0 0 400 200"></svg>
                     </div>
-                    <h1> {{step.title}} </h1>
-                    <p> {{step.text}} </p>
+                    <h1 class="tutorial-title" *ngIf="step.title"> {{step.title}} </h1>
+                    <p *ngIf="step.text"> {{step.text}} </p>
                 </div>
             </ng-template>
         </p-carousel>

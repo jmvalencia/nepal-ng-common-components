@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Car } from '../../../types/car';
 import { CarService } from '../../../service/carservice';
 import { ConfirmationService } from 'primeng/primeng';
 import { BreadcrumbService } from '../../../breadcrumb.service';
+import { AlBetaGetStartedComponent } from 'nepal-ng-common-components';
 
 @Component({
   templateUrl: './overlay-examples.component.html',
   providers: [ConfirmationService]
 })
 export class OverlayExamplesComponent implements OnInit {
+  @ViewChild('tutorial') tutorial: AlBetaGetStartedComponent;
 
   cars: Car[];
 
@@ -61,5 +63,9 @@ export class OverlayExamplesComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Are you sure to perform this action?'
     });
+  }
+
+  showTutorial() {
+    this.tutorial.showTutorial();
   }
 }

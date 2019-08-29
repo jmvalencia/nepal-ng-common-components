@@ -78,7 +78,8 @@
               "node_modules/highcharts/css/highcharts.css"
             ],
             "scripts": [
-              "node_modules/prismjs/prism.js"
+              "node_modules/prismjs/prism.js",
+              "node_modules/snapsvg/dist/snap.svg-min.js"
             ],
             "es5BrowserSupport": true,
             "preserveSymlinks": true

@@ -15,7 +15,8 @@ import { ALMultiSelectChipsComponent } from './al-multiselect-chips/al-multisele
 import { AlZeroContentDataComponent } from './al-content-zero-data/al-content-zero-data.component';
 import { AlToastComponent } from './al-toast/al-toast.component';
 import { AlFeedbackComponent } from './al-feedback/al-feedback.component';
-import { AlTutorialComponent } from './al-tutorial/al-tutorial.component';
+import { AlDialogCarrouselComponent } from './al-dialog-carrousel/al-dialog-carrousel.component';
+import { AlBetaGetStartedComponent } from './al-beta-get-started/al-beta-get-started.component';
 
 const ALL_COMPONENTS = [
   AlHighchartBubbleComponent,
@@ -35,7 +36,8 @@ const ALL_COMPONENTS = [
   AlZeroContentDataComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlTutorialComponent
+  AlDialogCarrouselComponent,
+  AlBetaGetStartedComponent
 ];
 
 export {
@@ -54,5 +56,6 @@ export {
   AlHighchartBarComponent,
   AlToastComponent,
   AlFeedbackComponent,
-  AlTutorialComponent
+  AlDialogCarrouselComponent,
+  AlBetaGetStartedComponent
 };

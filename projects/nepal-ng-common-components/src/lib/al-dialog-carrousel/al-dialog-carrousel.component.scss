@@ -15,6 +15,10 @@
         .template-content {
             text-align: center;
         }
+        .tutorial-title {
+            margin: 0;
+            border-bottom: none
+        }
     }
 
     .side-buttons {
@@ -39,5 +43,19 @@
     .ui-dialog-buttonpane {
         text-align:center;
         height: 45px;
+    }
+
+    .source-content {
+        width: 400px;
+        height: 200px;
+        .icon {
+            font-size: 24px;
+            width:400px;
+            height:200px;
+            i {
+                width:400px !important;
+                height:200px !important;
+            }
+        }
     }
 }
