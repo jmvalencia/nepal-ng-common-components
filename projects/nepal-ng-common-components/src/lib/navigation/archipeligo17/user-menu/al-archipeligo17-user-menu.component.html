@@ -46,14 +46,15 @@
       </main>
     </section>
 
-    <!--
     <section class="below">
         <div class="stacked-vertical">
             <span *ngIf="activeChild">{{activeChild.caption}}</span>
-            <i class="material-icons active" matMenuTriggerFor="userDropdownMenu">more_vert</i>
+            <i class="material-icons active" (click)="menuTest.toggle($event)">more_vert</i>
         </div>
     </section>
-    -->
+            
+    <p-menu #menuTest [popup]="true" [model]="menuItems"></p-menu>
+
     <!--
     <mat-menu md-position-mode="bottom" #locationDropdownMenu="matMenu" class="location-dropdown-menu" [overlapTrigger]="false">
       <div>
@@ -78,24 +79,6 @@
       </div>
     </mat-menu>
 
-    <mat-menu md-position-mode="bottom" #userDropdownMenu="matMenu" class="user-dropdown-menu" [overlapTrigger]="false">
-      <div *ngIf="activeMenu && activeMenu.children.length > 0">
-          <ng-template ngFor let-menuItem [ngForOf]="activeMenu.children">
-              <a mat-menu-item
-                      (click)="onClick(menuItem,$event)"
-                      [ngClass]="menuItem.properties.css_class || ''"
-                      [href]="menuItem._href || ''"
-                      [target]="menuItem.properties.target || ''"
-                      *ngIf="menuItem.visible"
-                      [disabled]="! menuItem.enabled">
-                  <div class="user-menu-li" layout="row" flex>
-                      <i *ngIf="menuItem.properties.iconClass" [ngClass]="menuItem.properties.iconClass">{{menuItem.properties.iconText}}</i>
-                      <span flex>{{menuItem.caption}}</span>
-                  </div>
-              </a>
-          </ng-template>
-      </div>
-    </mat-menu>
 
     <mat-menu md-position-mode="bottom" #initialsDropdownMenu="matMenu" class="user-dropdown-menu" [overlapTrigger]="false">
         <div *ngIf="initialsMenu && initialsMenu.children.length > 0">
