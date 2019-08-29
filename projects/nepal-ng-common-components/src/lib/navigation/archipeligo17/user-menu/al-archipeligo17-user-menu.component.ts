@@ -204,13 +204,11 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         if ( menuItem.properties.hasOwnProperty( "target" ) && menuItem.properties.target === "_blank" ) {
             return;
         }
-        if ( menuItem.definition.action === 'user:signout' ) {
-            this.alNavigation.navigate.byNamedRoute("user:signout");
+        if ( menuItem.action.type === 'trigger' ) {
             $event.stopPropagation();
             $event.preventDefault();
         }
         if (menuItem.enabled) {
-            console.log("MENU ITEM ALREADY ENABLED");
             menuItem.dispatch();
         }
     }
