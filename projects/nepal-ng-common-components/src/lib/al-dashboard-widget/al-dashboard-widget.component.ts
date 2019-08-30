@@ -60,7 +60,11 @@ export class AlDashboardWidgetComponent implements OnInit {
    * Data element clicked
    */
   public dataElementClicked(ev: CustomEventInit<{recordLink: string}>): void {
-    this.emitClick(this.config.actions.drilldown.action, WidgetClickType.DrillDown, ev.detail.recordLink);
+    if(this.config.actions.drilldown) {
+      this.emitClick(this.config.actions.drilldown.action, WidgetClickType.DrillDown, ev.detail.recordLink);
+    } else {
+      console.warn('No drill down action configured for this widget');
+    }
   }
 
   /*
