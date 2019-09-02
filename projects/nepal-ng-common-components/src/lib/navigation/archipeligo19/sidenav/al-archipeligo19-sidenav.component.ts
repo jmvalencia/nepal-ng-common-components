@@ -1,23 +1,29 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { AlRoute } from '@al/common/locator';
 import { AlTriggerSubscription } from '@al/common';
 import { ALSession } from '@al/session';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlManageExperienceService } from '../../services/al-manage-experience.service';
+import { Sidebar } from 'primeng/primeng';
 
 @Component({
     selector: 'al-archipeligo19-sidenav',
     templateUrl: './al-archipeligo19-sidenav.component.html',
     styleUrls: ['./al-archipeligo19-sidenav.component.scss']
 })
-export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy {
+export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() displayNav = false;    // See al-nav-header toggle button click handling, this should be based on value from a service (observable)
     @Input() menu:AlRoute = null;
+
+    @ViewChild(Sidebar) sidebar: Sidebar;
+
+    documentEscapeListener: Function;
 
     protected subscription:AlTriggerSubscription = null;
 
     constructor( alNavigation:AlNavigationService,
-                protected alManageExperience: AlManageExperienceService) {
+                protected alManageExperience: AlManageExperienceService,
+                protected renderer: Renderer2) {
         }
 
     ngOnInit() {
@@ -35,6 +41,10 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy {
         if ( this.subscription ) {
             this.subscription.cancel();
         }
+    }
+
+    ngAfterViewInit() {
+      this.bindDocumentEscapeListener();
     }
 
     toggleNav = () => {
@@ -59,4 +69,13 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy {
     leaveBeta() {
         this.alManageExperience.manageExperienceOption("back-default");
     }
+
+    bindDocumentEscapeListener() {
+      this.documentEscapeListener = this.renderer.listen('document', 'keydown', (event) => {
+        if (event.which === 27) {
+          this.sidebar.close(event);
+        }
+      });
+    }
+
 }
