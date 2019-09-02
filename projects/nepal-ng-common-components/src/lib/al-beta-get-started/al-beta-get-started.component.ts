@@ -18,6 +18,10 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
     upperBars: Element[], lowerBars: Element[],
     upperBarXBase: number, upperBarYBase: number, upperBarWidht:number, upperBarHeight:number,
     lowerBarXBase: number, lowerBarYBase: number, lowerBarWidht:number, lowerBarHeight:number
+  } = {
+    upperBars: [], lowerBars: [],
+    upperBarXBase: 0, upperBarYBase: 0, upperBarWidht: 0, upperBarHeight: 0,
+    lowerBarXBase: 0, lowerBarYBase: 0, lowerBarWidht: 0, lowerBarHeight: 0
   };
   wavesSvg: Paper;
   wavesSVGData: {
@@ -26,9 +30,19 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
     borderY: number,
     points: {x: number, y: number}[],
     waves: Element[]
+  } = {
+    minShiftX: 0,
+    maxShiftX: 0,
+    borderY: 0,
+    points: [],
+    waves: []
   };
   compassSvg: Paper;
-  compassSVGData: { compass: Element };
+  compassSVGData: {
+    compass: Element
+  } = {
+    compass: undefined
+  };
   svgChangeRate: number; // In seconds
 
   ngOnInit() {
