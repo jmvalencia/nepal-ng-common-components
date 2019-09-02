@@ -155,6 +155,9 @@ export interface TableListBody {
     deployment?: string;
     status?: string;
     country?: string;
+    id?: string|number;
+    percent?: string;
+
     /**
      * Define the type of table, used for styling
      */
