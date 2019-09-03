@@ -122,7 +122,6 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         } else if ( ! this.contentVisible && this.unentitledRoute ) {
             this.dispatchRoute( this.unentitledRoute, event, "/" );
         }
-        this.contentVisible = false;
     }
 
     onContentUnavailable = ( invalidEntitlements:AlEntitlementCollection ) => {
@@ -144,15 +143,12 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             }
 
         }
-        if ( contentVisible !== this.contentVisible ) {
-            //  Only emit events if the visibility attribute actually changes from its previous value
-            if ( contentVisible ) {
-                this.onDisplay.emit();
-            } else {
-                this.onContentUnavailable( entitlements );
-            }
-            this.contentVisible = contentVisible;
+        if ( contentVisible ) {
+            this.onDisplay.emit();
+        } else {
+            this.onContentUnavailable( entitlements );
         }
+        this.contentVisible = contentVisible;
     }
 
     /**
