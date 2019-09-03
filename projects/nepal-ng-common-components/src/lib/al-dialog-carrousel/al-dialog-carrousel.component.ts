@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Carousel } from 'primeng/primeng';
+import { Carousel } from 'primeng/carousel';
 
 @Component({
   selector: 'al-dialog-carrousel',

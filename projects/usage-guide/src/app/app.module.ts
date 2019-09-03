@@ -38,6 +38,41 @@ import { AppMenuComponent, AppSubMenuComponent } from './app.menu.component';
 
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import { CodeHighlighterDirective } from './pcode.directive';
+import {
+  OrderListModule,
+  TreeModule,
+  OrganizationChartModule,
+  TreeTableModule,
+  FieldsetModule,
+  MegaMenuModule,
+  TieredMenuModule,
+  AccordionModule,
+  TabViewModule,
+  StepsModule,
+  TabMenuModule,
+  CalendarModule,
+  ContextMenuModule,
+  ScrollPanelModule,
+  SelectButtonModule,
+  ListboxModule,
+  SliderModule,
+  SpinnerModule,
+  InputSwitchModule,
+  SplitButtonModule,
+  LightboxModule,
+  SlideMenuModule,
+  CheckboxModule,
+  BreadcrumbModule,
+  AutoCompleteModule,
+  PickListModule,
+  RadioButtonModule,
+  ConfirmDialogModule,
+  PanelMenuModule,
+  MessageModule,
+  MessagesModule
+} from 'primeng/primeng';
+import {DataViewModule } from 'primeng/dataview';
+import {VirtualScrollerModule } from 'primeng/virtualscroller';
 
 const appRoutes: Routes = [
   {
@@ -123,7 +158,40 @@ const appRoutes: Routes = [
     NepalNgNavigationModule,
     RouterModule.forRoot(appRoutes, { useHash: true } ),
     HttpClientModule,
-    CodeHighlighterModule
+    CodeHighlighterModule,
+    OrderListModule,
+    TreeModule,
+    OrganizationChartModule,
+    TreeTableModule,
+    FieldsetModule,
+    MegaMenuModule,
+    TieredMenuModule,
+    AccordionModule,
+    TabMenuModule,
+    TabViewModule,
+    StepsModule,
+    DataViewModule,
+    CalendarModule,
+    ContextMenuModule,
+    ScrollPanelModule,
+    SelectButtonModule,
+    ListboxModule,
+    SliderModule,
+    SpinnerModule,
+    InputSwitchModule,
+    SplitButtonModule,
+    LightboxModule,
+    SlideMenuModule,
+    CheckboxModule,
+    BreadcrumbModule,
+    AutoCompleteModule,
+    PickListModule,
+    RadioButtonModule,
+    VirtualScrollerModule,
+    ConfirmDialogModule,
+    PanelMenuModule,
+    MessageModule,
+    MessagesModule
   ],
   providers: [
     { provide: HIGHCHARTS_MODULES, useFactory: () => [ tree ] },
