@@ -1,9 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef,Renderer2,HostListener, OnChanges} from '@angular/core';
 import { AIMSAccount } from '@al/aims';
 import { ALSession } from '@al/session';
-import { SelectItem } from 'primeng/api';
-import { Dropdown } from 'primeng/primeng';
-import { AlNavigationService } from '../../services';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
     selector:       'al-archipeligo17-account-selector',

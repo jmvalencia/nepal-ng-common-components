@@ -2,7 +2,8 @@ import { Component, Input, OnInit, AfterViewInit, OnDestroy, ElementRef, Rendere
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { MenuItem, ScrollPanel } from 'primeng/primeng';
+import { MenuItem } from 'primeng/components/common/menuitem';
+import { ScrollPanel } from 'primeng/scrollpanel';
 import { AppComponent } from './app.component';
 
 @Component({
