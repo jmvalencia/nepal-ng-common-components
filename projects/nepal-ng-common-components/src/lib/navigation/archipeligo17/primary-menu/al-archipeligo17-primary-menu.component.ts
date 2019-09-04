@@ -50,7 +50,6 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     onContextChanged = () => {
-        console.log("AlArchipeligo17PrimaryMenuComponent: onContextChanged", this.menu);
         if ( ! this.menu ) {
             return;
         }
@@ -89,15 +88,6 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
                     if ( activeSecondaryItem.children.length > 0 ) {
                         const event = new AlNavigationTertiarySelected(activeSecondaryItem);
                         this.alNavigation.events.trigger(event);
-                    } else if ( activeSecondaryItem.getProperty( "tertiaryMenu" ) ) {
-                        let tertiaryMenuId = activeSecondaryItem.getProperty( "tertiaryMenu" );
-                        this.alNavigation.getMenu( this.navigationScheme, tertiaryMenuId  )
-                                        .then( tertiaryMenu => {
-                                            let event = new AlNavigationTertiarySelected(tertiaryMenu);
-                                            this.alNavigation.events.trigger(event);
-                                        }, error => {
-                                            console.warn(`WARNING: failed to retrieve tertiary menu ${tertiaryMenuId} from navigation scheme ${this.navigationScheme}; ignoring.` );
-                                        } );
                     } else {
                         let event = new AlNavigationTertiarySelected(null);
                         this.alNavigation.events.trigger(event);

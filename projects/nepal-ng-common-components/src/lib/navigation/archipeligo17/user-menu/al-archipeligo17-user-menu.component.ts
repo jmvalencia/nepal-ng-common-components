@@ -120,33 +120,19 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
              */
             if ( this.menu ) {
                 this.menu.refresh( true );
-                let activeChild = null;
-                for ( let i = 0; i < this.menu.children.length; i++ ) {
-                    if ( this.menu.children[i].activated ) {
-                        activeChild = this.menu.children[i];
-                        break;
-                    }
-                }
+                const activeChild = this.menu.children.find(child => child.activated);
                 if ( activeChild && activeChild !== this.activeChild ) {
                     this.activeChild = activeChild;
-                    let event = new AlNavigationSecondarySelected(activeChild);
-                    this.alNavigation.events.trigger( event );   // set
+                    this.alNavigation.events.trigger( new AlNavigationSecondarySelected(activeChild) );   // set
                 } else if ( ! activeChild && this.activeChild ) {
-                    const event = new AlNavigationTertiarySelected(activeChild);
                     this.activeChild = null;
-                    this.alNavigation.events.trigger( event );   //  clear
+                    this.alNavigation.events.trigger( new AlNavigationTertiarySelected(this.activeChild) );   //  clear
                 }
 
                 // Setting tertiary menu
                 if (this.activeChild) {
-                    for (let j = 0; j < this.activeChild.children.length; j++) {
-                        if (this.activeChild.children[j].activated) {
-                            const activeGrandchild = this.activeChild.children[j];
-                            const event = new AlNavigationTertiarySelected(activeGrandchild);
-                            this.alNavigation.events.trigger(event);
-                            break;
-                        }
-                    }
+                    const activeGrandchild = this.activeChild.children.find(child => child.activated);
+                    this.alNavigation.events.trigger(new AlNavigationTertiarySelected(activeGrandchild));
                 }
 
                 this.menuItems = this.menu.children.map((child: AlRoute) => {
@@ -224,10 +210,10 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         if ( menuItem.properties.hasOwnProperty( "target" ) && menuItem.properties.target === "_blank" ) {
             return;
         }
-        // if ( menuItem['action'] ['type'] && menuItem['action']['type'] === 'trigger' ) {
-        //     $event.stopPropagation();
-        //     $event.preventDefault();
-        // }
+        if ( ! menuItem.definition.action.hasOwnProperty('type') ) {
+            $event.stopPropagation();
+            $event.preventDefault();
+        }
         if (menuItem.enabled) {
             menuItem.dispatch();
         }
