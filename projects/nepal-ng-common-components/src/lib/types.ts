@@ -146,29 +146,9 @@ export interface TableListHeader {
     style?: string;
 }
 
-/**
- *
- */
-export interface TableListBody {
-    summary: string;
-    count?: string|number;
-    deployment?: string;
-    status?: string;
-    country?: string;
-    id?: string|number;
-    percent?: string;
-
-    /**
-     * Define the type of table, used for styling
-     */
-    type?: string;
-    recordLink?: string;
-    class?: string;
-}
-
 export interface TableListConfig {
-    headers: TableListHeader[];
-    body: TableListBody[];
+  headers: TableListHeader[];
+  body: {[p:string]: string|number}[];
 }
 
 /*

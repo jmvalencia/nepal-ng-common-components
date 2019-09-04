@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
-import { TableListConfig, TableListBody } from '../types';
+import { TableListConfig } from '../types';
 
 @Component({
   selector: 'al-detailed-table-list',
@@ -26,12 +26,12 @@ export class AlDetailedTableListComponent implements OnInit, OnChanges {
       this.tableConfig = this.config;
     }
 
-    onDataRowClick(rowBody: TableListBody) {
-      if (rowBody.recordLink) {
+    onDataRowClick(rowBody: {[p:string]: string|number}[]) {
+      if (rowBody.hasOwnProperty('recordLink')) {
         this.el.nativeElement
           .dispatchEvent(new CustomEvent('data-element-clicked', {
             detail: {
-              recordLink: rowBody.recordLink
+              recordLink: rowBody['recordLink']
             },
             bubbles: true
           }));
