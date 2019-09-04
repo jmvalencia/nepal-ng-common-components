@@ -54,6 +54,13 @@ export class AlNavigationTrigger extends AlTriggeredEvent
     }
 }
 
+export class AlNavigationSecondarySelected extends AlTriggeredEvent
+{
+    constructor(public child: AlRoute) {
+        super( "AlNavigationSecondarySelected" );
+    }
+}
+
 export class AlNavigationTertiarySelected extends AlTriggeredEvent
 {
     constructor(public child: AlRoute) {

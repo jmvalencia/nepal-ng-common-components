@@ -16,13 +16,12 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     @Input() navigationScheme:string = "archipeligo";
     @Input() menu:AlRoute       =   null;
 
-    activeChild:AlRoute         =   null;           //  First level activated item (topnav)
-    activeGrandchild:AlRoute    =   null;           //  Second level activated item (subnav)
     externalChild:boolean       =   false;
 
     viewReady:boolean           =   false;
     primaryItems:AlRoute[]      =   [];             //  Primary menu items
     secondaryItems:AlRoute[]    =   [];             //  Subnav menu items
+    activeSecondaryItem:AlRoute =   null;           //  Active secondary item
 
     refresh:AlStopwatch         =   null;
 
@@ -34,6 +33,7 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     ngOnInit() {
         this.alNavigation.events.attach( "AlActingAccountResolved", this.onActingAccountResolved );
         this.alNavigation.events.attach( "AlNavigationContextChanged", this.onContextChanged );
+        this.alNavigation.events.attach( "AlNavigationSecondarySelected", this.onSetSecondaryMenu );
     }
 
     ngOnChanges(changes:SimpleChanges) {
@@ -43,24 +43,18 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     onActingAccountResolved = ( event:AlActingAccountResolvedEvent ) => {
+        this.onContextChanged();
     }
 
     ngOnDestroy() {
     }
 
     onContextChanged = () => {
+        console.log("AlArchipeligo17PrimaryMenuComponent: onContextChanged", this.menu);
         if ( ! this.menu ) {
             return;
         }
         this.primaryItems = this.menu.children;
-        this.secondaryItems = [];
-        for ( let i = 0; i < this.primaryItems.length; i++ ) {
-            if ( this.primaryItems[i].activated ) {
-                this.secondaryItems = this.primaryItems[i].children;
-                break;
-            }
-        }
-        this.viewReady = true;
         this.onLocationChange();
     }
 
@@ -79,38 +73,24 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
         menuItem.refresh( true );
     }
     onLocationChange = () => {
-        let activeGrandchild = null;
+        let activeSecondaryItem = null;
         if ( this.menu ) {
             this.menu.refresh( true );
             if ( ! this.externalChild ) {
-                this.activeChild = null;
-                for ( let i = 0; i < this.menu.children.length; i++ ) {
-                    this.setMenuItemClasses( this.menu.children[i] );
-                    if ( this.menu.children[i].activated ) {
-                        this.activeChild = this.menu.children[i];
-                    }
-                }
+                this.primaryItems = this.menu.children;
+                const activeChild = this.findActiveChild(this.primaryItems);
+                this.secondaryItems = activeChild ? activeChild.children : [];
             }
-            if ( this.activeChild ) {
-                for ( let j = 0; j < this.activeChild.children.length; j++ ) {
-                    this.setMenuItemClasses( this.activeChild.children[j] );
-                    if ( this.activeChild.children[j].activated ) {
-                        activeGrandchild = this.activeChild.children[j];
-                    }
-                }
-            }
+            activeSecondaryItem = this.findActiveChild(this.secondaryItems);
         }
-        if ( activeGrandchild !== this.activeGrandchild ) {
-            if ( activeGrandchild ) {
-                if ( activeGrandchild !== this.activeGrandchild ) {
-                    if ( activeGrandchild.children.length > 0 ) {
-                        /**
-                         *  TODO: turn this into a constant
-                         */
-                        let event = new AlNavigationTertiarySelected(activeGrandchild);
+        if ( activeSecondaryItem !== this.activeSecondaryItem ) {
+            if ( activeSecondaryItem ) {
+                if ( activeSecondaryItem !== this.activeSecondaryItem ) {
+                    if ( activeSecondaryItem.children.length > 0 ) {
+                        const event = new AlNavigationTertiarySelected(activeSecondaryItem);
                         this.alNavigation.events.trigger(event);
-                    } else if ( activeGrandchild.getProperty( "tertiaryMenu" ) ) {
-                        let tertiaryMenuId = activeGrandchild.getProperty( "tertiaryMenu" );
+                    } else if ( activeSecondaryItem.getProperty( "tertiaryMenu" ) ) {
+                        let tertiaryMenuId = activeSecondaryItem.getProperty( "tertiaryMenu" );
                         this.alNavigation.getMenu( this.navigationScheme, tertiaryMenuId  )
                                         .then( tertiaryMenu => {
                                             let event = new AlNavigationTertiarySelected(tertiaryMenu);
@@ -127,8 +107,9 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
                 let event = new AlNavigationTertiarySelected(null);
                 this.alNavigation.events.trigger(event);
             }
-            this.activeGrandchild = activeGrandchild;
+            this.activeSecondaryItem = activeSecondaryItem;
         }
+        this.viewReady = true;
     }
 
     setMenuItemClasses( route:AlRoute ) {
@@ -143,4 +124,27 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
         classes.push( route.id ? route.id.replace( /\:/g, "_" ) : route.caption.replace( /\s/g, "_" ) );
         route.setProperty( "consolidated_css_classes", classes.join(" " ) );
     }
+
+    onSetSecondaryMenu = ( context ) => {
+        if ( context.child ) {
+            this.secondaryItems = context.child.children;
+            this.externalChild = true;
+        } else {
+            this.secondaryItems = [];
+            this.externalChild = false;
+        }
+    }
+
+    /**
+     * set menu item classes and returns the activated item or null
+     */
+    findActiveChild(items) {
+        let activeItem = null;
+        items.forEach(item => {
+            this.setMenuItemClasses(item);
+            activeItem = item.activated ? item : activeItem;
+        });
+        return activeItem;
+    }
+
 }
