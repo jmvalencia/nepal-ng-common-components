@@ -7,6 +7,8 @@
 <section class="navigation-frame-container">
 
     <div *ngIf="!experience">
+        <al-archipeligo17-header>
+        </al-archipeligo17-header>
         <ng-container *ngTemplateOutlet="mainContent"></ng-container>
     </div>
     <div *ngIf="experience === 'default'">
