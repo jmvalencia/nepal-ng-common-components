@@ -123,6 +123,18 @@
             }
         }
     }
+    p-menu {
+        .ui-menu {
+            left: auto !important;
+            width: 220px !important;
+            .ui-menuitem {
+                .ui-menuitem-link .ui-menuitem-icon {
+                    font-size: 1.5em;
+                    margin-right: 12px;
+                }
+            }
+        }
+    }
 }
 // this is to fix the top menu heigh, before value: 48px;
 .user-dropdown-menu {

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, SimpleChanges, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ALSession } from '@al/session';
@@ -13,7 +13,8 @@ import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem'
 @Component({
     selector: 'al-archipeligo17-user-menu',
     templateUrl: './al-archipeligo17-user-menu.component.html',
-    styleUrls: [ './al-archipeligo17-user-menu.component.scss' ]
+    styleUrls: [ './al-archipeligo17-user-menu.component.scss' ],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDestroy
