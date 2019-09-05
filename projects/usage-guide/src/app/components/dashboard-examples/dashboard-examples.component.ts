@@ -284,7 +284,46 @@ export class DashboardExamplesComponent implements OnInit {
         color: '#6CA2FF'
     };
 
+    public mockDoughnut = [
+      {
+        y: 300,
+        color: 'blue',
+        name: 'High',
+        percent: '10%'
+      },
+      {
+        y: 100,
+        color:'#F7464A',
+        name: 'Medium',
+        percent: '13%'
+      },
+      {
+        y: 100,
+        color:'#F7464A',
+        name: 'Low',
+        percent: '20%'
+      },
+      {
+        y: 100,
+        className: 'high',
+        name: 'Info',
+        percent: '20%'
+      }];
+
     public configs: Widget[] = [
+      {
+        id: '9',
+        title: 'Doughnut',
+        actions: {},
+        content: {
+          type: WidgetContentType.Doughnut,
+          data: this.mockDoughnut,
+        },
+        metrics: {
+          width: WidgetWidth.W1,
+          height: WidgetHeight.H1,
+        }
+      },
       {
         id: '1',
         title: 'Unprotected Nodes',
@@ -617,7 +656,8 @@ export class DashboardExamplesComponent implements OnInit {
           width: WidgetWidth.W1,
           height: WidgetHeight.H1,
         }
-      }
+      },
+
     ];
 
     // For use in template

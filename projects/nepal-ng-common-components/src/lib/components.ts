@@ -1,6 +1,7 @@
 import { AlHighchartBubbleComponent } from './al-highchart-bubble/al-highchart-bubble.component';
 import { AlHighchartColumnComponent } from './al-highchart-column/al-highchart-column.component';
 import { AlHighchartSemiCircleComponent } from './al-highchart-semi-circle/al-highchart-semi-circle.component';
+import { AlHighchartDoughnutComponent } from './al-highchart-doughnut/al-highchart-doughnut.component';
 import { AlHighchartTreeMapComponent } from './al-highchart-treemap/al-highchart-treemap.component';
 import { AlDetailedTableListComponent } from './al-detailed-table-list/al-detailed-table-list.component';
 import { AlDashboardWidgetComponent } from './al-dashboard-widget/al-dashboard-widget.component';
@@ -23,6 +24,7 @@ const ALL_COMPONENTS = [
   AlHighchartColumnComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
+  AlHighchartDoughnutComponent,
   AlDetailedTableListComponent,
   AlDashboardWidgetComponent,
   AlHighchartsActivityGaugeComponent,
@@ -44,6 +46,7 @@ export {
   ALL_COMPONENTS,
   AlHighchartBubbleComponent,
   AlHighchartColumnComponent,
+  AlHighchartDoughnutComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
   AlDetailedTableListComponent,
