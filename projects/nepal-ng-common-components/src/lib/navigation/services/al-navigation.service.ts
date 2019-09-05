@@ -8,7 +8,7 @@
 
 import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router, NavigationEnd, NavigationExtras } from '@angular/router';
+import { Router, NavigationEnd, NavigationExtras, ActivatedRouteSnapshot } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import {
@@ -35,6 +35,7 @@ import {
     AlNavigationFrameChanged,
     AlNavigationContextChanged,
     AlNavigationTrigger,
+    AlNavigationTertiarySelected,
     ExperiencePreference
 } from '../types';
 
@@ -46,6 +47,8 @@ export class AlNavigationService implements AlNavigationHost
     public schema:AlNavigationSchema            =   null;
     public currentUrl:string                    =   '';
     public routeParameters                      =   {};
+    public routeData:{[k:string]:string}        =   {};
+    public tertiaryMenu:AlRoute                 =   null;
 
     /**
      * Acting entitlements (distinct from primary entitlements); initially empty.
@@ -104,7 +107,8 @@ export class AlNavigationService implements AlNavigationHost
     protected navigationSchemaId:string            =   null;
 
     protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
-    protected menus:AlRoute[] = [];
+    protected loadedMenus:{[fullMenuId:string]:AlRoute} = {};
+    protected bookmarks:{[bookmarkId:string]:AlRoute} = {};
 
     protected frameNotifier:AlStopwatch;
     protected contextNotifier:AlStopwatch;
@@ -117,8 +121,7 @@ export class AlNavigationService implements AlNavigationHost
         this.frameNotifier = AlStopwatch.later( this.emitFrameChanges );
         this.contextNotifier = AlStopwatch.later( this.emitContextChanges );
         this.currentUrl = window.location.href;
-        this.router.events.pipe( filter( event => event instanceof NavigationEnd ) )
-                .subscribe( event => this.onNavigationComplete( event ) );
+        this.router.events.pipe( filter( event => event instanceof NavigationEnd ) ).subscribe( this.onNavigationComplete );
         ALSession.notifyStream.attach( "AlSessionStarted", this.onSessionStarted );
         ALSession.notifyStream.attach( "AlActingAccountChanged", this.onActingAccountChanged );
         ALSession.notifyStream.attach( "AlActingAccountResolved", this.onActingAccountResolved );
@@ -151,6 +154,12 @@ export class AlNavigationService implements AlNavigationHost
             },
             refresh: () => {
                 this.refreshMenus();
+            },
+            menus: ( id:string ) => {
+                if ( id ) {
+                    return this.loadedMenus.hasOwnProperty( id ) ? this.loadedMenus[id] : null;
+                }
+                return this.loadedMenus;
             },
             navigate: this.navigate
         } );
@@ -185,6 +194,11 @@ export class AlNavigationService implements AlNavigationHost
     public setSchema( schemaId:string ) {
         this.navigationSchemaId = schemaId;
         this.frameNotifier.again();
+    }
+
+    public setTertiaryMenu( menu:AlRoute ) {
+        this.tertiaryMenu = menu;
+        this.events.trigger( new AlNavigationTertiarySelected( menu ) );
     }
 
     /**
@@ -230,12 +244,25 @@ export class AlNavigationService implements AlNavigationHost
         );
     }
 
-    public getNavigationSchema( schema:string ):Promise<AlNavigationSchema> {
-        if ( ! this.schemas.hasOwnProperty( schema ) ) {
-            let path = `assets/navigation/${schema}.json`;
-            this.schemas[schema] = this.http.get<AlNavigationSchema>( path ).toPromise();
+    public getNavigationSchema( schemaId:string ):Promise<AlNavigationSchema> {
+        if ( ! this.schemas.hasOwnProperty( schemaId ) ) {
+            let path = `assets/navigation/${schemaId}.json`;
+            this.schemas[schemaId] = this.http.get<AlNavigationSchema>( path )
+                .toPromise()
+                .then( ( schema:AlNavigationSchema ) => {
+                    if ( schema.menus ) {
+                        Object.entries( schema.menus )
+                            .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
+                                const menuKey = `${schemaId}:${menuId}`;
+                                if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                                    this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
+                                }
+                            } );
+                    }
+                    return schema;
+                } );
         }
-        return this.schemas[schema];
+        return this.schemas[schemaId];
     }
 
     public getRouteById( namedRouteId:string ):AlRouteDefinition {
@@ -250,30 +277,33 @@ export class AlNavigationService implements AlNavigationHost
         return this.schema.namedRoutes[namedRouteId];
     }
 
-    public getMenu( schema:string, menuId:string ):Promise<AlRoute> {
-        return this.getNavigationSchema( schema ).then( schema => {
-            if ( schema.menus.hasOwnProperty( menuId ) ) {
-                let menu = new AlRoute( this, schema.menus[menuId] );
-                this.menus.push( menu );
-                menu.refresh(true);
-                return menu;
+    public getMenu( schemaId:string, menuId:string ):Promise<AlRoute> {
+        return this.getNavigationSchema( schemaId ).then( schema => {
+            let menuKey = `${schemaId}:${menuId}`;
+            if ( this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                return this.loadedMenus[menuKey];
             }
-            return Promise.reject( new Error( `Navigation schema '${schema}' does not have a menu with ID '${menuId}'` ) );
+            return Promise.reject( new Error( `Navigation schema '${schemaId}' does not have a menu with ID '${menuId}'` ) );
         } );
+    }
+
+    public setBookmark( bookmarkId:string, menuItem:AlRoute ) {
+        this.bookmarks[bookmarkId] = menuItem;
+    }
+
+    public getBookmark( bookmarkId:string ):AlRoute {
+        return this.bookmarks.hasOwnProperty( bookmarkId ) ? this.bookmarks[bookmarkId] : null;
     }
 
     /**
      * Handles user dispatch of a given route.
      */
     public dispatch = ( route:AlRoute, params?:{[param:string]:string} ) => {
-        console.log("Dispatching route!", route );
         this.navigate.byRoute( route, params );
     }
 
     public refreshMenus() {
-        this.menus.forEach( menu => {
-            menu.refresh( true );
-        } );
+        Object.values( this.loadedMenus ).forEach( menu => menu.refresh( true ) );
     }
 
     /**
@@ -328,23 +358,37 @@ export class AlNavigationService implements AlNavigationHost
      * console.account's logout route.
      */
     protected listenForSignout() {
-        this.events.attach( 'AlNavigationTrigger', ( event:AlNavigationTrigger ) => {
-            console.log("Got navigation trigger event", event );
-            if ( event.triggerName === 'Navigation.User.Signout' ) {
+        this.events.attach( 'AlNavigationTrigger' )
+            .filter( (event:AlNavigationTrigger ) => event.triggerName === 'Navigation.User.Signout' )
+            .then( ( event:AlNavigationTrigger ) => {
                 event.respond( true );
                 ALSession.deactivateSession();
                 this.navigate.byLocation( AlLocation.AccountsUI, '/#/logout' );
-            }
-        } );
+            } );
     }
 
     /**
      * Listens for router complete/cancel events from angular
      */
-    protected onNavigationComplete( event ) {
-        this.currentUrl = window.location.href;
-        this.refreshMenus();
-        this.contextNotifier.again();
+    protected onNavigationComplete = ( event:NavigationEnd ) => {
+        this.currentUrl = window.location.href;         //  Update the current "official" URL for the menu system
+
+        //  Iterate through the router's root to accumulate all data from its children, and make that data public
+        let aggregatedData = {};
+        if ( this.router.routerState.root.snapshot.children ) {
+            let accumulator = ( element:ActivatedRouteSnapshot ) => {
+                Object.assign( aggregatedData, element.data );
+                if ( element.children ) {
+                    element.children.forEach( accumulator );
+                }
+            };
+            accumulator( this.router.routerState.root.snapshot );
+        }
+        this.routeData = aggregatedData;
+
+        this.refreshMenus();                            //  Refresh menus against the most current data
+
+        this.contextNotifier.again();                   //  Notify child components
     }
 
     /**
@@ -410,10 +454,10 @@ export class AlNavigationService implements AlNavigationHost
                 } else {
                     console.warn("AlNavigationService: cannot dispatch link route without a link!", action );
                 }
-            } else if ( route.definition.action.type === 'trigger' ) {
-                console.log("AlNavigationService.Trigger [%s]", route.definition.action.trigger );
+            } else if ( action.type === 'trigger' ) {
+                console.log("AlNavigationService.Trigger [%s]", action.trigger );
                 this.events.trigger( new AlNavigationTrigger( this,
-                                                              route.definition.action.trigger,
+                                                              action.trigger,
                                                               route.definition,
                                                               route ) );
             }
@@ -528,7 +572,10 @@ export class AlNavigationService implements AlNavigationHost
         if ( rewriteQueryString ) {
             if ( applyIdentityParameters && ALSession.isActive() ) {
                 unused["aaid"] = ALSession.getActingAccountID();
-                unused["locid"] = ALSession.getActiveDatacenter();      //  corresponds to insight locations service locationId
+                let datacenterId = ALSession.getActiveDatacenter();
+                if ( datacenterId ) {
+                    unused["locid"] = datacenterId;      //  corresponds to insight locations service locationId
+                }
             }
             let qsOffset = url.indexOf("?");
             if ( qsOffset !== -1 ) {

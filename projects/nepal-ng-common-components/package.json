@@ -1,6 +1,6 @@
 {
   "name": "@al/ng-common-components",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "license": "MIT",
   "description": "Alert Logic Component Library for Angular projects",
   "author": {
@@ -35,5 +35,8 @@
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^1.0.0",
     "primeng": "^7.1.0"
+  },
+  "dependencies": {
+    "snapsvg-cjs": "~0.0.6"
   }
 }

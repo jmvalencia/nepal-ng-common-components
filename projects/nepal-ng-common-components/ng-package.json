@@ -11,6 +11,10 @@
       "@al/common/locator" : "@al/common/locator",
       "@al/common/schema-validator" : "@al/common/utility",
       "@al/common" : "@al/common",
+      "highcharts": "highcharts",
+      "highcharts/highcharts": "highcharts/highcharts",
+      "highcharts/highcharts-more": "highcharts/highcharts-more",
+      "highcharts/modules/solid-gauge": "highcharts/modules/solid-gauge",
       "primeng/accordion" : "primeng/accordion",
       "primeng/api" : "primeng/api",
       "primeng/autocomplete" : "primeng/autocomplete",
@@ -78,10 +82,10 @@
       "primeng/tree" : "primeng/tree",
       "primeng/treetable" : "primeng/treetable",
       "primeng/virtualscroller" : "primeng/virtualscroller",
-      "highcharts": "highcharts",
-      "highcharts/highcharts": "highcharts/highcharts",
-      "highcharts/highcharts-more": "highcharts/highcharts-more",
-      "highcharts/modules/solid-gauge": "highcharts/modules/solid-gauge"
+      "snapsvg": "snapsvg"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+      "snapsvg-cjs"
+  ]
 }
