@@ -6,7 +6,7 @@ import { AIMSClient, AIMSAccount } from '@al/aims';
 import { AlRoute, AlLocation, AlLocatorService } from '@al/common/locator';
 import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-archipeligo17-account-selector.component';
 import { AlNavigationService } from '../../services/al-navigation.service';
-import { AlNavigationContextChanged } from '../../types';
+import { AlNavigationContextChanged, AlNavigationSecondarySelected, AlNavigationTertiarySelected } from '../../types';
 import { AlStopwatch, AlTriggerStream, AlSubscriptionGroup } from '@al/common';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
@@ -52,6 +52,8 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     public accountName:string               = "";
     public accountId:string                 = "";
 
+    public refresh:AlStopwatch              =   null;
+
     @ViewChild(AlArchipeligo17AccountSelectorComponent) accountSelector:AlArchipeligo17AccountSelectorComponent;
 
     /**
@@ -64,6 +66,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                  public alNavigation: AlNavigationService ) {
         this.subscriptions.manage( this.alNavigation.events.attach( "AlNavigationContextChanged", this.onNavigationContextChanged ) );
         this.onNavigationContextChanged( new AlNavigationContextChanged( this.alNavigation, ALSession ) );
+        this.refresh = AlStopwatch.later( this.onNavigationContextChanged );
     }
 
     ngOnInit() {
@@ -76,12 +79,11 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
 
     ngOnChanges(changes: SimpleChanges){
         if (typeof changes['menu'] !== 'undefined') {
-            this.onNavigationContextChanged();
+            this.loadMenu();
         }
     }
 
     onNavigationContextChanged = ( navigationEvent?: AlNavigationContextChanged ) => {
-        console.log("onNavigationContextChanged!");
         if ( ALSession.isActive() ) {
             this.userMenuAvailable = true;
             this.userName = ALSession.getUserName();
@@ -118,31 +120,21 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
              */
             if ( this.menu ) {
                 this.menu.refresh( true );
-                let activeChild = null;
-                for ( let i = 0; i < this.menu.children.length; i++ ) {
-                    if ( this.menu.children[i].activated ) {
-                        activeChild = this.menu.children[i];
-                        break;
-                    }
-                }
+                const activeChild = this.menu.children.find(child => child.activated);
                 if ( activeChild && activeChild !== this.activeChild ) {
                     this.activeChild = activeChild;
-                    // "Navigation.SecondaryNavigationActivated", this.activeChild
-                    // this.alNavigation.events.trigger(  );    //  set
+                    this.alNavigation.events.trigger( new AlNavigationSecondarySelected(activeChild) );   // set
                 } else if ( ! activeChild && this.activeChild ) {
                     this.activeChild = null;
-                    //                      this.alNavigation.events.trigger("Navigation.SecondaryNavigationActivated", null );                 //  clear
+                    this.alNavigation.events.trigger( new AlNavigationTertiarySelected(this.activeChild) );   //  clear
                 }
+
                 // Setting tertiary menu
                 if (this.activeChild) {
-                    for (let j = 0; j < this.activeChild.children.length; j++) {
-                        if (this.activeChild.children.activated) {
-                            const activeGrandchild = this.activeChild.children;
-                            // this.alNavigation.events.trigger( "Navigation.TertiaryNavigationSelected", activeGrandchild );
-                            break;
-                        }
-                    }
+                    const activeGrandchild = this.activeChild.children.find(child => child.activated);
+                    this.alNavigation.events.trigger(new AlNavigationTertiarySelected(activeGrandchild));
                 }
+
                 this.menuItems = this.menu.children.map((child: AlRoute) => {
                     return this.parseToPrimeMenuItem(child);
                 });
@@ -199,18 +191,26 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         } */
     }
 
+    // load the menu
+    loadMenu() {
+        // Load the User Menu
+        this.alNavigation.getMenu(  'cie-plus2', 'user' ).then( menu => {
+                // this.viewReady = true;
+                this.menu = menu;
+                this.refresh.again();
+            },
+            err => {
+                console.error("Failed to retrieve menu 'user'; not instantiating.", err );
+                // this.menu = AlXRoute.abstract( this.navigation, "Empty Menu" );
+            });
+    }
+
     onClick( menuItem:AlRoute, $event:any ) {
         menuItem.refresh(true);
         if ( menuItem.properties.hasOwnProperty( "target" ) && menuItem.properties.target === "_blank" ) {
             return;
         }
-        if ( menuItem.action.type === 'trigger' ) {
-            $event.stopPropagation();
-            $event.preventDefault();
-        }
-        if (menuItem.enabled) {
-            menuItem.dispatch();
-        }
+        menuItem.dispatch();
     }
 
     onClickDatacenter( menuItem:AlRoute, $event:any ) {
