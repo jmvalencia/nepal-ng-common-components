@@ -60,7 +60,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                         enabled: false
                     },
                     showInLegend: true,
-                    size: '85%'
+                    size: '90%'
                 },
             },
             title: {
@@ -69,7 +69,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
             legend: {
                 align: 'right',
                 verticalAlign: 'middle',
-                labelFormat: '{name} - {y} - {percent}',
+                labelFormat: '{name}: {y} - {percent}',
                 layout: 'vertical',
             },
             credits: {

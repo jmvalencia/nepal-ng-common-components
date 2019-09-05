@@ -179,7 +179,7 @@ path.unhealthy {
       fill: #CBCBCB;
     }
 
-    g text {
+    g text,  g text tspan {
       fill: white;
     }
 
@@ -188,6 +188,11 @@ path.unhealthy {
     }
   }
 
+  .highcharts-data-label span {
+    dt, dd {
+      color:  al-color($al-gray, 50);
+    }
+  }
   .dropdowns {
 
     label,
@@ -355,11 +360,17 @@ al-app-header {
     }
   }
   svg {
-    g text {
+    g text, g text tspan {
       fill: al-color($al-gray, 50)
     }
     text {
       fill: al-color($al-gray, 50);
+    }
+  }
+
+  .highcharts-data-label span {
+    dt, dd {
+      color:  al-color($al-gray, 50);
     }
   }
 
