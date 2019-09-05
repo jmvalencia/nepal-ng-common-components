@@ -210,13 +210,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         if ( menuItem.properties.hasOwnProperty( "target" ) && menuItem.properties.target === "_blank" ) {
             return;
         }
-        if ( ! menuItem.definition.action.hasOwnProperty('type') ) {
-            $event.stopPropagation();
-            $event.preventDefault();
-        }
-        if (menuItem.enabled) {
-            menuItem.dispatch();
-        }
+        menuItem.dispatch();
     }
 
     onClickDatacenter( menuItem:AlRoute, $event:any ) {
