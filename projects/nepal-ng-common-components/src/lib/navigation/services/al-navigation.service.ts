@@ -155,6 +155,12 @@ export class AlNavigationService implements AlNavigationHost
             refresh: () => {
                 this.refreshMenus();
             },
+            menus: ( id:string ) => {
+                if ( id ) {
+                    return this.loadedMenus.hasOwnProperty( id ) ? this.loadedMenus[id] : null;
+                }
+                return this.loadedMenus;
+            },
             navigate: this.navigate
         } );
         this.listenForSignout();
@@ -238,12 +244,25 @@ export class AlNavigationService implements AlNavigationHost
         );
     }
 
-    public getNavigationSchema( schema:string ):Promise<AlNavigationSchema> {
-        if ( ! this.schemas.hasOwnProperty( schema ) ) {
-            let path = `assets/navigation/${schema}.json`;
-            this.schemas[schema] = this.http.get<AlNavigationSchema>( path ).toPromise();
+    public getNavigationSchema( schemaId:string ):Promise<AlNavigationSchema> {
+        if ( ! this.schemas.hasOwnProperty( schemaId ) ) {
+            let path = `assets/navigation/${schemaId}.json`;
+            this.schemas[schemaId] = this.http.get<AlNavigationSchema>( path )
+                .toPromise()
+                .then( ( schema:AlNavigationSchema ) => {
+                    if ( schema.menus ) {
+                        Object.entries( schema.menus )
+                            .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
+                                const menuKey = `${schemaId}:${menuId}`;
+                                if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                                    this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
+                                }
+                            } );
+                    }
+                    return schema;
+                } );
         }
-        return this.schemas[schema];
+        return this.schemas[schemaId];
     }
 
     public getRouteById( namedRouteId:string ):AlRouteDefinition {
@@ -258,15 +277,13 @@ export class AlNavigationService implements AlNavigationHost
         return this.schema.namedRoutes[namedRouteId];
     }
 
-    public getMenu( schema:string, menuId:string ):Promise<AlRoute> {
-        return this.getNavigationSchema( schema ).then( schema => {
-            if ( schema.menus.hasOwnProperty( menuId ) ) {
-                let menu = new AlRoute( this, schema.menus[menuId] );
-                this.loadedMenus[`${schema}:${menuId}`] = menu;
-                menu.refresh(true);
-                return menu;
+    public getMenu( schemaId:string, menuId:string ):Promise<AlRoute> {
+        return this.getNavigationSchema( schemaId ).then( schema => {
+            let menuKey = `${schemaId}:${menuId}`;
+            if ( this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                return this.loadedMenus[menuKey];
             }
-            return Promise.reject( new Error( `Navigation schema '${schema}' does not have a menu with ID '${menuId}'` ) );
+            return Promise.reject( new Error( `Navigation schema '${schemaId}' does not have a menu with ID '${menuId}'` ) );
         } );
     }
 
