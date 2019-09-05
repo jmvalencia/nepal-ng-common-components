@@ -149,7 +149,9 @@ export interface TableListHeader {
 
 export interface TableListConfig {
   headers: TableListHeader[];
-  body: {[p:string]: string|number}[];
+  body: {
+    [p: string]: string | number | {[p:string]:string};
+  }[];
 }
 
 /*
