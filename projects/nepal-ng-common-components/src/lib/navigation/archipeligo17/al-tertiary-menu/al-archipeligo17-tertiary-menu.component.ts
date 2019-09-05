@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AlRoute } from '@al/common/locator';
 import { filter } from 'rxjs/operators';
 import { AlNavigationService } from '../../services/al-navigation.service';
+import { AlNavigationTertiarySelected } from '../../types/navigation.types';
 
 @Component({
     selector: 'al-archipeligo17-tertiary-menu',
@@ -13,8 +14,11 @@ import { AlNavigationService } from '../../services/al-navigation.service';
 
 export class AlArchipeligo17TertiaryMenuComponent implements OnInit
 {
-    menu:AlRoute               =   null;
-    public activeTabs:AlRoute  =   null;
+    @Input()
+    public visible:boolean      =   true;
+
+    menu:AlRoute                =   null;
+    public activeTabs:AlRoute   =   null;
     sidenavOpen:boolean         =   false;
     stateChanges: Subscription  =   null;
 
@@ -35,8 +39,9 @@ export class AlArchipeligo17TertiaryMenuComponent implements OnInit
     onDestroy = () => {
     }
 
-    onMenuChanged = ( event ) => {
-        this.menu = <AlRoute>event.child;
+    onMenuChanged = ( event:AlNavigationTertiarySelected ) => {
+        this.menu = this.alNavigation.tertiaryMenu || event.child;
+        this.alNavigation.setBookmark("tertiaryMenu", this.menu );
         if ( this.menu && this.menu.children.length > 0 ) {
             this.sidenavOpen = true;
             this.onLocationChange();

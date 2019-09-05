@@ -35,5 +35,8 @@
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^1.0.0",
     "primeng": "^7.1.0"
+  },
+  "dependencies": {
+    "snapsvg-cjs": "~0.0.6"
   }
 }

@@ -67,3 +67,6 @@ export interface ExperiencePreference
     dismissBetaForever?:    boolean;
     offerBetaTutorial?:     boolean;
 }
+
+export const ALNAV_DISABLE_PRIMARY = "alNavigation.disablePrimary";
+export const ALNAV_DISABLE_TERTIARY = "alNavigation.disableTertiary";

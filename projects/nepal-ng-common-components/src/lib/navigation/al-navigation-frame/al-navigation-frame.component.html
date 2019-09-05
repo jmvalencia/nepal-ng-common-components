@@ -15,14 +15,16 @@
         <!-- CIE-plus "Universal" Navigation -->
         <div class="mat-sidenav-container">     <!-- this should be a p-sidebar -->
             <al-archipeligo17-header>
-                <div class="user-menu-item">
+                <div class="user-menu-item" *ngIf="!disablePrimaryMenu">
                     <al-archipeligo17-user-menu [menu]="userMenu"></al-archipeligo17-user-menu>
                 </div>
-                <div class="application-menu">
+                <div class="application-menu" *ngIf="!disablePrimaryMenu">
                     <al-archipeligo17-primary-menu [menu]="primaryMenu"></al-archipeligo17-primary-menu>
                 </div>
             </al-archipeligo17-header>
-            <al-archipeligo17-tertiary-menu>
+            <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu">
+                <ng-content select="[above-tertiary-menu]" ngProjectAs="*"></ng-content>
+                <ng-content select="[below-tertiary-menu]" ngProjectAs="*"></ng-content>
                 <ng-container *ngTemplateOutlet="mainContent"></ng-container>
             </al-archipeligo17-tertiary-menu>
         </div>
@@ -34,7 +36,8 @@
                 <ng-content select="[in-header]"></ng-content>
             </al-archipeligo19-app-header>
             <al-archipeligo19-nav-header (toggleButtonClick)="toggleNav()"></al-archipeligo19-nav-header>
-            <al-archipeligo19-sidenav   [menu]="primaryMenu"
+            <al-archipeligo19-sidenav   *ngIf="!disablePrimaryMenu"
+                                        [menu]="primaryMenu"
                                         [(displayNav)]="displayNav"></al-archipeligo19-sidenav>
         </div>
         <div class="mainContent">

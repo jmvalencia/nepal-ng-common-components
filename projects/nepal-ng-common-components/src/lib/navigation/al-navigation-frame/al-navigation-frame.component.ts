@@ -7,7 +7,13 @@
 
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlNavigationHost, AlNavigationFrameChanged } from '../types';
+import {
+    AlNavigationHost,
+    AlNavigationFrameChanged,
+    AlNavigationContextChanged,
+    ALNAV_DISABLE_PRIMARY,
+    ALNAV_DISABLE_TERTIARY
+} from '../types';
 import { ALSession } from '@al/session';
 import { AIMSClient } from '@al/aims';
 import { AlRoute } from '@al/common/locator';
@@ -32,12 +38,16 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
 
     displayNav:boolean = false;
 
+    disablePrimaryMenu:boolean = false;
+    disableTertiaryMenu:boolean = false;
+
     constructor( public alNavigation:AlNavigationService,
                  public activatedRoute:ActivatedRoute ) {
     }
 
     ngOnInit() {
         this.alNavigation.events.attach( "AlNavigationFrameChanged", this.onNavigationChanged );
+        this.alNavigation.events.attach( "AlNavigationContextChanged", this.onNavigationContextChanged );
         this.activatedRoute.queryParams.subscribe( this.onQueryParamsChanged );
     }
 
@@ -82,6 +92,14 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
         } else {
             this.userMenu = AlRoute.empty();
+        }
+    }
+
+    onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
+        if ( this.alNavigation.routeData.hasOwnProperty("alNavigation" ) && Array.isArray( this.alNavigation.routeData.alNavigation ) ) {
+            const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
+            this.disablePrimaryMenu = routeDirectives.includes( ALNAV_DISABLE_PRIMARY );
+            this.disableTertiaryMenu = routeDirectives.includes( ALNAV_DISABLE_TERTIARY );
         }
     }
 
