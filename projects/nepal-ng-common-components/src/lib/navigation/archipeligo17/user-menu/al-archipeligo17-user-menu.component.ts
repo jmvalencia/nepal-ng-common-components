@@ -13,8 +13,7 @@ import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem'
 @Component({
     selector: 'al-archipeligo17-user-menu',
     templateUrl: './al-archipeligo17-user-menu.component.html',
-    styleUrls: [ './al-archipeligo17-user-menu.component.scss' ],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: [ './al-archipeligo17-user-menu.component.scss' ]
 })
 
 export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDestroy

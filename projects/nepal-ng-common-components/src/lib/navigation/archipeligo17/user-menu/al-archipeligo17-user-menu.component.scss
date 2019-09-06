@@ -57,7 +57,7 @@
             align-items: center;
             justify-content: center;
 
-            div {
+            > div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -123,9 +123,9 @@
             }
         }
     }
-    p-menu {
+    p-menu ::ng-deep {
         .ui-menu {
-            width: 200px !important;
+            width: 220px !important;
 
             .ui-menuitem {
                 height: 48px;
