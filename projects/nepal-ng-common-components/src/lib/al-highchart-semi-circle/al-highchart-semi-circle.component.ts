@@ -53,8 +53,8 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
         styledMode: true,
         width: this.containerWidth,
         height: this.containerHeight,
-        marginLeft: 50,
-        marginRight: 50,
+        marginLeft: 20,
+        marginRight: 20,
         marginBottom: 0,
         spacingLeft: 0,
         spacingRight: 0,
@@ -99,7 +99,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
           startAngle: -90,
           endAngle: 90,
           center: ['50%', '65%'],
-          size: '120%'
+          size: '110%'
         },
         series: {
           events: {
