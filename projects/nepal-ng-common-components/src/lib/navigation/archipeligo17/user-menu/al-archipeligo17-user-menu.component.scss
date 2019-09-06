@@ -125,12 +125,15 @@
     }
     p-menu {
         .ui-menu {
-            left: auto !important;
-            width: 220px !important;
+            width: 200px !important;
+
             .ui-menuitem {
+                height: 48px;
+
                 .ui-menuitem-link .ui-menuitem-icon {
                     font-size: 1.5em;
                     margin-right: 12px;
+                    color: al-color($al-gray, 500);
                 }
             }
         }
