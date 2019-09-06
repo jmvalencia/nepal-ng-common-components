@@ -3,6 +3,7 @@ import { AlHighchartColumnComponent } from './al-highchart-column/al-highchart-c
 import { AlHighchartSemiCircleComponent } from './al-highchart-semi-circle/al-highchart-semi-circle.component';
 import { AlHighchartDoughnutComponent } from './al-highchart-doughnut/al-highchart-doughnut.component';
 import { AlHighchartTreeMapComponent } from './al-highchart-treemap/al-highchart-treemap.component';
+import { AlHighmapChartComponent } from './al-highmap-chart/al-highmap-chart.component';
 import { AlDetailedTableListComponent } from './al-detailed-table-list/al-detailed-table-list.component';
 import { AlDashboardWidgetComponent } from './al-dashboard-widget/al-dashboard-widget.component';
 import { AlHighchartsActivityGaugeComponent } from './al-highchart-activity-gauge/al-highchart-activity-gauge.component';
@@ -25,6 +26,7 @@ const ALL_COMPONENTS = [
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
   AlHighchartDoughnutComponent,
+  AlHighmapChartComponent,
   AlDetailedTableListComponent,
   AlDashboardWidgetComponent,
   AlHighchartsActivityGaugeComponent,
@@ -49,6 +51,7 @@ export {
   AlHighchartDoughnutComponent,
   AlHighchartSemiCircleComponent,
   AlHighchartTreeMapComponent,
+  AlHighmapChartComponent,
   AlDetailedTableListComponent,
   AlDashboardWidgetComponent,
   AlHighchartsActivityGaugeComponent,

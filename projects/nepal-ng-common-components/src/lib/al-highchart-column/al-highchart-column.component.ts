@@ -6,6 +6,7 @@
 import { Input, Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
+
 @Component({
     selector: 'al-highchart-column',
     templateUrl: './al-highchart-column.component.html',

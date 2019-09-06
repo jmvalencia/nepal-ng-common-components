@@ -53,7 +53,8 @@ export enum WidgetContentType {
   Bar,
   Area,
   Bubble,
-  Doughnut
+  Doughnut,
+  Map
 }
 
 
