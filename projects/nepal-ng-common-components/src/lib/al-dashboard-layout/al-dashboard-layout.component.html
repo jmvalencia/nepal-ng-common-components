@@ -35,6 +35,9 @@
           <al-highchart-doughnut
             *ngIf="configItem.content.type === contentType.Doughnut"
             [config]="configItem.content.data"></al-highchart-doughnut>
+          <al-highmap-chart
+            *ngIf="configItem.content.type === contentType.Map"
+            [config]="configItem.content.data"></al-highmap-chart>
       </div>
       <div class="interior" *ngIf="configItem.content && configItem.content.data && configItem.content.data.nodata">
         <al-content-zero-data [contentType]="configItem.content.type" [config]="configItem.content.data"></al-content-zero-data>

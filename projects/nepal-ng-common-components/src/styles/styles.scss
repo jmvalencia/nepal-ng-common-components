@@ -749,9 +749,25 @@ al-app-header {
   }
 }
 
-.bubble-container {
+.bubble-container, .mapChart-container {
   .highcharts-data-labels {
     text-align: center;
   }
 }
+.mapChart-container {
+  path.highcharts-point.source {
+    opacity: 0.75;
+    fill: al-color($al-purple, 400);
+    stroke: al-color($al-purple, 400);
+  }
 
+  path.highcharts-point.target {
+    opacity: 0.75;
+    fill: al-color($al-blue, 900);
+    stroke: al-color($al-blue, 900);
+  }
+  g.highcharts-data-label text {
+    font-size: 10px;
+    text-anchor: middle;
+  }  
+}
