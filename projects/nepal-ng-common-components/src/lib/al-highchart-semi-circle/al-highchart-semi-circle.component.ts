@@ -107,7 +107,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
             click: function(event) {
               event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
                 detail: {
-                  segment: event.point
+                  recordLink: event.point.recordLink
                 },
                 bubbles: true
               }));
