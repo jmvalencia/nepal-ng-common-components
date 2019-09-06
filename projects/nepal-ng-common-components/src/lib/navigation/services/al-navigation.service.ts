@@ -109,6 +109,7 @@ export class AlNavigationService implements AlNavigationHost
     protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
     protected loadedMenus:{[fullMenuId:string]:AlRoute} = {};
     protected bookmarks:{[bookmarkId:string]:AlRoute} = {};
+    protected namedRouteDictionary:{[routeId:string]:AlRouteDefinition} = {};
 
     protected frameNotifier:AlStopwatch;
     protected contextNotifier:AlStopwatch;
@@ -154,6 +155,15 @@ export class AlNavigationService implements AlNavigationHost
             },
             refresh: () => {
                 this.refreshMenus();
+            },
+            routes: ( search:string = null ) => {
+                Object.keys( this.namedRouteDictionary )
+                    .filter( id => search === null || id.indexOf( search ) >= 0 || this.namedRouteDictionary[id].caption.indexOf( search ) >= 0 )
+                    .sort()
+                    .forEach( id => {
+                        const definition = this.namedRouteDictionary[id];
+                        console.log(`[${id}] "${definition.caption}"`, definition );
+                    } );
             },
             menus: ( id:string ) => {
                 if ( id ) {
@@ -249,32 +259,27 @@ export class AlNavigationService implements AlNavigationHost
             let path = `assets/navigation/${schemaId}.json`;
             this.schemas[schemaId] = this.http.get<AlNavigationSchema>( path )
                 .toPromise()
-                .then( ( schema:AlNavigationSchema ) => {
-                    if ( schema.menus ) {
-                        Object.entries( schema.menus )
-                            .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
-                                const menuKey = `${schemaId}:${menuId}`;
-                                if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
-                                    this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
-                                }
-                            } );
-                    }
-                    return schema;
-                } );
+                .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ) );
         }
         return this.schemas[schemaId];
     }
 
-    public getRouteById( namedRouteId:string ):AlRouteDefinition {
-        if ( ! this.schema ) {
-            console.warn(`AlNavigationService: cannot retrieve route with id '${namedRouteId}'; no schema is loaded.` );
+    public getRouteByName( routeName:string ):AlRouteDefinition {
+        if ( ! this.namedRouteDictionary.hasOwnProperty( routeName ) ) {
+            console.warn(`AlNavigationService: cannot retrieve route with name '${routeName}'; no such named route is defined.` );
             return null;
         }
-        if ( ! this.schema.namedRoutes || ! this.schema.namedRoutes.hasOwnProperty( namedRouteId ) ) {
-            console.warn(`AlNavigationService: cannot retrieve route with id '${namedRouteId}'; no such named route is defined.` );
-            return null;
-        }
-        return this.schema.namedRoutes[namedRouteId];
+        return this.namedRouteDictionary[routeName];
+    }
+
+    /**
+     * @deprecated
+     *
+     * Routes with ids are now referred to as 'named routes'; use getRouteByName instead.
+     */
+    public getRouteById( routeId:string ):AlRouteDefinition {
+        console.warn("AlNavigationService.getRouteById is deprecated; please use getRouteByName instead." );
+        return this.getRouteByName;
     }
 
     public getMenu( schemaId:string, menuId:string ):Promise<AlRoute> {
@@ -431,7 +436,7 @@ export class AlNavigationService implements AlNavigationHost
      */
     protected navigateByNamedRoute( namedRouteId:string, parameters:{[p:string]:string} = {}, options:any = {} ) {
         this.defaultSchema.then( schema => {
-            let definition = this.getRouteById( namedRouteId );
+            let definition = this.getRouteByName( namedRouteId );
             if ( ! definition ) {
                 throw new Error("Imperative navigation could not be executed." );
             }
@@ -476,16 +481,7 @@ export class AlNavigationService implements AlNavigationHost
      * Internal handler for navigation based on location/path.
      */
     protected navigateByLocation( locTypeId:string, path:string = '/#/', parameters:{[p:string]:string} = {}, options:any = {} ) {
-        let node = AlLocatorService.getNode( locTypeId );
-        if ( ! node ) {
-            console.warn(`AlNavigationService: cannot navigate to unknown location '${locTypeId}'; aborting imperative navigation.` );
-            return;
-        }
-        let url = node.uri;
-        if ( path && path.length ) {
-            url = url + path;
-        }
-        this.navigateByURL( url, parameters, options );
+        this.navigateByURL( AlLocatorService.resolveURL( locTypeId, path ), parameters, options );
     }
 
     /**
@@ -548,6 +544,29 @@ export class AlNavigationService implements AlNavigationHost
         } );
     }
 
+    /**
+     * Processes a schema when it is loaded for the first time -- hydrates its menus, stores its named routes, etc.
+     */
+    protected ingestNavigationSchema( schemaId:string, schema:AlNavigationSchema ):AlNavigationSchema {
+        //  First ingest named routes and add them to the internal dictionary
+        if ( schema.namedRoutes ) {
+            Object.entries( schema.namedRoutes )
+                .forEach( ( [ routeId, routeDefinition ]:[ string, AlRouteDefinition ] ) => {
+                    this.namedRouteDictionary[routeId] = routeDefinition;
+                } );
+        }
+        //  Then build living menus from their definitions
+        if ( schema.menus ) {
+            Object.entries( schema.menus )
+                .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
+                    const menuKey = `${schemaId}:${menuId}`;
+                    if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                        this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
+                    }
+                } );
+        }
+        return schema;
+    }
 
     /**
      * Black magic.  Consumes provided parameters as route parameters and compiles any remainders into a query string.

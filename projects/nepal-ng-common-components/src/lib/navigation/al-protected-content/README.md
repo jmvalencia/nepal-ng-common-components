@@ -1,19 +1,19 @@
-# al-entitled-content
+# al-protected-content
 
 ## Overview
 
-The `al-entitled-content` component allows application authors to easily protect views or view elements from accounts who are not entitled to see them.
+The `al-protected-content` component allows application authors to easily protect views or view elements from accounts who are not entitled to see them.
 It also provides functionality to automatically redirect to a more appropriate route when the acting account changes, show a zero state in the event the current user is unentitled, or redirect to a default route in the case the current user is unentitled.
 
 ## Basic Usage
 
 ```
-<al-entitled-content entitlement="cloud_defender">
+<al-protected-content entitlement="cloud_defender">
     Content for entitled view
     <div class="inaccessible">
         Only unentitled viewers will see this.
     </div>
-</al-entitled-content>
+</al-protected-content>
 ```
 
 The `entitlement` attribute can be any valid entitlement expression (e.g., `"cloud_insight&!active_watch_premier|web_security_managed"`), a named entitlement group (e.g., `"EntitlementGroup.Incidents"`),
@@ -23,25 +23,35 @@ _Best Practice_: Embed your entitlement expression or group directly into your c
 
 ## Events
 
-`al-entitled-content` emits three events under normal usage conditions.
+`al-protected-content` emits three events under normal usage conditions.
 
 `onHide` emits `void` when the current account's entitlements do NOT allow the acting user to view the entitled content, before it is hidden (or at initialization time).
+
 `onDisplay` emits `void` when the current account's entitlements DO allow the acting user to view the entitled content, before it is displayed.
+
 `unentitled` emits the current entitlements when the current account has been determined to be ineligible to view the protected content.  These entitlements take the form of an `EntitlementCollection` instance, which can be used to determine the best place to redirect to, for instance.
+
+Last but not least, `onAccountChange` emits the acting account whenever the account changes, its metadata has been successfully resolved, AND it is entitled to view the content.  For components that are interested only in reloaded their data when the acting account changes, this simplifies the process of listening for account changes to something as simple as
+
+```
+    <al-protected-content (onAccountChange)="reload($event)">
+        View of account data here
+    </al-protected-content>
+```
 
 #### Example
 
 Component HTML:
 
 ```
-<al-entitled-content [entitlement]="'EntitlementGroup.CloudInsightOnly'"
+<al-protected-content [entitlement]="'EntitlementGroup.CloudInsightOnly'"
                     (onDisplay)="beforeShowContent()"
                     (onHide)="beforeHideContent()"
                     (unentitled)="onUnentitledAccess($event)">
     Na nah, you can't see me without the right entitlements!
 
     <em>{{notice}}</em>
-</al-entitled-content>
+</al-protected-content>
 ```
 
 Component TS:
@@ -70,10 +80,10 @@ In this example, the onDisplay event is used to calculate a property before the 
 ## Account Change Handling
 
 Most applications with account-specific views will want to automatically reroute the current view to reference the newly activated account when it changes, or redirect to a default/"detector" route (typically '/') when the newly activated account is not entitled to access the current view.
-The `al-entitled-content` component supports both of these common use cases with the @Input(s) `accountChangeRoute` and `unentitledRoute`.
+The `al-protected-content` component supports both of these common use cases with the @Input(s) `accountChangeRoute` and `unentitledRoute`.
 
 Both `accountChangeRoute` and `unentitledRoute` can be assigned a boolean, string, or array of strings.  
-When the acting account changes, IF the new account is entitled to view the inner content based on the `entitlement` attribute, then `al-entitled-content` will redirect to the given route.  
+When the acting account changes, IF the new account is entitled to view the inner content based on the `entitlement` attribute, then `al-protected-content` will redirect to the given route.  
 If `accountChangeRoute` is a boolean, the component will attempt to redirect to the current view, replacing the old account ID with the new one.  
 If `accountChangeRoute` is a string, it will be treated as a route literal.
 If `accountChangeRoute` is a string[], it will be treated as an array of route segments.
@@ -81,11 +91,11 @@ If `accountChangeRoute` is a string[], it will be treated as an array of route s
 #### Examples
 
 ```
-<al-entitled-content entitlement="threat_manager"
+<al-protected-content entitlement="threat_manager"
 						 [accountChangeRoute]="true"
 						 [unentitledRoute]="true">
 	<div>My Content Lives Here</div>
-</al-entitled-content>
+</al-protected-content>
 ```
 
 The above example will display "My Content Lives Here" if the current account has the "threat_manager" entitlement.
@@ -95,11 +105,11 @@ If the acting account changes to another account that has the threat_manager ent
 If the acting account changes to an account without the threat_manager entitlement, it will redirect to the default unentitled route -- '/'.
 
 ```
-<al-entitled-content entitlement="log_manager|cloud_insight"
+<al-protected-content entitlement="log_manager|cloud_insight"
 						 [accountChangeRoute]="['kevin', 'was', 'here', ':accountId' ]"
 						 unentitledRoute="/unacceptable/:accountId">
     <!-- State Seekrets Here -->
-</al-entitled-content>
+</al-protected-content>
 ```
 
 In the above example, state secrets will be shown to accounts with log manager or cloud insight entitlements.  If the account changes to an account with those entitlements, the app will be routed to '/kevin/was/here/(account ID)'.  Otherwise, it will be routed to '/unacceptable/(account ID)'.

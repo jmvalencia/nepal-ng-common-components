@@ -28,6 +28,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlNavigationService } from '../services/al-navigation.service';
+import { AIMSAccount } from '@al/aims';
 import { ALSession, AlActingAccountChangedEvent, AlActingAccountResolvedEvent } from '@al/session';
 import { AlRoute } from '@al/common/locator';
 import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
@@ -50,7 +51,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
 
     @Output() onDisplay:EventEmitter<any>                       =   new EventEmitter();
     @Output() onHide:EventEmitter<any>                          =   new EventEmitter();
-    @Output() unentitled:EventEmitter<AlEntitlementCollection>    =   new EventEmitter<AlEntitlementCollection>();
+    @Output() unentitled:EventEmitter<AlEntitlementCollection>  =   new EventEmitter<AlEntitlementCollection>();
+    @Output() onAccountChange:EventEmitter<any>                 =   new EventEmitter<AIMSAccount>();
 
     protected subscriptions = new AlSubscriptionGroup( null );
 
@@ -63,7 +65,9 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     ngOnInit() {
         this.setEntitlements( this.entitlement );
         ALSession.resolved().then( () => {
-            this.evaluateAccessibility();
+            if ( this.evaluateAccessibility() ) {
+                this.onAccountChange.emit( ALSession.getActingAccount() );
+            }
         });
     }
 
@@ -112,7 +116,9 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
 
     onAccountResolved = ( event:AlActingAccountResolvedEvent ) => {
         AlStopwatch.once( () => {
-            this.evaluateAccessibility( event.entitlements );
+            if ( this.evaluateAccessibility( event.entitlements ) ) {
+                this.onAccountChange.emit( event.actingAccount );
+            }
         }, 10 );
     }
 
@@ -129,7 +135,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         this.unentitled.emit( invalidEntitlements );
     }
 
-    evaluateAccessibility( entitlements:AlEntitlementCollection = null ) {
+    evaluateAccessibility( entitlements:AlEntitlementCollection = null ):boolean {
         if ( ! entitlements ) {
             entitlements = this.navigation.entitlements;
         }
@@ -149,6 +155,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             this.onContentUnavailable( entitlements );
         }
         this.contentVisible = contentVisible;
+        return contentVisible;
     }
 
     /**
