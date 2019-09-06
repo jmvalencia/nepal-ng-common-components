@@ -86,6 +86,8 @@
     }
   },
   "whitelistedNonPeerDependencies": [
-      "snapsvg-cjs"
+      "snapsvg-cjs",
+      "@highcharts/map-collection",
+      "proj4"
   ]
 }

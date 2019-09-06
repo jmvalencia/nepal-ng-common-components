@@ -14,7 +14,7 @@
           [searchable]="false"
           [(ngModel)]="actingAccountId"
           [searchFn]="accountSearchFn"
-          (change)="onAccountChanged($event)"
+          (change)="onAccountChanged()"
           class="al-account-selector"
           (open)="onOpen()">
         <ng-template ng-header-tmp>

@@ -126,25 +126,14 @@ describe('AlAppHeaderComponent Test Suite', () => {
   });
   describe('When the selected account has changed', () => {
     describe('and the account value is valid', () => {
-      it('should call setActingAccount() on the ALSession instance', () => {
-        const account: AIMSAccount = {
-          id: '2',
-          name: 'AL',
-          active: true,
-          accessible_locations: [],
-          default_location: 'Cardiff',
-          created: {
-            at: 1,
-            by: 'blaaa'
-          },
-          modified: {
-            at: 1,
-            by: 'blaa'
-          }
-        };
-        spyOn(ALSession, 'setActingAccount').and.callFake(() => { });
-        component.onAccountChanged(account);
-        expect(ALSession.setActingAccount).toHaveBeenCalledWith(account);
+      it('should call setActingAccount() on the AlNavigationService instance', () => {
+        const accountId = "2";
+        spyOn(component.alNavigation, 'setActingAccount').and.callFake(() => { });
+
+        component.actingAccountId = accountId;      //  <ng-select>'s bind property causes this value to be updated by change events
+        component.onAccountChanged();
+
+        expect(component.alNavigation.setActingAccount).toHaveBeenCalledWith( accountId );
       });
     });
   });

@@ -44,6 +44,9 @@ export class AlArchipeligo19AppHeaderComponent implements OnInit
     ALSession.notifyStream.attach('AlActingAccountResolved', this.onActingAccountResolved);
     this.authenticated = ALSession.isActive();
     this.actingAccount = ALSession.getActingAccount();
+    if ( this.actingAccount ) {
+        this.actingAccountId = this.actingAccount.id;
+    }
     this.userMenuItems = [
       {
         label: ALSession.getUserName(),
@@ -58,6 +61,11 @@ export class AlArchipeligo19AppHeaderComponent implements OnInit
         ]
       }
     ];
+    if ( this.authenticated ) {
+      ALSession.getManagedAccounts().then( managedAccounts => {
+        this.initializeAccountSelector( [ ...managedAccounts, ALSession.getPrimaryAccount() ] );
+      } );
+    }
   }
 
   onSessionStart = (event: AlSessionStartedEvent) => {
@@ -71,27 +79,23 @@ export class AlArchipeligo19AppHeaderComponent implements OnInit
     this.ngZone.run(() => {
       this.actingAccount = event.actingAccount;
       this.actingAccountId = event.actingAccount.id;
-      const userPrimaryAccount = ALSession.getPrimaryAccount();
-      this.managedAccounts = [...event.managedAccounts, userPrimaryAccount];
-      this.managedAccounts.sort((a, b) => {
-        const textA = a.name.toUpperCase();
-        const textB = b.name.toUpperCase();
-        return textA.localeCompare(textB);
-      });
-      this.managedAccountsBuffer = this.managedAccounts.slice(0, this.bufferSize);
+      this.initializeAccountSelector( [ ...event.managedAccounts, ALSession.getPrimaryAccount() ] );
     });
+  }
+
+  initializeAccountSelector( accounts:AIMSAccount[] ) {
+    this.managedAccounts = accounts.sort( ( a, b ) => {
+      return a.name.toUpperCase().localeCompare( b.name.toUpperCase() );
+    });
+    this.managedAccountsBuffer = this.managedAccounts.slice(0, this.bufferSize);
   }
 
   logout = () => {
     ALSession.deactivateSession();
   }
 
-  onAccountChanged(account: AIMSAccount) {
-    if (account && account.hasOwnProperty('id') && account.hasOwnProperty('name')) {
-      ALSession.setActingAccount(account);
-    } else {
-      console.log(`account change event trigged for malformed account data? - ${JSON.stringify(account)}`);
-    }
+  onAccountChanged() {
+    this.alNavigation.setActingAccount(this.actingAccountId);
   }
 
   onScrollToEnd() {
