@@ -358,13 +358,13 @@ export class AlNavigationService implements AlNavigationHost
      * console.account's logout route.
      */
     protected listenForSignout() {
-        this.events.attach( 'AlNavigationTrigger' )
-            .filter( (event:AlNavigationTrigger ) => event.triggerName === 'Navigation.User.Signout' )
-            .then( ( event:AlNavigationTrigger ) => {
-                event.respond( true );
-                ALSession.deactivateSession();
-                this.navigate.byLocation( AlLocation.AccountsUI, '/#/logout' );
-            } );
+        this.events.attach( 'AlNavigationTrigger', (event: AlNavigationTrigger) => {
+          if(event.triggerName === 'Navigation.User.Signout') {
+            event.respond( true );
+            ALSession.deactivateSession();
+            this.navigate.byLocation( AlLocation.AccountsUI, '/#/logout' );
+          }
+        });
     }
 
     /**
