@@ -41,7 +41,7 @@ const ALL_COMPONENTS = [
   AlToastComponent,
   AlFeedbackComponent,
   AlDialogCarrouselComponent,
-  AlBetaGetStartedComponent
+  AlBetaGetStartedComponent,
 ];
 
 export {
@@ -63,5 +63,5 @@ export {
   AlToastComponent,
   AlFeedbackComponent,
   AlDialogCarrouselComponent,
-  AlBetaGetStartedComponent
+  AlBetaGetStartedComponent,
 };

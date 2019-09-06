@@ -17,6 +17,7 @@ import { AlArchipeligo19SidenavComponent } from './archipeligo19/sidenav/al-arch
 import { AlProtectedContentComponent } from './al-protected-content/al-protected-content.component';
 import { AlNavigationFrameComponent } from './al-navigation-frame/al-navigation-frame.component';
 import { AlNavigationOverlaysComponent } from './al-navigation-overlays/al-navigation-overlays.component';
+import { AlDefenderSessionLinkComponent  } from './al-defender-session-link/al-defender-session-link.component';
 
 const NAVIGATION_COMPONENTS = [
     AlArchipeligo17PrimaryMenuComponent,
@@ -31,7 +32,8 @@ const NAVIGATION_COMPONENTS = [
     AlProtectedContentComponent,
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
-    AlArchipeligo17TertiaryMenuComponent
+    AlArchipeligo17TertiaryMenuComponent,
+    AlDefenderSessionLinkComponent,
 ];
 
 export {
@@ -46,5 +48,6 @@ export {
     AlProtectedContentComponent,
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
-    AlArchipeligo17TertiaryMenuComponent
+    AlArchipeligo17TertiaryMenuComponent,
+    AlDefenderSessionLinkComponent,
 };
