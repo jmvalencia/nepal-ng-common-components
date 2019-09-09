@@ -1,6 +1,12 @@
 @import "~@al/design/styles/utility";
 @import "~@al/design/styles/palette";
 
+.table-container {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 al-detailed-table-list {
     th, td {
         border-style: none !important;
@@ -14,6 +20,10 @@ al-detailed-table-list {
     }
 
     th {
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        border-top: 0 !important;
         font-weight: bold !important;
         font-size: 0.8em !important;
         color: #707070 !important;
