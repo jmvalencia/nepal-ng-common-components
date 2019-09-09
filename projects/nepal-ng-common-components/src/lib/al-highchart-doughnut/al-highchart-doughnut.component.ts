@@ -67,10 +67,8 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                 text: ''
             },
             legend: {
-                align: 'right',
-                verticalAlign: 'middle',
                 labelFormat: '{name}: {y} - {percent}',
-                layout: 'vertical',
+                layout: 'horizontal',
             },
             credits: {
                 enabled: false
