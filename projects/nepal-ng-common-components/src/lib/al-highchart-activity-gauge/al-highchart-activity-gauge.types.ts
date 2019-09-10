@@ -18,7 +18,8 @@ export const BASE_CONFIG: any = {
             outerRadius: '112%',
             innerRadius: '95%',
             backgroundColor: '',
-            borderWidth: 0
+            borderWidth: 0,
+            className:'',
         }]
     },
 
