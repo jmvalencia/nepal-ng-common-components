@@ -2,17 +2,29 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AlHighchartAreaGraphComponent } from './al-highchart-area-graph.component';
 import { SimpleChange } from '@angular/core';
+import * as Highcharts from 'highcharts';
 
 describe('AlHighchartAreaGraphComponent', () => {
   let component: AlHighchartAreaGraphComponent;
   let fixture: ComponentFixture<AlHighchartAreaGraphComponent>;
-  const config = [
-    {
-        id: '1',
-        name: 'High',
-        data: [234, 234]
-    }
-  ];
+  const config: Highcharts.Options = {
+    xAxis: {
+      categories: ['January', 'February', 'March']
+    },
+    yAxis: {
+      title: {
+        text: 'Count of Incidents'
+      }
+    },
+    series: [
+      {
+        name: 'Critical',
+        data: [502, 635, 809,],
+        className: 'critical',
+        type: 'area'
+      }]
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AlHighchartAreaGraphComponent ]
