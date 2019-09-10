@@ -18,7 +18,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
 
     public containerWidth: number;
     public containerHeight: number;
-    public doughnutChart: any;
+    public doughnutChart: Highcharts.Chart;
     /**
      * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
      * an interface
@@ -36,9 +36,6 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
         }
     }
 
-    /*
-     *
-     */
     private reflow(): void {
       this.containerWidth = this.chartContainer.nativeElement.offsetWidth;
       this.containerHeight = this.chartContainer.nativeElement.offsetHeight;
@@ -60,8 +57,20 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                         enabled: false
                     },
                     showInLegend: true,
-                    size: '90%'
-                },
+                    size: '90%',
+                    events: {
+                        // tslint:disable-next-line
+                        click: function(event) {
+                          event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                            detail: {
+                              recordLink: event.point.recordLink
+                            },
+                            bubbles: true
+                          }));
+                        }
+                    }
+                }
+
             },
             title: {
                 text: ''

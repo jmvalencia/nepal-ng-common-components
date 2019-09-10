@@ -48,7 +48,7 @@
   "dependencies": {
     "@al/aims": "^1.0.0",
     "@al/client": "^1.0.0",
-    "@al/common": "^1.0.0",
+    "@al/common": "^1.0.9",
     "@al/design": "^0.1.11",
     "@al/session": "^1.0.1",
     "@al/subscriptions": "^1.0.0",
