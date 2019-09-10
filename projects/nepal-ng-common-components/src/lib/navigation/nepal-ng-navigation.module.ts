@@ -11,6 +11,7 @@ import * as components from './components';
 import { AlNavigationService } from './services/al-navigation.service';
 import { AlExperiencePreferencesService } from './services/al-experience-preferences.service';
 import { AlManageExperienceService } from './services/al-manage-experience.service';
+import { AlUrlFilterService } from "./services/al-url-filter.service";
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { AlManageExperienceService } from './services/al-manage-experience.servi
         ...components.NAVIGATION_COMPONENTS
     ],
     providers: [
-        MessageService
+        MessageService,
+        AlUrlFilterService
     ]
 })
 export class NepalNgNavigationModule {

@@ -4,7 +4,7 @@ import { AlNavigationService } from './al-navigation.service';
 import { NavigationExtras, Router, Params, ActivatedRoute } from '@angular/router';
 
 @Injectable()
-export class UrlFilterService {
+export class AlUrlFilterService {
 
     private whiteList:string[] = [];
     private filterObj:{[i:string]:string};
