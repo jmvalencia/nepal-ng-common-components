@@ -12,14 +12,11 @@ import * as Highcharts from 'highcharts';
     styleUrls: ['./al-highchart-area-graph.component.scss']
 })
 export class AlHighchartAreaGraphComponent implements OnChanges {
-    public areaGraphItem: any;
+    public areaGraphItem: Highcharts.Chart;
 
     @ViewChild('areaGraph') areaGraph: ElementRef;
-    /**
-     * Input to populate the graph - set to 'any' until backend is defined, allowing us to build
-     * an interface
-     */
-    @Input() config: any;
+
+    @Input() config: Highcharts.Options;
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
@@ -32,60 +29,48 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
     }
 
     private populateConfig = (): void => {
-        this.areaGraphItem = Highcharts.chart(this.areaGraph.nativeElement, {
-            chart: {
-                type: 'area',
-                styledMode: true
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: this.config.categories
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                  // tslint:disable-next-line
-                    formatter: function() {
-                        return this.value / 1000 + 'k';
-                    }
-                }
-            },
-            tooltip: {
-                pointFormat: '{point.y:,.0f}'
-            },
-            plotOptions: {
-                area: {
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 2,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
-                    }
-                }
-            },
-            series: [{
-                type: 'area',
-                name: this.config.name,
-                color: this.config.color,
-                data: this.config.data,
-                className: this.config.className
-            }]
-        });
+      this.areaGraphItem = Highcharts.chart(this.areaGraph.nativeElement, Object.assign({
+        chart: {
+            type: 'area',
+            styledMode: true
+        },
+        credits: {
+            enabled: false
+        },
+        yAxis: {
+            gridLineColor: 'transparent',
+        },
+        tooltip: {
+          headerFormat: '',
+          shadow: false,
+          useHTML: true,
+          pointFormat: `
+              <span class="detail">{point.category}</span><br>
+              <span class="description">{series.name}:</span> <span class="detail">{point.y}</span><br>
+              <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
+          `,
+        },
+        plotOptions: {
+            area: {
+              stacking: 'normal',
+              marker: {
+                  enabled: false,
+                  symbol: 'circle',
+                  radius: 2,
+                  states: {
+                      hover: {
+                          enabled: true
+                      }
+                  }
+              }
+            }
+        },
+      }, this.config));
     }
 
     private updateSeries = (): void => {
         this.areaGraphItem.update({
-            series: {
-                data: this.config.data
-            }
+            series: this.config.series
         });
     }
 }

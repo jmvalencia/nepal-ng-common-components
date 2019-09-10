@@ -67,29 +67,52 @@ path.critical,
 rect.critical,
 .high rect,
 path.high,
-rect.high {
+rect.high,
+.critical .highcharts-area,
+.critical .highcharts-halo {
   fill: al-color($al-red, 500);
+  stroke: none;
+}
+.critical .highcharts-graph {
   stroke: none;
 }
 
 .medium rect,
 path.medium,
-rect.medium {
+rect.medium,
+.medium .highcharts-area,
+.medium .highcharts-halo {
   fill: al-color($al-orange, 500);
+  stroke: none;
+}
+.medium .highcharts-graph {
   stroke: none;
 }
 
 .low rect,
 path.low,
-rect.low {
+rect.low,
+.low .highcharts-area,
+.low .highcharts-halo {
   fill: al-color($al-yellow, 500);
   stroke: none;
+}
+.low .highcharts-graph {
+  stroke: none;
+}
+.highcharts-series-hover.highcharts-markers {
+  fill: black;
 }
 
 .info rect,
 path.info,
-rect.info {
+rect.info,
+.info .highcharts-area,
+.info .highcharts-halo {
   fill: al-color($al-gray, 300);
+  stroke: none;
+}
+.info .highcharts-graph {
   stroke: none;
 }
 
@@ -150,7 +173,7 @@ path.unhealthy {
         }
       }
     }
-    
+
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
     }
@@ -300,7 +323,7 @@ al-app-header {
 }
 
 /*
-* SAMPLE BLUE COLOURING 
+* SAMPLE BLUE COLOURING
 */
 .blueTheme {
 
@@ -769,5 +792,5 @@ al-app-header {
   g.highcharts-data-label text {
     font-size: 10px;
     text-anchor: middle;
-  }  
+  }
 }
