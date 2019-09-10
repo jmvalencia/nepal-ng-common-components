@@ -123,7 +123,9 @@
             }
         }
     }
-    p-menu ::ng-deep {
+}
+:host ::ng-deep p-menu {
+    &.elipsis-menu{
         .ui-menu {
             width: 220px !important;
 
@@ -215,15 +217,44 @@ ul.location-dropdown-menu {
         }
     }
 }
-
-.mat-menu-item {
-  line-height: normal !important;
-  font-family: 'Open Sans', Arial, sans-serif !important;
-}
-.mat-menu-panel {
-  min-width: 180px !important;
-  max-width: 100% !important;
-}
-.mat-sidenav-container {
-    background-color: white !important;
+:host ::ng-deep p-menu {
+    &.region-menu {
+        text-align: left;
+        .ui-menu {
+            padding: 8px 0;
+            .ui.ui-submenu-header{
+                height: 36px;
+            }
+            .ui-menuitem {
+                height: 48px;
+                font-size: 14px;
+                &.active {
+                    background-color: #cbe2f2;
+                    pointer-events: none;
+                    font-weight: 700;
+                }
+                .ui-menuitem-link {
+                    padding-left: 24px;
+                }
+            }
+            li {
+                display: flex;
+                align-items: center;
+                padding-left: 16px;
+                a:hover {
+                    background-color: inherit;
+                    color: inherit;
+                }
+            }
+            .ui-menuitem:hover {
+                background-color: #e8e8e8;
+                color: #000000;
+            }
+            .ui-submenu-header {
+                font-size: 11pt;
+                color: #a8a8a8;
+                background-color: white;
+            }
+        }
+    }
 }
