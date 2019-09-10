@@ -37,6 +37,9 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
         credits: {
             enabled: false
         },
+        title: {
+          text: ''
+        },
         yAxis: {
             gridLineColor: 'transparent',
         },
