@@ -183,11 +183,34 @@ export class HighChartsComponent implements OnInit {
         }
     ];
 
-    public mockAreaChart = {
-        categories: ['January', 'February', 'March'],
-        name: 'Logs',
-        data: [3717, 4368, 4018],
-        color: '#6CA2FF'
+    public mockAreaChart: Highcharts.Options = {
+      xAxis: {
+        categories: ['January', 'February', 'March']
+      },
+      yAxis: {
+        title: {
+          text: 'Count of Incidents'
+        }
+      },
+      series: [
+        {
+          name: 'Critical',
+          data: [502, 635, 809,],
+          className: 'critical',
+          type: 'area'
+        },
+        {
+          name: 'Medium',
+          data: [106, 107, 111],
+          className: 'medium',
+          type: 'area'
+        },
+        {
+          name: 'Low',
+          data: [163, 203, 276],
+          className: 'low',
+          type: 'area'
+      }]
     };
 
     public mockBarChart = {
