@@ -15,6 +15,7 @@ export class AlHighchartsActivityGaugeService {
         const { title, value, text1, text2, className, backgroundColor } = config;
 
         BASE_CONFIG.title.text = title;
+        BASE_CONFIG.pane.background[0].className = className;
         BASE_CONFIG.pane.background[0].backgroundColor = backgroundColor;
         BASE_CONFIG.series[0].data[0].className = className;
         BASE_CONFIG.series[0].data[0].y = value;
@@ -29,6 +30,7 @@ export class AlHighchartsActivityGaugeService {
                 <dd style="margin: 0; font-size: 12px">${text2}</dd>
             </dl>`;
         });
+
         return BASE_CONFIG;
     }
 }
