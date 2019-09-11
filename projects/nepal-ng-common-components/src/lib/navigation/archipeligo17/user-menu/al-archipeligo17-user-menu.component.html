@@ -23,9 +23,9 @@
               </div>
           </div>
           <p-menu class="region-menu" #menux popup="popup" [model]="regionSelectorItems" [style]="{'width':'180px'}"></p-menu>
-          <div class="entity-wrapper" *ngIf="locationsAvailable > 0" (click)="menux.toggle($event)">
+          <div class="entity-wrapper" *ngIf="locationsAvailable > 0">
               <div class="user-menu-block" [ngClass]="{'inactive': locationsAvailable <= 1 }" [title]="currentLocationName">
-                  <div class="menu-trigger">
+                  <div class="menu-trigger" (click)="menux.toggle($event)">
                       <div class="account-icon-space">
                           <div class="dco-flag" *ngIf="currentLocationResidency==='US'">
                               <i class="al al-usa-color dco-flag">

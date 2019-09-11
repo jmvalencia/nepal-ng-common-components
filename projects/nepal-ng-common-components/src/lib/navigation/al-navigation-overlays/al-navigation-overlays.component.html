@@ -1,3 +1,9 @@
 <al-feedback></al-feedback>
 <al-toast key="global-toast"></al-toast>
+<p-confirmDialog #cd key="confirmation" class="confirmation-dialog">
+    <p-footer>
+        <button pButton type="button" [label]="cd.rejectLabel" (click)="cd.reject()"></button>
+        <button pButton type="button" [label]="cd.acceptLabel" (click)="cd.accept()" class="accept"></button>
+    </p-footer>
+</p-confirmDialog>
 <al-beta-get-started></al-beta-get-started>

@@ -64,6 +64,7 @@
 
             }
             &.inactive {
+                cursor: default;
                 > div.menu-trigger {
                     pointer-events: none;
                 }
@@ -228,6 +229,7 @@ ul.location-dropdown-menu {
             .ui-menuitem {
                 height: 48px;
                 font-size: 14px;
+                text-transform: uppercase;
                 &.active {
                     background-color: #cbe2f2;
                     pointer-events: none;
