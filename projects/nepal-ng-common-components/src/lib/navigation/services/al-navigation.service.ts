@@ -490,7 +490,12 @@ export class AlNavigationService implements AlNavigationHost
     protected navigateByURL( url:string, parameters:{[p:string]:string} = {}, options:any = {} ) {
         url = this.applyParameters( url, parameters );
         console.log(`AlNavigationService: following link to [${url}]` );
-        window.location.href = url;
+
+        if ( options.hasOwnProperty('target') && options['target'] === '_blank' ) {
+            window.open( url, "_blank" );
+        } else {
+            window.location.href = url;
+        }
     }
 
     /**
