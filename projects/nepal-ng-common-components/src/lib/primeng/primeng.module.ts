@@ -7,13 +7,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { ChipsModule } from 'primeng/chips';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PaginatorModule } from 'primeng/paginator';
@@ -30,6 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CardModule,
     CarouselModule,
     ChipsModule,
+    ConfirmDialogModule,
     DialogModule,
     InputTextModule,
     InputTextareaModule,
@@ -50,6 +52,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CardModule,
     CarouselModule,
     ChipsModule,
+    ConfirmDialogModule,
     DialogModule,
     InputTextModule,
     InputTextareaModule,
@@ -66,6 +69,7 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule
   ],
   providers: [
+    ConfirmationService,
     MessageService
   ]
 })
