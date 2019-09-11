@@ -1,14 +1,14 @@
-import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, SimpleChanges, AfterViewInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ALSession } from '@al/session';
-import { AIMSClient, AIMSAccount } from '@al/aims';
+import { AIMSAccount } from '@al/aims';
 import { AlRoute, AlLocation, AlLocatorService } from '@al/common/locator';
 import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-archipeligo17-account-selector.component';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationContextChanged, AlNavigationSecondarySelected, AlNavigationTertiarySelected } from '../../types';
-import { AlStopwatch, AlTriggerStream, AlSubscriptionGroup } from '@al/common';
+import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'al-archipeligo17-user-menu',
@@ -41,7 +41,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
      *  DCO properties
      */
     public locations:{[dataResidency:string]:AlRoute[]} = {};       //  list of available locations (as AlRoute instances), keyed by data residency code.
-    public locationsAvailable:number        =   1;                  //  whether or not any locations are available to switch to
+    public locationsAvailable:number        =   0;                  //  whether or not any locations are available to switch to
     public currentLocationResidency:string  =   'US';               //  data residency of currently selected location
     public currentLocationName:string       =   '';
     public regionSelectorItems: PrimengMenuItem[] = [];
@@ -95,7 +95,8 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
 
     constructor( public router:Router,
                  public activatedRoute:ActivatedRoute,
-                 public alNavigation: AlNavigationService ) {
+                 public alNavigation: AlNavigationService,
+                 private confirmationService: ConfirmationService ) {
         this.subscriptions.manage( this.alNavigation.events.attach( "AlNavigationContextChanged", this.onNavigationContextChanged ) );
         this.onNavigationContextChanged( new AlNavigationContextChanged( this.alNavigation, ALSession ) );
         this.refresh = AlStopwatch.later( this.onNavigationContextChanged );
@@ -230,13 +231,21 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         console.log(`NOTICE: changing active location ID to ${insightLocationId}`);
         ALSession.setActiveDatacenter( insightLocationId );
 
-        /**
-         * TODO(mlopez) Where's my damn dialog?
-         * TODO(knielsen) Route to appropriate location based on target location ID
-         *
-         * The redirect below is a placeholder for the correct behavior.
-         */
-        this.alNavigation.navigate.byLocation( "cd17:overview", '/#/');
+        this.confirmationService.confirm({
+            key: 'confirmation',
+            header: 'Are you sure?',
+            message: `You are about to switch regions to ${insightLocationId}.  Are you sure this is what you want to do?`,
+            acceptLabel: 'Yes, switch now!',
+            rejectLabel: 'No thanks',
+            accept: () => {
+                /**
+                 * TODO(knielsen) Route to appropriate location based on target location ID
+                 *
+                 * The redirect below is a placeholder for the correct behavior.
+                 */
+                this.alNavigation.navigate.byLocation( "cd17:overview", '/#/');
+            }
+        });
 
         /*
         if ( $event ) {
@@ -364,6 +373,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
             }
         } );
 
+        this.locationsAvailable = 0;
         this.regionSelectorItems = [];
         Object.keys( available ).forEach( region => {
             let regionMenu = {
@@ -372,6 +382,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
             };
             Object.keys( available[region] ).forEach( logicalRegion => {
                 let targetLocationId = available[region][logicalRegion];
+                this.locationsAvailable++;
                 regionMenu.items.push( {
                     label: logicalRegion,
                     styleClass: logicalRegion === currentLogicalRegion ? "active" : "",
