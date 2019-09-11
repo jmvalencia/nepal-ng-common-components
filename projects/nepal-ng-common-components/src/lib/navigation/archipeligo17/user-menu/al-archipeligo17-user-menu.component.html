@@ -22,11 +22,10 @@
                   </div>
               </div>
           </div>
-          <div class="entity-wrapper" *ngIf="locationsAvailable > 0">
+          <p-menu class="region-menu" #menux popup="popup" [model]="regionSelectorItems" [style]="{'width':'180px'}"></p-menu>
+          <div class="entity-wrapper" *ngIf="locationsAvailable > 0" (click)="menux.toggle($event)">
               <div class="user-menu-block" [ngClass]="{'inactive': locationsAvailable <= 1 }" [title]="currentLocationName">
-                  <div  mat-icon-button
-                        matMenuTriggerFor="locationDropdownMenu"
-                        class="menu-trigger">
+                  <div class="menu-trigger">
                       <div class="account-icon-space">
                           <div class="dco-flag" *ngIf="currentLocationResidency==='US'">
                               <i class="al al-usa-color dco-flag">
@@ -49,11 +48,10 @@
     <section class="below">
         <div class="stacked-vertical">
             <span *ngIf="activeChild">{{activeChild.caption}}</span>
-            <i class="material-icons active" (click)="menuTest.toggle($event)">more_vert</i>
+            <i class="material-icons active" (click)="elipsisMenu.toggle($event)">more_vert</i>
         </div>
     </section>
-            
-    <p-menu #menuTest [popup]="true" [model]="menuItems"></p-menu>
+    <p-menu class="elipsis-menu" #elipsisMenu [popup]="true" [model]="menuItems"></p-menu>
 
     <!--
     <mat-menu md-position-mode="bottom" #locationDropdownMenu="matMenu" class="location-dropdown-menu" [overlapTrigger]="false">

@@ -44,6 +44,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     public locationsAvailable:number        =   0;              //  whether or not any locations are available to switch to
     public currentLocationResidency:string  =   'US';               //  data residency of currently selected location
     public currentLocationName:string       =   '';
+    public regionSelectorItems: PrimengMenuItem[] = [];
 
     /**
      *  Account and user information
@@ -90,6 +91,16 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
             this.accountName = ALSession.getActingAccountName();
             this.accountId = ALSession.getActingAccountID();
 
+            // TODO: Implement the new logic to get the available locations
+            this.regionSelectorItems = [
+                {label: 'UNITED STATES', items: [
+                    {label: 'US-WEST-1', styleClass: "active", command: (event) => this.onClickDatacenter('us-west-1', event)},
+                    {label: 'US-EAST-1', command: (event) => this.onClickDatacenter('us-east-1', event)}
+                ]},
+                {label: 'UNITED KINGDOM', items: [
+                    {label: 'UK-WEST-1', command: (event) => this.onClickDatacenter('uk-west-1', event)}
+                ]}
+            ];
             /*
             let actingNode = this.brainstem.getServiceMatrix().getActingNode();
 
@@ -213,7 +224,8 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         menuItem.dispatch();
     }
 
-    onClickDatacenter( menuItem:AlRoute, $event:any ) {
+    onClickDatacenter( regionId:string, $event:any ) {
+        console.log('Im changing to the reigion: ' + regionId);
         /*
         if ( $event ) {
             $event.preventDefault();
