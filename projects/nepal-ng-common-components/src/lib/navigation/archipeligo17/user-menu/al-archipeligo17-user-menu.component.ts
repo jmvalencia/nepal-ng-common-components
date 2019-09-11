@@ -381,11 +381,15 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                 items: []
             };
             Object.keys( available[region] ).forEach( logicalRegion => {
-                let targetLocationId = available[region][logicalRegion];
+                const targetLocationId = available[region][logicalRegion];
+                const activated = ( logicalRegion === currentLogicalRegion ) ? true : false;
+                if ( activated ) {
+                    this.currentLocationResidency = this.insightLocations[targetLocationId].residency;
+                }
                 this.locationsAvailable++;
                 regionMenu.items.push( {
                     label: logicalRegion,
-                    styleClass: logicalRegion === currentLogicalRegion ? "active" : "",
+                    styleClass: activated ? "active" : "",
                     command: ( event ) => this.onClickDatacenter( targetLocationId, event )
                 } );
             } );
