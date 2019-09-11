@@ -49,6 +49,10 @@ export class DashboardExamplesComponent implements OnInit {
      nodata: true,
      reason: ZeroStateReason.Zero
     };
+    public failedDoughnut: ZeroState = {
+      nodata: true,
+      reason: ZeroStateReason.Zero
+    };
     public dashboards = [
         { label: 'Threat Summary', icon: 'ui-icon-vertical-align-top', value: { id: 6, name: 'Threat Summmary', code: 'TS' }},
         { label: 'Coverage and Health', icon: 'ui-icon-vertical-align-top', value: { id: 1, name: 'Coverage and Health', code: 'CAH' }},
@@ -537,6 +541,18 @@ export class DashboardExamplesComponent implements OnInit {
         content: {
           type: WidgetContentType.TreeMap,
           data: this.failedTree
+        },
+        metrics: {
+          width: WidgetWidth.W1,
+          height: WidgetHeight.H1,
+        }
+      },
+      {
+        id: '108',
+        title: '1 x 1 Widget with Doughnut - No Data',
+        content: {
+          type: WidgetContentType.Doughnut,
+          data: this.failedDoughnut
         },
         metrics: {
           width: WidgetWidth.W1,
