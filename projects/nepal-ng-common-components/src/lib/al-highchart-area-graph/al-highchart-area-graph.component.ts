@@ -50,6 +50,7 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
           pointFormat: `
               <span class="detail">{point.category}</span><br>
               <span class="description">{series.name}:</span> <span class="detail">{point.y}</span><br>
+              <span class="description">Total:</span> <span class="detail">{point.total}</span><br>
               <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
           `,
         },
@@ -67,7 +68,7 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
                   }
               }
             }
-        },
+        }
       }, this.config));
     }
 

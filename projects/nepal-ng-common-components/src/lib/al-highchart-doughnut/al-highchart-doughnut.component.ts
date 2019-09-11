@@ -75,8 +75,17 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
             title: {
                 text: ''
             },
+            tooltip: {
+                headerFormat: '',
+                shadow: false,
+                useHTML: true,
+                pointFormat: `
+                    <span class="description">{point.name}:</span> <span class="detail">{point.y}</span><br>
+                    <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
+                `,
+            },
             legend: {
-                labelFormat: '{name}: {y} - {percent}',
+                labelFormat: '{name}',
                 layout: 'horizontal',
             },
             credits: {

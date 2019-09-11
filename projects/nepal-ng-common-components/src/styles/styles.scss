@@ -1,5 +1,6 @@
 @import "~@al/design/styles/palette";
 @import "~@al/design/styles/utility";
+@import "./paletteClassNames";
 
 // TODO - below should live in @al/design (core theme style)??x
 html,
@@ -796,4 +797,7 @@ al-app-header {
 }
 path.highcharts-pane {
   fill-opacity: 0.25;
+}
+.highcharts-area {
+  fill-opacity: 1;
 }
