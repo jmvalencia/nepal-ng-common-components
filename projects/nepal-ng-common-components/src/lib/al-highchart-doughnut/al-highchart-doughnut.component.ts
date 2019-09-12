@@ -78,6 +78,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
             tooltip: {
                 headerFormat: '',
                 shadow: false,
+                shape: 'callout',
                 useHTML: true,
                 pointFormat: `
                     <span class="description">{point.name}:</span> <span class="detail">{point.y}</span><br>
