@@ -1,10 +1,9 @@
-
 <div #dashboardLayout class="dashboard-layout">
     <al-dashboard-widget 
         *ngFor="let configItem of config" 
         [ngClass]="{'w2': configItem.metrics.width === 2, 'h2': configItem.metrics.height === 2 }"
         [config]="configItem">
-      <div class="interior" *ngIf="configItem.content && configItem.content.data && !configItem.content.data.nodata">
+      <div class="interior" [ngClass]="{'noFooter': !hasActions(configItem)}" *ngIf="configItem.content && configItem.content.data && !configItem.content.data.nodata">
           <al-highchart-semi-circle
             *ngIf="configItem.content.type === contentType.SemiCircle"
             [config]="configItem.content.data"></al-highchart-semi-circle>
