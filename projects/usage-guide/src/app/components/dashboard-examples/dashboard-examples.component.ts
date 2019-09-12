@@ -126,26 +126,71 @@ export class DashboardExamplesComponent implements OnInit {
             ]
         }]
     };
-    public mapComponent = [
+    public mapComponentTarget = [
+      {
+        id: 'Belfast',
+        lat: 54.597,
+        lon: -5.93,
+        value: 12,
+        className: 'target',
+        marker: {
+            radius: 12
+        }
+      },
+      {
+        id: 'Rome',
+        lat: 41.902,
+        lon: 12.496,
+        value: 12,
+        className: 'target',
+        marker: {
+            radius: 12
+        }
+      },
+      {
+        id: 'Dearborn',
+        lat: 41.322,
+        lon: -83.176,
+        value: 8,
+        className: 'target',
+        marker: {
+            radius: 8
+        }
+      },
+      {
+        id: 'Iran',
+        lat: 35.6961,
+        lon: 51.4231,
+        value: 10,
+        className: 'target',
+        marker: {
+            radius: 10
+        }
+      }
+    ];
+
+    public mapComponentSource = [
     {
       id: 'Belfast',
       lat: 54.597,
       lon: -5.93,
       value: 12,
-      className: 'target',
+      className: 'source',
       marker: {
           radius: 12
       }
-  },{
+    },
+    {
       id: 'Rome',
       lat: 41.902,
       lon: 12.496,
       value: 12,
-      className: 'target',
+      className: 'source',
       marker: {
           radius: 12
       }
-  },{
+    },
+    {
       id: 'Dearborn',
       lat: 41.322,
       lon: -83.176,
@@ -154,7 +199,8 @@ export class DashboardExamplesComponent implements OnInit {
       marker: {
           radius: 8
       }
-  },{
+    },
+    {
       id: 'Iran',
       lat: 35.6961,
       lon: 51.4231,
@@ -163,7 +209,8 @@ export class DashboardExamplesComponent implements OnInit {
       marker: {
           radius: 10
       }
-  }];
+    }
+  ];
     /*
      *
      */
@@ -716,7 +763,20 @@ export class DashboardExamplesComponent implements OnInit {
         actions: {},
         content: {
           type: WidgetContentType.Map,
-          data: this.mapComponent,
+          data: this.mapComponentTarget,
+        },
+        metrics: {
+          width: WidgetWidth.W2,
+          height: WidgetHeight.H1,
+        }
+      },
+      {
+        id: '8',
+        title: 'Map',
+        actions: {},
+        content: {
+          type: WidgetContentType.Map,
+          data: this.mapComponentSource,
         },
         metrics: {
           width: WidgetWidth.W2,
