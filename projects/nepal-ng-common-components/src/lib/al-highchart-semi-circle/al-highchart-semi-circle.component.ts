@@ -68,9 +68,13 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
         text: this.config.title || ''
       },
       tooltip: {
-        pointFormat: '{point.y:.0f}',
+        pointFormat: `
+          <span class="description">{point.name}:</span> <span class="detail">{point.y}</span><br>
+          <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
+        `,
         headerFormat: '',
         followPointer: false,
+        shape: 'callout'
       },
       plotOptions: {
         pie: {
