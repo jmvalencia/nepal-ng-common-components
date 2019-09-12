@@ -51,6 +51,7 @@ export class AlHighmapChartComponent implements OnChanges {
                 map: mapWorld,
                 borderWidth: 1,
                 styledMode: true,
+                animation: false
             },
             title: {
                 text: ''
@@ -62,11 +63,16 @@ export class AlHighmapChartComponent implements OnChanges {
                 enabled: false
             },
             tooltip: {
-                formatter: function () {
-                    return this.point.id + (
-                        this.point.lat ?
-                            '<br>Lat: ' + this.point.lat + ' Lon: ' + this.point.lon : ''
-                    );
+                headerFormat: '',
+                shadow: false,
+                useHTML: true,
+                pointFormat: `
+                    <span class="description">{point.id}:</span> <span class="detail">{point.value}</span><br>
+                `,
+            },
+            plotOptions: {
+                map: {
+                    animation: false,
                 }
             },
             series: [
@@ -76,12 +82,13 @@ export class AlHighmapChartComponent implements OnChanges {
                     name: 'Basemap',
                     borderColor: '#d6d6d6',
                     nullColor: '#eeeeee',
-                    showInLegend: false
+                    showInLegend: false,
+                    animation: false,
                 },
                 {
                     zIndex: 1,
-                    data: this.config,
                     type: 'mappoint',
+                    data: this.config,
                     name: 'Cities',
                     dataLabels: {
                         align: 'center',
@@ -100,10 +107,5 @@ export class AlHighmapChartComponent implements OnChanges {
     }
 
     private updateSeries = (): void => {
-        this.mapChart.update({
-            series: {
-                data: this.config
-            }
-        });
     }
 }

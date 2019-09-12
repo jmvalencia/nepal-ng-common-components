@@ -281,7 +281,20 @@ path.unhealthy {
     tr:hover td {
         background-color: al-color($al-gray, 400) !important;
       }
+  }
+  al-highmap-chart {
+    svg g text {
+      stroke: #868686 !important;
     }
+
+    path.highcharts-button-box {
+      fill: al-color($al-gray, 500);
+    }
+    .highcharts-map-series .highcharts-point {
+      stroke: al-color($al-gray, 300) !important;
+      fill: #585858 !important;
+    }
+  }
 }
 
 /*
@@ -749,6 +762,19 @@ al-app-header {
   tbody {
     tr:hover td {
       background-color: #6883A4 !important;
+    }
+  }
+  al-highmap-chart {
+    svg g text {
+      stroke: white !important;
+    }
+
+    path.highcharts-button-box {
+      fill: #536984;
+    }
+    .highcharts-map-series .highcharts-point {
+      stroke: #6883A4 !important;
+      fill: #556577 !important;
     }
   }
 }
