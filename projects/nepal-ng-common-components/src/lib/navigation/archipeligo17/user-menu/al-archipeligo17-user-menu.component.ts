@@ -176,35 +176,6 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         return menuItem;
     }
 
-    refreshUserData = () => {
-        /**
-         * TODO: reimplement this using nepal tooling
-         */
-        /*
-        this.accountMenuAvailable   = true;
-        if ( this.brainstem.getServiceMatrix().getActingNode() ) {
-            if ( this.brainstem.getServiceMatrix().getActingNode().serviceNodeId === AlServiceIdentity.AccountsUI ) {
-                this.router.events.subscribe( event => {
-                    if ( event instanceof NavigationEnd) {
-                        this.accountMenuAvailable = true;
-                        if (this.activatedRoute.snapshot.firstChild.data.hasOwnProperty( 'disableAccountSwitch') ) {
-                            this.accountMenuAvailable = !this.activatedRoute.snapshot.firstChild.data['disableAccountSwitch'];
-                        }
-                    }
-                });
-            }
-        }
-        this.activeAccountID = this.brainstem.getActingAccountId();
-        this.accountName = this.brainstem.getActingAccountName();
-        this.userName = this.brainstem.getActingUserName();
-        let parts = [];
-        if ( this.accountName ) {
-            parts = this.accountName.split(" " );
-            this.accountFirstName = parts.shift();
-            this.accountSecondName = parts.join( " " );
-        } */
-    }
-
     // load the menu
     loadMenu() {
         // Load the User Menu
@@ -228,52 +199,33 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     }
 
     onClickDatacenter( insightLocationId:string, $event:any ) {
-        console.log(`NOTICE: changing active location ID to ${insightLocationId}`);
-        ALSession.setActiveDatacenter( insightLocationId );
-
+        const actor = AlLocatorService.getActingNode();
+        if ( actor === null || ! this.insightLocations.hasOwnProperty( insightLocationId ) ) {
+            //  No eggs, no bacon?  No breakfast for you :(
+            return;
+        }
+        const regionLabel = this.insightLocations[insightLocationId].logicalRegion;
         this.confirmationService.confirm({
             key: 'confirmation',
             header: 'Are you sure?',
-            message: `You are about to switch regions to ${insightLocationId}.  Are you sure this is what you want to do?`,
+            message: `You are about to switch regions to ${regionLabel}.  Are you sure this is what you want to do?`,
             acceptLabel: 'Yes, switch now!',
             rejectLabel: 'No thanks',
             accept: () => {
-                /**
-                 * TODO(knielsen) Route to appropriate location based on target location ID
-                 *
-                 * The redirect below is a placeholder for the correct behavior.
-                 */
-                this.alNavigation.navigate.byLocation( "cd17:overview", '/#/');
+                const originBaseURI = AlLocatorService.resolveURL( actor.locTypeId );
+                ALSession.setActiveDatacenter( insightLocationId );
+                AlLocatorService.setContext( { insightLocationId } );
+                const targetBaseURI = AlLocatorService.resolveURL( actor.locTypeId );
+                if ( targetBaseURI !== originBaseURI ) {
+                    //  The new domain portal for the changed datacenter is the one we're on.  Emit a notice and redirect.
+                    console.log(`NOTICE: changing active location to '${insightLocationId}' requires change to a new portal at [${targetBaseURI}]`);
+                    this.alNavigation.navigate.byLocation( actor.locTypeId );
+                } else {
+                    //  The new domain portal is the same as the old one.  Route to its base/default route using angular's router.
+                    this.alNavigation.navigate.byNgRoute( [ '/' ] );
+                }
             }
         });
-
-        /*
-        if ( $event ) {
-            $event.preventDefault();
-        }
-        let dialogRef = this.dialog.open( AlConfirmComponent, {
-            width: '80%',
-            data: {
-                title:      'Are you sure?',
-                message:    `You are about to switch regions to ${menuItem.caption}.  Are you sure this is what you want to do?`,
-                cancel:     'No thanks',
-                confirm:    'Yes, switch now!',
-                data:       menuItem            // if user confirms, this will be emitted from the afterClosed() observable
-            }
-        } );
-
-        dialogRef.afterClosed().subscribe( menuItemDCO => {
-            if ( menuItemDCO ) {
-                if ( menuItemDCO.action.locationId ) {
-                    this.brainstem.setLocationInfo( menuItemDCO.action.locationId, null, true );
-                    menuItemDCO.refresh( true );     //  bwahahha
-                }
-
-                console.warn("User has changed datacenters.  Entry point: ", menuItemDCO );
-                this.onClick( <AlRoute>menuItemDCO, undefined );
-            }
-        } );
-        */
     }
 
     onHoverStart( menuItem:AlRoute, $event:any ) {
@@ -385,6 +337,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                 const activated = ( logicalRegion === currentLogicalRegion ) ? true : false;
                 if ( activated ) {
                     this.currentLocationResidency = this.insightLocations[targetLocationId].residency;
+                    this.currentLocationName = this.insightLocations[targetLocationId].logicalRegion;
                 }
                 this.locationsAvailable++;
                 regionMenu.items.push( {
