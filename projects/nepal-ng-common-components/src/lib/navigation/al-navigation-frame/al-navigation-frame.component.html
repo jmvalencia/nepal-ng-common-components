@@ -41,7 +41,9 @@
                                         [(displayNav)]="displayNav"></al-archipeligo19-sidenav>
         </div>
         <div class="mainContent">
-            <ng-container *ngTemplateOutlet="mainContent"></ng-container>
+            <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu">
+                <ng-container *ngTemplateOutlet="mainContent"></ng-container>
+            </al-archipeligo17-tertiary-menu>
         </div>
     </div>
 
