@@ -135,6 +135,11 @@ export class AlManageExperienceService {
         if (option === 'show-beta-tutorial') {
             this.betaTutorial.showTutorial();
             option = 'beta-tutorial';
+        } else if (option === 'try-beta') {
+            this.alNavigation.navigate.byNamedRoute('cd19:dashboards');
+        } else if (option === 'back-default') {
+            console.log("leave beta");
+            this.alNavigation.navigate.byNamedRoute('cd17:overview');
         }
         this.experiencePreferences.saveExperiencePreferences(option).then(() => {
             this.loadNavigationExperience();

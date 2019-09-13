@@ -174,6 +174,9 @@ export class AlNavigationService implements AlNavigationHost
             navigate: this.navigate
         } );
         this.listenForSignout();
+        // to fill the namedRouteDictionary
+        this.getNavigationSchema("cieplus-2");
+        this.getNavigationSchema("siemless");
     }
 
     /**
