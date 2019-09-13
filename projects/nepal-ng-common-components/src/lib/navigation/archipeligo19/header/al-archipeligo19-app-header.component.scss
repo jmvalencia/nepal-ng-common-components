@@ -158,9 +158,13 @@
     .ng-option {
       color: al-color($al-gray, 700);
       padding: 12px;
+      line-height: unset;
       &.ng-option-marked {
-        background-color: al-color($al-gray, 50);
-        color: al-color($al-smokeBlue, 500);
+        background-color: #e8e8e8;
+      }
+      &.ng-option-selected {
+        background-color: al-color($al-smokeBlue, 500);
+        color: white;
       }
     }
   }
