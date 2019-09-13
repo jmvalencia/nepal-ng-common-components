@@ -41,6 +41,13 @@ export class AlDashboardLayoutComponent implements OnInit {
   /*
    *
    */
+  public hasActions = (config: Widget): Boolean => {
+    return config.hasOwnProperty('actions') && Object.keys(config.actions).length > 0;
+  }
+
+  /*
+   *
+   */
   private resize = (): void => {
     if (!this.isResizing) {
       this.isResizing = true;

@@ -1,5 +1,6 @@
 $min-width: 384px;
 $default-dimension: 384px;
+$footer-height: 60px;
 
 .dashboard-layout {
     display: grid;
@@ -7,10 +8,12 @@ $default-dimension: 384px;
     grid-auto-rows: $default-dimension;
     grid-auto-flow: dense;
     al-dashboard-widget {
-      // min-width: $min-width;
       div.interior {
         height: 286px;
         width: 100%;
+        &.noFooter {
+          height: calc(286px + #{$footer-height} - 5px);
+        }
       }
       &.w2 {
         grid-column: span 2;
@@ -22,6 +25,9 @@ $default-dimension: 384px;
         grid-row: span 2;
         div.interior {
           height: 690px;
+          &.noFooter {
+            height: calc(600px + #{$footer-height} - 5px);
+          }
         }
       }
   }
