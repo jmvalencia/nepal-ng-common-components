@@ -180,7 +180,7 @@ path.unhealthy {
   }
 
   al-detailed-table-list td, al-detailed-table-list th {
-    border-bottom: 1px solid rgba(237, 237, 237, .5) !important;
+    border-bottom: 1px solid al-color($al-gray, 50, 0.5) !important;
   }
 
   al-count-summary {
