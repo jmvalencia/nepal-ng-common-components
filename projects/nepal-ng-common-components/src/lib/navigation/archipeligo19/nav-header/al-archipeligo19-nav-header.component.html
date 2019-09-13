@@ -1,7 +1,10 @@
 <div class="nav-header-bar">
   <div class="nav-header-content">
       <i class="material-icons menu-toggle" (click)="toggleClick()">menu</i>
-      <i class="material-icons">{{displayIconName}}</i>
+      <span *ngIf="displayIconName.length > 0">
+          <i class="material-icons">{{displayIconName}}</i>
+          [{{displayIconName}}]
+      </span>
       <span>{{heading}}</span>
   </div>
   <div class="nav-header-actions">
