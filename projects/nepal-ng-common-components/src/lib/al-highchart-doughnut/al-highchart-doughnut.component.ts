@@ -57,7 +57,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                         enabled: true,
                         softConnector: false,
                         distance: 15,
-                        formatter: function() {
+                        formatter: function () {
                             if ( this.point.y === 0 ) {
                               return null;
                             } else {
