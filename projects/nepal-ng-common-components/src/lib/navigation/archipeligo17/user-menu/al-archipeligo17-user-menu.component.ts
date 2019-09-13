@@ -1,14 +1,14 @@
 import { Component, Input, ViewChild, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ALSession } from '@al/session';
-import { AIMSAccount } from '@al/aims';
-import { AlRoute, AlLocation, AlLocatorService } from '@al/common/locator';
-import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-archipeligo17-account-selector.component';
-import { AlNavigationService } from '../../services/al-navigation.service';
-import { AlNavigationContextChanged, AlNavigationSecondarySelected, AlNavigationTertiarySelected } from '../../types';
-import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 import { ConfirmationService } from 'primeng/api';
+import { ALSession } from '@al/session';
+import { AIMSAccount } from '@al/aims';
+import { AlRoute, AlLocation, AlLocatorService, AlInsightLocations } from '@al/common/locator';
+import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
+import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-archipeligo17-account-selector.component';
+import { AlNavigationService } from '../../services/al-navigation.service';
+import { AlNavigationContextChanged, AlNavigationSecondarySelected, AlNavigationTertiarySelected, AlDatacenterOptionsSummary } from '../../types';
 
 @Component({
     selector: 'al-archipeligo17-user-menu',
@@ -40,11 +40,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     /**
      *  DCO properties
      */
-    public locations:{[dataResidency:string]:AlRoute[]} = {};       //  list of available locations (as AlRoute instances), keyed by data residency code.
-    public locationsAvailable:number        =   0;                  //  whether or not any locations are available to switch to
-    public currentLocationResidency:string  =   'US';               //  data residency of currently selected location
-    public currentLocationName:string       =   '';
-    public regionSelectorItems: PrimengMenuItem[] = [];
+    public datacenter:AlDatacenterOptionsSummary;
 
     /**
      *  Account and user information
@@ -61,37 +57,6 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
      *  Private/internal state
      */
     protected subscriptions                 =   new AlSubscriptionGroup( null );
-
-    /* TODO(kjn): procure this data from @al/common/locator, for the sake of DRYness...  this is only included here until it can be updated.*/
-    protected insightLocations: {[i:string]: ({residency: string; residencyCaption?: string, alternatives?: string[]; logicalRegion: string});} = {
-        "defender-us-denver": {
-            residency: "US",
-            residencyCaption: "UNITED STATES",
-            logicalRegion: "us-west-1"
-        },
-        "defender-us-ashburn": {
-            residency: "US",
-            residencyCaption: "UNITED STATES",
-            logicalRegion: "us-east-1"
-        },
-        "defender-uk-newport": {
-            residency: "EMEA",
-            residencyCaption: "UNITED KINGDOM",
-            logicalRegion: "uk-west-1"
-        },
-        "insight-us-virginia": {
-            residency: "US",
-            residencyCaption: "UNITED STATES",
-            alternatives: [ "defender-us-denver", "defender-us-ashburn" ],
-            logicalRegion: "us-east-1"
-        },
-        "insight-eu-ireland": {
-            residency: "EMEA",
-            residencyCaption: "UNITED KINGDOM",
-            alternatives: [ "defender-uk-newport" ],
-            logicalRegion: "uk-west-1"
-        }
-    };
 
     constructor( public router:Router,
                  public activatedRoute:ActivatedRoute,
@@ -128,10 +93,9 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
             if ( actingLocation && ALSession.getActiveDatacenter() ) {
                 const defenderDatacenterId = ALSession.getActiveDatacenter();
                 const accessibleLocationIds = ALSession.getActingAccountAccessibleLocations();
-                this.currentLocationResidency = actingLocation.dataResidency || "US";
-                this.generateDatacenterMenu( defenderDatacenterId, accessibleLocationIds );
+                this.datacenter = this.alNavigation.generateDatacenterMenu( defenderDatacenterId, accessibleLocationIds, this.onClickDatacenter );
             } else {
-                this.regionSelectorItems = [];
+                this.datacenter = undefined;
             }
             if ( this.menu ) {
                 this.menu.refresh( true );
@@ -209,13 +173,13 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         menuItem.dispatch();
     }
 
-    onClickDatacenter( insightLocationId:string, $event:any ) {
+    onClickDatacenter = ( insightLocationId:string, $event:any ) => {
         const actor = AlLocatorService.getActingNode();
-        if ( actor === null || ! this.insightLocations.hasOwnProperty( insightLocationId ) ) {
+        if ( actor === null || ! AlInsightLocations.hasOwnProperty( insightLocationId ) ) {
             //  No eggs, no bacon?  No breakfast for you :(
             return;
         }
-        const regionLabel = this.insightLocations[insightLocationId].logicalRegion;
+        const regionLabel = AlInsightLocations[insightLocationId].logicalRegion;
         this.confirmationService.confirm({
             key: 'confirmation',
             header: 'Are you sure?',
@@ -295,69 +259,4 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         AlRoute.link( this.alNavigation, AlLocation.AccountsUI, '/#/preferences/notifications' ).dispatch();
     }
 
-    /**
-     *  Generates the available data center menu structure.
-     *
-     *  A note on history: the reason this code is so unduly complicated is because, when the data center selector was introduced during 2017's "Universal Navigation"
-     *  project (a time period when it was necessary to manage seperate user accounts and logins for different datacenters, if you can imagine that) the decision was made
-     *  to conflate defender and insight locations into composites "us-west-1", "us-east-1", and "uk-west-1".  The problem, of course, is that the defender and insight
-     *  datacenters of the US are asymmetrical.  It was assumed that the number of datacenters would inevitably increase and span further regions, so abstraction
-     *  was preferred over a simpler enumeration of the possible permutations.
-     *
-     *  This expansion has not yet occurred, but the code is ready for it...  :)
-     */
-    protected generateDatacenterMenu( currentLocationId:string, accessible:string[] ) {
-        let available = {};
-        let currentLogicalRegion = this.insightLocations.hasOwnProperty( currentLocationId )
-                                    ? this.insightLocations[currentLocationId].logicalRegion
-                                    : 'us-west-1';      //  without a default, people complain...  they complain so much
-        accessible.forEach( accessibleLocationId => {
-            if ( ! this.insightLocations.hasOwnProperty( accessibleLocationId ) ) {
-                return;
-            }
-            const locationInfo = this.insightLocations[accessibleLocationId];
-            let targetLocationId = accessibleLocationId;
-            let logicalRegion = locationInfo.logicalRegion;
-            if ( locationInfo.alternatives ) {
-                locationInfo.alternatives.find( alternativeLocationId => {
-                    if ( accessible.includes( alternativeLocationId ) ) {
-                        targetLocationId = alternativeLocationId;
-                        logicalRegion = this.insightLocations[alternativeLocationId].logicalRegion;
-                        return true;
-                    }
-                    return false;
-                } );
-            }
-            if ( ! available.hasOwnProperty( locationInfo.residencyCaption ) ) {
-                available[locationInfo.residencyCaption] = {};
-            }
-            if ( ! available[locationInfo.residencyCaption].hasOwnProperty( logicalRegion ) ) {
-                available[locationInfo.residencyCaption][logicalRegion] = targetLocationId;
-            }
-        } );
-
-        this.locationsAvailable = 0;
-        this.regionSelectorItems = [];
-        Object.keys( available ).forEach( region => {
-            let regionMenu = {
-                label: region,
-                items: []
-            };
-            Object.keys( available[region] ).forEach( logicalRegion => {
-                const targetLocationId = available[region][logicalRegion];
-                const activated = ( logicalRegion === currentLogicalRegion ) ? true : false;
-                if ( activated ) {
-                    this.currentLocationResidency = this.insightLocations[targetLocationId].residency;
-                    this.currentLocationName = this.insightLocations[targetLocationId].logicalRegion;
-                }
-                this.locationsAvailable++;
-                regionMenu.items.push( {
-                    label: logicalRegion,
-                    styleClass: activated ? "active" : "",
-                    command: ( event ) => this.onClickDatacenter( targetLocationId, event )
-                } );
-            } );
-            this.regionSelectorItems.push( regionMenu );
-        } );
-    }
 }

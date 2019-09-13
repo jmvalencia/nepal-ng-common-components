@@ -178,3 +178,46 @@
   height: 39px;
   min-height: 39px;
 }
+
+:host ::ng-deep p-menu {
+    &.region-menu {
+        text-align: left;
+        .ui-menu {
+            padding: 8px 0;
+            .ui.ui-submenu-header{
+                height: 36px;
+            }
+            .ui-menuitem {
+                height: 48px;
+                font-size: 14px;
+                text-transform: uppercase;
+                &.active {
+                    background-color: #cbe2f2;
+                    pointer-events: none;
+                    font-weight: 700;
+                }
+                .ui-menuitem-link {
+                    padding-left: 24px;
+                }
+            }
+            li {
+                display: flex;
+                align-items: center;
+                padding-left: 16px;
+                a:hover {
+                    background-color: inherit;
+                    color: inherit;
+                }
+            }
+            .ui-menuitem:hover {
+                background-color: #e8e8e8;
+                color: #000000;
+            }
+            .ui-submenu-header {
+                font-size: 11pt;
+                color: #a8a8a8;
+                background-color: white;
+            }
+        }
+    }
+}

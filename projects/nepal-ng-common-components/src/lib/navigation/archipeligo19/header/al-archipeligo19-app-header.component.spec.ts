@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -10,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { ALSession, AlSessionStartedEvent, AlSessionInstance, AlActingAccountResolvedEvent } from '@al/session';
 import { AlEntitlementCollection } from '@al/subscriptions';
 import { AIMSAccount } from '@al/client';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, ConfirmationService } from 'primeng/api';
 
 describe('AlAppHeaderComponent Test Suite', () => {
   let component: AlArchipeligo19AppHeaderComponent;
@@ -20,11 +22,12 @@ describe('AlAppHeaderComponent Test Suite', () => {
     TestBed.configureTestingModule({
       declarations: [AlArchipeligo19AppHeaderComponent],
       imports: [
-        MenubarModule, TooltipModule,
+        ConfirmDialogModule, MenuModule, MenubarModule, TooltipModule,
         NgSelectModule, FormsModule,
         HttpClientTestingModule,
         RouterTestingModule.withRoutes( [] )
-      ]
+      ],
+      providers: [ ConfirmationService ]
     })
       .compileComponents();
   }));
