@@ -92,6 +92,19 @@
     box-shadow: none;
   }
 
+  // Only needed because of conflict style applied by material theme css in o3-apps
+  .ng-select {
+    padding-bottom: unset;
+    .ng-select-container {
+      &::after {
+        border-bottom: 0;
+      }
+      .ng-value-container {
+        padding-left: 10px;
+      }
+    }
+  }
+
   .filter-input {
     width: 100%;
 
