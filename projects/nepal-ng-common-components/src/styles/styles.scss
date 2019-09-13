@@ -155,7 +155,6 @@ path.unhealthy {
     tr {
       background-color: #3C3C3C !important;
       color: al-color($al-gray, 50) !important;
-
       &.status {
         &.Critical, &.critical {
           color: al-color($al-red, 600);
@@ -178,6 +177,10 @@ path.unhealthy {
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
     }
+  }
+
+  al-detailed-table-list td, al-detailed-table-list th {
+    border-bottom: 1px solid al-color($al-gray, 50, 0.5) !important;
   }
 
   al-count-summary {
