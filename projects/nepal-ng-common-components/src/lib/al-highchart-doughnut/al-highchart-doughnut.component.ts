@@ -54,24 +54,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                     center: ['50%', '50%'],
                     cursor: 'pointer',
                     dataLabels: {
-                        enabled: true,
-                        softConnector: false,
-                        distance: 15,
-                        formatter: function () {
-                            if ( this.point.y === 0 ) {
-                              return null;
-                            } else {
-                              let count: string;
-                              if ( this.point.y > 1000 ) {
-                                count = this.point.y > 1000000 ?
-                                  Highcharts.numberFormat( this.point.y / 1000000, 1 ) + 'M' :
-                                  Highcharts.numberFormat( this.point.y / 1000, 1 ) + 'K';
-                              } else {
-                                count = String(this.point.y);
-                              }
-                              return count;
-                            }
-                        }
+                        enabled: false,
                     },
                     showInLegend: true,
                     size: '90%',
