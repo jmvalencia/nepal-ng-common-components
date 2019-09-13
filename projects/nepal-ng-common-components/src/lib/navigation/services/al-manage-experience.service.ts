@@ -43,7 +43,7 @@ export class AlManageExperienceService {
                 },
                 {
                     key: 'try-beta',
-                    label: 'hell yeah!',
+                    label: 'yes!',
                     class: 'p-col-fixed',
                     textAlign: 'right'
                 }
