@@ -4,7 +4,7 @@
             <div class="top-items">
                 <ng-template ngFor let-menuItem [ngForOf]="menu.children">
                     <div class="menu-item-container" *ngIf="menuItem.visible">
-                        <div class="menu-item-parent" (click)="toggleItemExpanded(menuItem);"><i class="material-icons">{{menuItem.properties.iconClass}}</i><span>{{menuItem.caption}}</span></div>
+                        <div class="menu-item-parent" (click)="toggleItemExpanded(menuItem);"><i class="material-icons">{{menuItem.properties.iconClass}}</i><span [class.active]="menuItem.activated">{{menuItem.caption}}</span></div>
                         <div class="menu-item-children-container" [hidden]="!menuItem.properties.expanded" *ngIf="menuItem.children">
                             <ng-template ngFor let-childItem [ngForOf]="menuItem.children">
                                 <div class="menu-item-child" *ngIf="childItem.visible">
