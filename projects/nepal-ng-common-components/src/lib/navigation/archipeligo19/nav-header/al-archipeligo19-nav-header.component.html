@@ -1,10 +1,7 @@
 <div class="nav-header-bar">
   <div class="nav-header-content">
       <i class="material-icons menu-toggle" (click)="toggleClick()">menu</i>
-      <span *ngIf="displayIconName.length > 0">
-          <i class="material-icons">{{displayIconName}}</i>
-          [{{displayIconName}}]
-      </span>
+      <i *ngIf="displayIconName.length > 0" [className]="'ui-icon-' + displayIconName"></i>
       <span>{{heading}}</span>
   </div>
   <div class="nav-header-actions">
