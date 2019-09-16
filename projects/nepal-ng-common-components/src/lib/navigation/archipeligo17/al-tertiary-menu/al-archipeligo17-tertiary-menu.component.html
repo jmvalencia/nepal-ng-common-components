@@ -27,7 +27,7 @@
             <div class="tab-container">
                 <ng-template ngFor let-tab [ngForOf]="activeTabs.children">
                     <div    *ngIf="tab.visible"
-                            [ngClass]="{'active':tab.activated,'disabled': ! tab.enabled}"
+                            [ngClass]="tab.properties.consolidated_css_classes"
                             (click)="onClick(tab,$event)"
                             (mouseover)="onHoverStart(tab, $event)">
                         <a [ngClass]="{'active':tab.activated,'disabled': ! tab.enabled}"
