@@ -65,7 +65,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
 
   createUpperBar(position) {
     return this.barsSvg.rect(
-      this.barsSVGData.upperBarXBase * (position-1),
+      this.barsSVGData.upperBarXBase * (position-1) + (position-1)*1.3,
       this.barsSVGData.upperBarYBase,
       this.barsSVGData.upperBarWidht,
       this.barsSVGData.upperBarHeight
@@ -74,7 +74,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
 
   createLowerBar(position) {
     return this.barsSvg.rect(
-      this.barsSVGData.lowerBarXBase * (position-1),
+      this.barsSVGData.lowerBarXBase * (position-1) + (position-1)*1.3,
       this.barsSVGData.lowerBarYBase,
       this.barsSVGData.lowerBarWidht,
       this.barsSVGData.lowerBarHeight
@@ -165,7 +165,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
   getCurvesPath() {
     const initialY = Math.random() * this.height|1;
     this.wavesSVGData.points = [];
-    this.wavesSVGData.points.push(this.getPointFromPrevPoint({x:0, y:initialY}));
+    this.wavesSVGData.points.push(this.getPointFromPrevPoint({x:-this.width, y:initialY}));
     while(this.wavesSVGData.points[this.wavesSVGData.points.length-1].x <= this.width) {
       const prevPoint = this.wavesSVGData.points[this.wavesSVGData.points.length-1];
       this.wavesSVGData.points.push(this.getPointFromPrevPoint({x: prevPoint.x, y: prevPoint.y}));
@@ -180,7 +180,7 @@ export class AlBetaGetStartedComponent extends AlDialogCarrouselComponent implem
     this.wavesSVGData.minShiftX = this.width * 0.35;
     this.wavesSVGData.maxShiftX = this.width * 0.45;
     this.wavesSVGData.borderY = 0.08;
-    const gradient = this.wavesSvg.gradient("l(0, 1, 0, 0)#2699FB-#FFFFFF");
+    const gradient = this.wavesSvg.gradient("l(0, 1, 0, 0)#FFFFFF-#2699FB");
     return this.wavesSvg.path(this.getCurvesPath()).attr(
       {fill: gradient, stroke: "#2699FB", strokeWidth: "0", fillOpacity: 0.5}
     );
