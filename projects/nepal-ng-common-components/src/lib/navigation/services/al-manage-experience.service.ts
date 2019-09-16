@@ -138,7 +138,6 @@ export class AlManageExperienceService {
         } else if (option === 'try-beta') {
             this.alNavigation.navigate.byNamedRoute('cd19:dashboards');
         } else if (option === 'back-default') {
-            console.log("leave beta");
             this.alNavigation.navigate.byNamedRoute('cd17:overview');
         }
         this.experiencePreferences.saveExperiencePreferences(option).then(() => {
