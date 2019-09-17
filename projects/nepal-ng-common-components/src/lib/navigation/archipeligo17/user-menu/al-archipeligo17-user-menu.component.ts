@@ -196,13 +196,8 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         // Load the User Menu
         this.alNavigation.getMenu( 'cie-plus2', 'initials' ).then( initialMenu => {
             if(initialMenu) {
-                this.initialsMenu = initialMenu.children.map((child: AlRoute) => {
-                    return this.parseToPrimeMenuItem(child);
-                });
+                this.initialsMenu = initialMenu.children.map( child => this.parseToPrimeMenuItem( child ) );
             }
-        },
-        err => {
-            console.error("Failed to retrieve menu 'initials'; not instantiating.", err );
         });
     }
 
