@@ -20,10 +20,14 @@ export class AlDefenderSessionLinkComponent
 
   protected subscriptions  =   new AlSubscriptionGroup( null );
 
-  constructor(public sanitizer: DomSanitizer,  public alNavigation: AlNavigationService ){
+  constructor(public sanitizer: DomSanitizer,  public alNavigation: AlNavigationService ) {
     this.setLink = AlStopwatch.later(this.setDefenderLink);
-    this.subscriptions.manage( this.alNavigation.events.attach( 'AlNavigationContextChanged', this.onContextChanged ) );
-    ALSession.notifyStream.attach('AlActiveDatacenterChanged', this.onContextChanged);
+    this.subscriptions.manage(
+            this.alNavigation.events.attach( 'AlNavigationContextChanged', this.onContextChanged ),
+    );
+    this.subscriptions.manage(
+            ALSession.notifyStream.attach('AlActiveDatacenterChanged', this.onContextChanged)
+    );
   }
 
   private setDefenderLink = (): void => {
@@ -35,8 +39,7 @@ export class AlDefenderSessionLinkComponent
     if (!aimsAccessToken || !aimsAccessToken.token) {
       return ;
     }
-    const resource = '/defender_session_link.php?aims_token='
-                      + encodeURIComponent( aimsAccessToken.token );
+    const resource = `/defender_session_link.php?aims_token=${encodeURIComponent( aimsAccessToken.token )}`;
     const origin = AlLocatorService
                   .resolveURL( AlLocation.LegacyUI, resource);
     if (this.rawURL !== origin) {

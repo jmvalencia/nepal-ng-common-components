@@ -33,7 +33,7 @@ const NAVIGATION_COMPONENTS = [
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
     AlArchipeligo17TertiaryMenuComponent,
-    AlDefenderSessionLinkComponent,
+    AlDefenderSessionLinkComponent
 ];
 
 export {
@@ -49,5 +49,5 @@ export {
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
     AlArchipeligo17TertiaryMenuComponent,
-    AlDefenderSessionLinkComponent,
+    AlDefenderSessionLinkComponent
 };
