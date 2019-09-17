@@ -30,7 +30,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     /**
      *  Initials menu container
      */
-    public initialsMenu:AlRoute            = null;
+    public initialsMenu:PrimengMenuItem[]     = null;
 
     /**
      *  Active child menu (determined during refresh cycles by activated items in primary menu)
@@ -114,6 +114,7 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
         if (typeof changes['menu'] !== 'undefined') {
             this.loadMenu();
         }
+        this.loadinitialsMenu();
     }
 
     onNavigationContextChanged = ( navigationEvent?: AlNavigationContextChanged ) => {
@@ -188,6 +189,16 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                 console.error("Failed to retrieve menu 'user'; not instantiating.", err );
                 // this.menu = AlXRoute.abstract( this.navigation, "Empty Menu" );
             });
+    }
+
+    // load the logout from user dropdown menu
+    loadinitialsMenu() {
+        // Load the User Menu
+        this.alNavigation.getMenu( 'cie-plus2', 'initials' ).then( initialMenu => {
+            if(initialMenu) {
+                this.initialsMenu = initialMenu.children.map( child => this.parseToPrimeMenuItem( child ) );
+            }
+        });
     }
 
     onClick( menuItem:AlRoute, $event:any ) {
