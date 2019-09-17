@@ -14,7 +14,7 @@
           </div>
           <div class="entity-wrapper" *ngIf="menu && menu.children">
               <div class="user-menu-block">
-                <div class="account-icon-space" matMenuTriggerFor="initialsDropdownMenu">
+                <div class="account-icon-space" (click)="initialsDropdownMenu.toggle($event)">
                     <al-identity-icon [name]="userName"
                                       [circular]="false"
                                       [withLegend]="false">
@@ -53,6 +53,9 @@
     </section>
     <p-menu class="elipsis-menu" #elipsisMenu [popup]="true" [model]="menuItems"></p-menu>
 
+    <!-- logout from user dropdown menu -->
+    <p-menu class="user-dropdown-menu" #initialsDropdownMenu [popup]="true" [model]="initialsMenu"></p-menu>
+
     <!--
     <mat-menu md-position-mode="bottom" #locationDropdownMenu="matMenu" class="location-dropdown-menu" [overlapTrigger]="false">
       <div>
@@ -75,26 +78,6 @@
               </ng-container>
           </ul>
       </div>
-    </mat-menu>
-
-
-    <mat-menu md-position-mode="bottom" #initialsDropdownMenu="matMenu" class="user-dropdown-menu" [overlapTrigger]="false">
-        <div *ngIf="initialsMenu && initialsMenu.children.length > 0">
-            <ng-template ngFor let-menuItem [ngForOf]="initialsMenu.children">
-                <a mat-menu-item
-                        (click)="onClick(menuItem,$event)"
-                        [ngClass]="menuItem.properties.css_class || ''"
-                        [href]="menuItem._href || ''"
-                        [target]="menuItem.properties.target || ''"
-                        *ngIf="menuItem.visible"
-                        [disabled]="! menuItem.enabled">
-                    <div class="user-menu-li" layout="row" flex>
-                        <i *ngIf="menuItem.properties.iconClass" [ngClass]="menuItem.properties.iconClass">{{menuItem.properties.iconText}}</i>
-                        <span flex>{{menuItem.caption}}</span>
-                    </div>
-                </a>
-            </ng-template>
-        </div>
     </mat-menu>
     -->
   </div>
