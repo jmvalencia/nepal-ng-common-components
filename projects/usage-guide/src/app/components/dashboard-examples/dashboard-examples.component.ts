@@ -122,6 +122,11 @@ export class DashboardExamplesComponent implements OnInit {
                     name: 'Recon',
                     y: 15.3,
                     className: 'not-scanned'
+                },
+                {
+                    name: 'SQL Injection',
+                    y: 0,
+                    className: 'critical'
                 }
             ]
         }]

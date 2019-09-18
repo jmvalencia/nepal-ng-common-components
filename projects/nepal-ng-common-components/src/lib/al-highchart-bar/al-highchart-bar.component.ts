@@ -4,6 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -21,6 +22,11 @@ export class AlHighchartBarComponent implements OnChanges {
      */
     @Input() config: any;
 
+    /*
+     *
+     */
+    constructor(private utilityService: AlHighChartsUtilityService) { }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
             if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
@@ -32,6 +38,7 @@ export class AlHighchartBarComponent implements OnChanges {
     }
 
     private populateConfig = (): void => {
+        const service = this.utilityService;
         this.barChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'bar',
@@ -53,20 +60,24 @@ export class AlHighchartBarComponent implements OnChanges {
                 reversed: true
             },
             plotOptions: {
-                series: {
-                    stacking: 'normal',
-                    events: {
-                        // tslint:disable-next-line
-                        click: function(event) {
-                          event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
-                            detail: {
-                              segment: event.point
-                            },
-                            bubbles: true
-                          }));
-                        }
-                    }
+              series: {
+                stacking: 'normal',
+                events: {
+                  // tslint:disable-next-line
+                  legendItemClick: function(e: Highcharts.SeriesLegendItemClickEventObject) {
+                    service.seriesLegendClickHandler(e);
+                  },
+                  // tslint:disable-next-line
+                  click: function(event) {
+                    event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                      detail: {
+                        segment: event.point
+                      },
+                      bubbles: true
+                    }));
+                  }
                 }
+              }
             },
             series: this.config.series
         });

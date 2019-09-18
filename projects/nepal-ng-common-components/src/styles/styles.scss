@@ -261,6 +261,11 @@ path.unhealthy {
 
   .user-info-summary {
     background-color: al-color($al-gray, 900) !important;
+    .ui-menubar.ui-widget.ui-widget-content.ui-corner-all,
+    a.ui-menuitem-link.ui-corner-all.ng-star-inserted,
+    .ui-submenu-icon {
+      background-color: al-color($al-gray, 900) !important;
+    }
   }
 
   al-app-header {
@@ -533,6 +538,12 @@ al-app-header {
 
   .user-info-summary {
     background-color: #1E2B38 !important;
+
+    .ui-menubar.ui-widget.ui-widget-content.ui-corner-all,
+    a.ui-menuitem-link.ui-corner-all.ng-star-inserted,
+    .ui-submenu-icon {
+      background-color: #1E2B38 !important;
+    }
   }
 
   al-app-header {

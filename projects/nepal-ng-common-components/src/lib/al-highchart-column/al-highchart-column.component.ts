@@ -4,6 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, OnInit, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 
@@ -22,6 +23,11 @@ export class AlHighchartColumnComponent implements OnChanges {
      */
     @Input() config: any;
 
+    /*
+     *
+     */
+    constructor(private utilityService: AlHighChartsUtilityService) { }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
             if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
@@ -33,6 +39,7 @@ export class AlHighchartColumnComponent implements OnChanges {
     }
 
     private populateConfig = (): void => {
+        const service = this.utilityService;
         this.columnChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'column',
@@ -69,6 +76,10 @@ export class AlHighchartColumnComponent implements OnChanges {
                 },
                 series: {
                     events: {
+                      // tslint:disable-next-line
+                      legendItemClick: function(e: Highcharts.SeriesLegendItemClickEventObject) {
+                        service.seriesLegendClickHandler(e);
+                      },
                       // tslint:disable-next-line
                       click: function(event) {
                         event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
