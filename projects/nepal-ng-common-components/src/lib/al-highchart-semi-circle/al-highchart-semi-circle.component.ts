@@ -4,6 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -30,6 +31,11 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
   /*
    *
    */
+  constructor(private utilityService: AlHighChartsUtilityService) { }
+
+  /*
+   *
+   */
   ngOnChanges(changes: SimpleChanges): void {
     this.reflow();
     if (this.config) {
@@ -45,6 +51,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
    *
    */
   private populateConfig = (): void => {
+    const service = this.utilityService;
     this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
       chart: {
         plotBackgroundColor: null,
@@ -104,7 +111,14 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
           startAngle: -90,
           endAngle: 90,
           center: ['50%', '65%'],
-          size: `${this.containerWidth * .65}px`
+          size: `${this.containerWidth * .65}px`,
+          point: {
+            events: {
+              legendItemClick: function (e: Highcharts.PointLegendItemClickEventObject) {
+                service.pieLegendClickHandler(e);
+              }
+            }
+          }
         },
         series: {
           events: {
