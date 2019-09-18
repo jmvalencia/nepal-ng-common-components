@@ -53,6 +53,10 @@
     padding-right: 0!important;
   }
 
+  .ui-menubar .ui-menuitem-link {
+    color: unset;
+  }
+
   .separator {
     color: white;
   }
@@ -179,22 +183,21 @@
   min-height: 39px;
 }
 
-:host ::ng-deep p-menu {
+:host ::ng-deep {
+  p-menu {
     &.region-menu {
         text-align: left;
         .ui-menu {
             padding: 8px 0;
-            .ui.ui-submenu-header{
-                height: 36px;
-            }
             .ui-menuitem {
-                height: 48px;
-                font-size: 14px;
                 text-transform: uppercase;
                 &.active {
-                    background-color: #cbe2f2;
+                    background-color: al-color($al-smokeBlue, 500);
                     pointer-events: none;
                     font-weight: 700;
+                    > a {
+                      color: #fff;
+                    }
                 }
                 .ui-menuitem-link {
                     padding-left: 24px;
@@ -214,10 +217,21 @@
                 color: #000000;
             }
             .ui-submenu-header {
-                font-size: 11pt;
-                color: #a8a8a8;
+                color: al-color($al-gray, 200);
                 background-color: white;
             }
+          }
+      }
+    }
+    .menu-trigger {
+      .account-icon-space {
+        color: #fff;
+        text-transform: uppercase;
+        padding-left: 10px;
+        &:hover {
+          color: al-color($al-gray, 100)!important;
+          cursor: pointer;
         }
+      }
     }
 }
