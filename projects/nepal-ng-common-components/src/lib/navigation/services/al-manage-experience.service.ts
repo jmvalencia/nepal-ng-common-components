@@ -12,6 +12,7 @@ import { AlToastService } from '../../al-toast/al-toast.service';
 import { AlFeedbackComponent } from '../../al-feedback/al-feedback.component';
 import { AlBetaGetStartedComponent } from '../../al-beta-get-started/al-beta-get-started.component';
 import { AlGlobalizer } from '@al/common';
+import { AlLocation, AlLocatorService } from '@al/common/locator';
 import { ALSession, AlSessionEndedEvent } from '@al/session';
 import { AlEntitlementCollection } from '@al/subscriptions';
 import { ExperiencePreference } from '../types';
@@ -138,7 +139,13 @@ export class AlManageExperienceService {
         } else if (option === 'try-beta') {
             this.alNavigation.navigate.byNamedRoute('cd19:dashboards');
         } else if (option === 'back-default') {
-            this.alNavigation.navigate.byNamedRoute('cd17:overview');
+            if ( AlLocatorService.getActingNode().locTypeId !== AlLocation.OverviewUI ) {
+                this.alNavigation.navigate.byNamedRoute('cd17:overview');
+            } else {
+                // set schema/experience to default
+                this.alNavigation.setSchema("cie-plus2");
+                this.alNavigation.setExperience("default");
+            }
         }
         this.experiencePreferences.saveExperiencePreferences(option).then(() => {
             this.loadNavigationExperience();
