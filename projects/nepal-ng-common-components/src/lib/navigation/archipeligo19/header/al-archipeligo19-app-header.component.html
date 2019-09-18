@@ -31,5 +31,19 @@
           <div pTooltip="{{account.name}}" [tooltipZIndex]="2000"><b>({{account.id}})</b> - {{account.name}}</div>
         </ng-template>
     </ng-select>
+    <span class="separator">|</span>
+    <ng-container *ngIf="datacenter && datacenter.locationsAvailable > 0">
+      <p-menu class="region-menu" #menux popup="popup" [model]="datacenter.selectableRegions" [style]="{'width':'180px'}"></p-menu>
+      <div class="menu-trigger" (click)="menux.toggle($event)">
+          <div class="account-icon-space">
+              <div class="dco-flag" *ngIf="datacenter.currentResidency==='US'">
+                  {{datacenter.currentRegion}} (US)
+              </div>
+              <div class="dco-flag" *ngIf="datacenter.currentResidency==='EMEA'">
+                  {{datacenter.currentRegion}} (UK)
+              </div>
+          </div>
+      </div>
+    </ng-container>
   </div>
 </div>

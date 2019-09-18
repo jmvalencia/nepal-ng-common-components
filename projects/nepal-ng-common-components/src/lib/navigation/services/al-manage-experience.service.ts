@@ -27,24 +27,23 @@ export class AlManageExperienceService {
         sticky: true,
         closable: false,
         data: {
-            message: 'We have a new BETA experience for you to try. It includes all-new Dashboards and a new, '
-                + 'action-centric navigation. Would you like to try it out?',
+            message: 'Experience Dashboards, a beta feature that simplifies navigation and centralizes information in interactive visuals.',
             buttons: [
                 {
                     key: 'dismiss-beta',
-                    label: 'don\'t show this message again',
+                    label: 'Do not show me this message again',
                     class: 'p-col secondaryButton',
                     textAlign: 'left'
                 },
                 {
-                    key: 'not-right-now',
-                    label: 'not right now',
+                    key: 'try-beta',
+                    label: 'Try Dashboards Beta',
                     class: 'p-col-fixed',
                     textAlign: 'right'
                 },
                 {
-                    key: 'try-beta',
-                    label: 'yes!',
+                    key: 'not-right-now',
+                    label: 'Maybe later',
                     class: 'p-col-fixed',
                     textAlign: 'right'
                 }

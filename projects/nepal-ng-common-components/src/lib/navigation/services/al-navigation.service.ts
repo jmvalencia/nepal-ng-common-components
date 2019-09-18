@@ -10,6 +10,7 @@ import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, NavigationEnd, NavigationExtras, ActivatedRouteSnapshot } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
 import {
     ALSession,
@@ -19,6 +20,7 @@ import {
     AlActingAccountResolvedEvent
 } from '@al/session';
 import {
+    AlInsightLocations,
     AlLocation,
     AlRoute,
     AlRoutingHost,
@@ -32,6 +34,7 @@ import { AlEntitlementCollection } from '@al/subscriptions';
 import { AlGlobalizer, AlStopwatch, AlTriggerStream, AlBehaviorPromise } from '@al/common';
 import { AlExperiencePreferencesService } from './al-experience-preferences.service';
 import {
+    AlDatacenterOptionsSummary,
     AlNavigationFrameChanged,
     AlNavigationContextChanged,
     AlNavigationTrigger,
@@ -362,6 +365,132 @@ export class AlNavigationService implements AlNavigationHost
     }
 
     /**
+     * Black magic function that, given a url with :variable placeholder, consumes provided parameters as route parameters
+     * and compiles any remainders into a query string.
+     *
+     * @param url The input url, with route parameter placeholder -- e.g., https://console.overview.alertlogic.com/#/remediations-scan-status/:accountId/:deploymentId
+     * @param parameters The list of parameters to consume
+     * @param rewriteQueryString If true (default), applies unused keys/values from the `parameters` input to generate a query string, and appends that to the result.
+     * @param applyIdentityParameters If true (default), applies current acting account and location parameters to the query string.
+     *
+     * @returns The compiled URL.
+     */
+    public applyParameters( url:string, parameters:{[p:string]:string}, rewriteQueryString:boolean = true, applyIdentityParameters:boolean = true ):string {
+        let unused = Object.assign( {}, parameters );
+
+        url = url.replace( /\:[a-zA-Z_]+/g, match => {
+            let variableId = match.substring( 1 );
+            if ( unused.hasOwnProperty( variableId ) ) {
+                let value = unused[variableId];
+                delete unused[variableId];
+                return value;
+            } else if ( this.routeParameters.hasOwnProperty( variableId ) ) {
+                return this.routeParameters[variableId];
+            } else {
+                console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
+                return "(null)";
+            }
+        } );
+
+        if ( rewriteQueryString ) {
+            if ( applyIdentityParameters && ALSession.isActive() ) {
+                unused["aaid"] = ALSession.getActingAccountID();
+                let datacenterId = ALSession.getActiveDatacenter();
+                if ( datacenterId ) {
+                    unused["locid"] = datacenterId;      //  corresponds to insight locations service locationId
+                }
+            }
+            let qsOffset = url.indexOf("?");
+            if ( qsOffset !== -1 ) {
+                let existing = url.substring( qsOffset + 1 ).split("&");
+                for ( let k in existing ) {
+                    if ( existing.hasOwnProperty( k ) ) {
+                        unused[k] = existing[k];
+                    }
+                }
+                url = url.substring( 0, qsOffset );
+            }
+            if ( Object.keys( unused ).length > 0 ) {
+                let queryString = Object.keys( unused ).map( key => `${key}=${encodeURIComponent( unused[key] )}` ).join( "&" );
+                url = `${url}?${queryString}`;
+            }
+        }
+
+        return url;
+    }
+
+    /**
+     *  Generates the available data center menu structure.
+     *
+     *  A note on history: the reason this code is so unduly complicated is because, when the data center selector was introduced during 2017's "Universal Navigation"
+     *  project (a time period when it was necessary to manage seperate user accounts and logins for different datacenters, if you can imagine that) the decision was made
+     *  to conflate defender and insight locations into composites "us-west-1", "us-east-1", and "uk-west-1".  The problem, of course, is that the defender and insight
+     *  datacenters of the US are asymmetrical.  It was assumed that the number of datacenters would inevitably increase and span further regions, so abstraction
+     *  was preferred over a simpler enumeration of the possible permutations.
+     *
+     *  This expansion has not yet occurred, but the code is ready for it...  :)
+     */
+    public generateDatacenterMenu( currentLocationId:string,
+                                      accessible:string[],
+                                      activationCallback:{(insightLocationId:string,$event:any):void} ):AlDatacenterOptionsSummary {
+        let available = {};
+        let currentRegion = AlInsightLocations.hasOwnProperty( currentLocationId )
+                                ? AlInsightLocations[currentLocationId].logicalRegion
+                                : 'us-west-1';      //  without a default, people complain...  they complain so much
+        accessible.forEach( accessibleLocationId => {
+            if ( ! AlInsightLocations.hasOwnProperty( accessibleLocationId ) ) {
+                return;
+            }
+            const locationInfo = AlInsightLocations[accessibleLocationId];
+            let targetLocationId = accessibleLocationId;
+            let logicalRegion = locationInfo.logicalRegion;
+            if ( locationInfo.alternatives ) {
+                locationInfo.alternatives.find( alternativeLocationId => {
+                    if ( accessible.includes( alternativeLocationId ) ) {
+                        targetLocationId = alternativeLocationId;
+                        logicalRegion = AlInsightLocations[alternativeLocationId].logicalRegion;
+                        return true;
+                    }
+                    return false;
+                } );
+            }
+            if ( ! available.hasOwnProperty( locationInfo.residencyCaption ) ) {
+                available[locationInfo.residencyCaption] = {};
+            }
+            if ( ! available[locationInfo.residencyCaption].hasOwnProperty( logicalRegion ) ) {
+                available[locationInfo.residencyCaption][logicalRegion] = targetLocationId;
+            }
+        } );
+
+        let locationsAvailable = 0;
+        let currentResidency = "US";
+        let selectableRegions:PrimengMenuItem[] = [];
+        Object.keys( available ).forEach( region => {
+            let regionMenu = {
+                label: region,
+                items: []
+            };
+            Object.keys( available[region] ).forEach( logicalRegion => {
+                const targetLocationId = available[region][logicalRegion];
+                const activated = ( logicalRegion === currentRegion ) ? true : false;
+                if ( activated ) {
+                    currentResidency = AlInsightLocations[targetLocationId].residency;
+                    currentRegion = AlInsightLocations[targetLocationId].logicalRegion;
+                }
+                locationsAvailable++;
+                regionMenu.items.push( {
+                    label: logicalRegion,
+                    styleClass: activated ? "active" : "",
+                    command: ( event ) => activationCallback( targetLocationId, event )
+                } );
+            } );
+            selectableRegions.push( regionMenu );
+        } );
+
+        return { locationsAvailable, selectableRegions, currentRegion, currentResidency };
+    }
+
+    /**
      * Registers a listener for the User.Navigation.Signout trigger, which should prompt local session destruction and a redirect to
      * console.account's logout route.
      */
@@ -576,50 +705,4 @@ export class AlNavigationService implements AlNavigationHost
         return schema;
     }
 
-    /**
-     * Black magic.  Consumes provided parameters as route parameters and compiles any remainders into a query string.
-     */
-    protected applyParameters( url:string, parameters:{[p:string]:string}, rewriteQueryString:boolean = true, applyIdentityParameters:boolean = true ):string {
-        let unused = Object.assign( {}, parameters );
-
-        url = url.replace( /\:[a-zA-Z_]+/g, match => {
-            let variableId = match.substring( 1 );
-            if ( unused.hasOwnProperty( variableId ) ) {
-                let value = unused[variableId];
-                delete unused[variableId];
-                return value;
-            } else if ( this.routeParameters.hasOwnProperty( variableId ) ) {
-                return this.routeParameters[variableId];
-            } else {
-                console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
-                return "(null)";
-            }
-        } );
-
-        if ( rewriteQueryString ) {
-            if ( applyIdentityParameters && ALSession.isActive() ) {
-                unused["aaid"] = ALSession.getActingAccountID();
-                let datacenterId = ALSession.getActiveDatacenter();
-                if ( datacenterId ) {
-                    unused["locid"] = datacenterId;      //  corresponds to insight locations service locationId
-                }
-            }
-            let qsOffset = url.indexOf("?");
-            if ( qsOffset !== -1 ) {
-                let existing = url.substring( qsOffset + 1 ).split("&");
-                for ( let k in existing ) {
-                    if ( existing.hasOwnProperty( k ) ) {
-                        unused[k] = existing[k];
-                    }
-                }
-                url = url.substring( 0, qsOffset );
-            }
-            if ( Object.keys( unused ).length > 0 ) {
-                let queryString = Object.keys( unused ).map( key => `${key}=${encodeURIComponent( unused[key] )}` ).join( "&" );
-                url = `${url}?${queryString}`;
-            }
-        }
-
-        return url;
-    }
 }
