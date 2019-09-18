@@ -4,7 +4,7 @@ import * as Highcharts from 'highcharts';
 @Injectable({
   providedIn: 'root',
 })
-export class CommonComponentsService {
+export class AlHighChartsUtilityService {
 
   constructor() { }
 

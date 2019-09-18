@@ -4,7 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonComponentsService } from '../common-components.service';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -31,7 +31,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
   /*
    *
    */
-  constructor(private componentsService: CommonComponentsService) { }
+  constructor(private utilityService: AlHighChartsUtilityService) { }
 
   /*
    *
@@ -51,7 +51,7 @@ export class AlHighchartSemiCircleComponent implements OnChanges {
    *
    */
   private populateConfig = (): void => {
-    const service = this.componentsService;
+    const service = this.utilityService;
     this.semiCircle = Highcharts.chart(this.semiCircleEl.nativeElement, {
       chart: {
         plotBackgroundColor: null,

@@ -4,7 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { CommonComponentsService } from '../common-components.service';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -29,7 +29,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
     /*
      *
      */
-    constructor(private componentsService: CommonComponentsService) { }
+    constructor(private utilityService: AlHighChartsUtilityService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.reflow();
@@ -48,7 +48,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
     }
 
     private populateConfig = (): void => {
-        const service = this.componentsService;
+        const service = this.utilityService;
         this.doughnutChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'pie',

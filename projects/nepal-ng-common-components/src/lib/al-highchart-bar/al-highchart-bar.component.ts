@@ -4,7 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonComponentsService } from '../common-components.service';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -25,7 +25,7 @@ export class AlHighchartBarComponent implements OnChanges {
     /*
      *
      */
-    constructor(private componentsService: CommonComponentsService) { }
+    constructor(private utilityService: AlHighChartsUtilityService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
@@ -38,7 +38,7 @@ export class AlHighchartBarComponent implements OnChanges {
     }
 
     private populateConfig = (): void => {
-        const service = this.componentsService;
+        const service = this.utilityService;
         this.barChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'bar',

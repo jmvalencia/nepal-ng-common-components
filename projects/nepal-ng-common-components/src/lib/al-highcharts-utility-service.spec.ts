@@ -1,15 +1,15 @@
-import { CommonComponentsService } from './common-components.service';
+import { AlHighChartsUtilityService } from './al-highcharts-utility-service';
 import { TestBed } from '@angular/core/testing';
 import * as Highcharts from 'highcharts';
 
-describe('CommonComponentsService', () => {
+describe('AlHighChartsUtilityService', () => {
 
-  let service: CommonComponentsService;
+  let service: AlHighChartsUtilityService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ CommonComponentsService ]
+      providers: [ AlHighChartsUtilityService ]
     });
-    service = TestBed.get(CommonComponentsService);
+    service = TestBed.get(AlHighChartsUtilityService);
   });
 
   describe('when clicking on a pie legend item', () => {
