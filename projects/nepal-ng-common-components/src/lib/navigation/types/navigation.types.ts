@@ -1,6 +1,7 @@
 import { AlRoute, AlRouteDefinition, AlRoutingHost, AlNavigationSchema } from '@al/common/locator';
 import { AlTriggerStream, AlTriggeredEvent } from '@al/common';
 import { AlActingAccountResolvedEvent, AlSessionInstance } from '@al/session';
+import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
 /**
  * This interface is used to abstract services that a host application must provide to top-level navigation components
@@ -73,6 +74,14 @@ export interface ExperiencePreference
     displayBetaNavigation:  boolean;
     dismissBetaForever?:    boolean;
     offerBetaTutorial?:     boolean;
+}
+
+export interface AlDatacenterOptionsSummary
+{
+    locationsAvailable:     number;
+    selectableRegions:      PrimengMenuItem[];
+    currentRegion:          string;
+    currentResidency:       string;
 }
 
 export const ALNAV_DISABLE_PRIMARY = "alNavigation.disablePrimary";
