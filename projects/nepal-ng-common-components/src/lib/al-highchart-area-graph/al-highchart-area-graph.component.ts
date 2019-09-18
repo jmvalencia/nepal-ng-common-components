@@ -4,6 +4,7 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonComponentsService } from '../common-components.service';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -18,6 +19,11 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
 
     @Input() config: Highcharts.Options;
 
+    /*
+     *
+     */
+    constructor(private componentsService: CommonComponentsService) { }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (this.config) {
             if (changes.config.previousValue === undefined && changes.config.currentValue !== undefined) {
@@ -29,6 +35,7 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
     }
 
     private populateConfig = (): void => {
+      const service = this.componentsService;
       this.areaGraphItem = Highcharts.chart(this.areaGraph.nativeElement, Object.assign({
         chart: {
             type: 'area',
@@ -57,6 +64,12 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
         plotOptions: {
             area: {
               stacking: 'normal',
+              events: {
+                // tslint:disable-next-line
+                legendItemClick: function(e: Highcharts.SeriesLegendItemClickEventObject) {
+                  service.seriesLegendClickHandler(e);
+                }
+              },
               marker: {
                   enabled: false,
                   symbol: 'circle',
