@@ -95,8 +95,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         }
 
         if ( entitlement instanceof Array ){
-            for (let i = 0; i < this.entitlement.length; i++) {
-                entitlement[i] = this.setEntitlementGroup(this.entitlement[i]);
+            for (let i = 0; i < entitlement.length; i++) {
+                entitlement[i] = this.setEntitlementGroup(entitlement[i]);
             }
             this.entitlement = entitlement;
         }
