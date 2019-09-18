@@ -4,8 +4,8 @@
  * @copyright Alert Logic, Inc 2019
  */
 import { Input, Component, ViewChild, ElementRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { AlHighChartsUtilityService } from '../al-highcharts-utility-service';
 import * as Highcharts from 'highcharts';
-
 
 @Component({
     selector: 'al-highchart-doughnut',
@@ -25,6 +25,12 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
      */
     @Input() config: any[];
 
+
+    /*
+     *
+     */
+    constructor(private utilityService: AlHighChartsUtilityService) { }
+
     ngOnChanges(changes: SimpleChanges): void {
         this.reflow();
         if (this.config) {
@@ -42,6 +48,7 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
     }
 
     private populateConfig = (): void => {
+        const service = this.utilityService;
         this.doughnutChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
                 type: 'pie',
@@ -55,6 +62,14 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: false,
+                    },
+                    point: {
+                      events: {
+                        // tslint:disable-next-line
+                        legendItemClick: function(e: Highcharts.PointLegendItemClickEventObject) {
+                          service.pieLegendClickHandler(e);
+                        }
+                      }
                     },
                     showInLegend: true,
                     size: '90%',
