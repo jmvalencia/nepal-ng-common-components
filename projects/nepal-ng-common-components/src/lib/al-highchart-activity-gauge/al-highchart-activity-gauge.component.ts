@@ -14,9 +14,6 @@ import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsSolidGauge from 'highcharts/modules/solid-gauge';
 import { ActivityGaugeConfig } from '../types';
 
-HighchartsMore(Highcharts);
-HighchartsSolidGauge(Highcharts);
-
 
 @Component({
     selector: 'al-highchart-activity-gauge',
@@ -47,7 +44,10 @@ export class AlHighchartsActivityGaugeComponent implements OnInit {
 
     constructor(
         private gaugeService: AlHighchartsActivityGaugeService
-    ) {}
+    ) {
+      HighchartsMore(Highcharts);
+      HighchartsSolidGauge(Highcharts);
+    }
 
     /*
      *
