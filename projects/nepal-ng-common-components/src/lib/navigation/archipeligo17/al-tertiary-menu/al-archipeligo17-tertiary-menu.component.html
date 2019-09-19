@@ -22,7 +22,7 @@
         </aside>
       </section>
     </div>
-    <div class="tertiary-content">
+    <div class="tertiary-content" [ngClass]="alNavigation.tertiaryContentClass$ | async">
         <section class="navigation-tabs" *ngIf="activeTabs && activeTabs.children.length > 1">
             <div class="tab-container">
                 <ng-template ngFor let-tab [ngForOf]="activeTabs.children">

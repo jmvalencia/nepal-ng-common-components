@@ -10,7 +10,6 @@ import * as Highcharts from 'highcharts';
 import map from 'highcharts/modules/map';
 
 const mapWorld = require('@highcharts/map-collection/custom/world.geo.json');
-map(Highcharts);
 
 @Component({
     selector: 'al-highmap-chart',
@@ -30,6 +29,10 @@ export class AlHighmapChartComponent implements OnChanges {
      * an interface
      */
     @Input() config: any;
+
+    constructor() {
+      map(Highcharts);
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if ( typeof window !== 'undefined' ) {
@@ -78,7 +81,6 @@ export class AlHighmapChartComponent implements OnChanges {
             series: [
                 {
                     type: 'map',
-                    mapData: Highcharts.maps['countries/gb/gb-all'],
                     name: 'Basemap',
                     borderColor: '#d6d6d6',
                     nullColor: '#eeeeee',
