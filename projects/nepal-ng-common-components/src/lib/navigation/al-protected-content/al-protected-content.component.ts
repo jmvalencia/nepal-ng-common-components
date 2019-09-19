@@ -144,6 +144,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         if ( contentVisible === false ){
             if ( typeof(this.entitlement) === "string" ) {
                 contentVisible = this.navigation.evaluateEntitlementExpression( this.entitlement );
+            } else if ( this.entitlement instanceof Array ) {
+                contentVisible = this.navigation.evaluateEntitlementExpression( this.entitlement.join('|') );
             } else {
                 console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
             }
