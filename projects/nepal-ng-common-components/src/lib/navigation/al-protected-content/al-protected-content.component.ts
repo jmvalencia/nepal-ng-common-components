@@ -108,7 +108,16 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             if ( EntitlementGroup.hasOwnProperty( entitlement ) ) {
                 entitlement = EntitlementGroup[entitlement];
             } else {
-                throw new Error(`Warning: the entitlement expression 'EntitlementGroup.${entitlement}' does not reflect a valid entitlement group.  Are you using an outdated O3 constant?` );
+                if ( this.entitlement instanceof Array ) {
+                    let entitlementExpression = "";
+                    for (let i = 0; i < this.entitlement.length; i++) {
+                        (i === 0) ? entitlementExpression = this.entitlement[i]
+                                  : entitlementExpression = entitlementExpression + "|" +this.entitlement[i];
+                    }
+                    contentVisible = this.navigation.evaluateEntitlementExpression( entitlementExpression );
+                } else {
+                    console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
+                }
             }
         }
         return entitlement;
