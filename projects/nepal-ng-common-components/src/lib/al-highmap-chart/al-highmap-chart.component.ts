@@ -78,7 +78,6 @@ export class AlHighmapChartComponent implements OnChanges {
             series: [
                 {
                     type: 'map',
-                    mapData: Highcharts.maps['countries/gb/gb-all'],
                     name: 'Basemap',
                     borderColor: '#d6d6d6',
                     nullColor: '#eeeeee',
