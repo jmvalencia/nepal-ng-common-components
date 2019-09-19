@@ -95,8 +95,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         }
 
         if ( entitlement instanceof Array ){
-            for (let i = 0; i < this.entitlement.length; i++) {
-                entitlement[i] = this.setEntitlementGroup(this.entitlement[i]);
+            for (let i = 0; i < entitlement.length; i++) {
+                entitlement[i] = this.setEntitlementGroup(entitlement[i]);
             }
             this.entitlement = entitlement;
         }
@@ -144,6 +144,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         if ( contentVisible === false ){
             if ( typeof(this.entitlement) === "string" ) {
                 contentVisible = this.navigation.evaluateEntitlementExpression( this.entitlement );
+            } else if ( this.entitlement instanceof Array ) {
+                contentVisible = this.navigation.evaluateEntitlementExpression( this.entitlement.join('|') );
             } else {
                 console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
             }
