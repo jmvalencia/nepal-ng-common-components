@@ -108,16 +108,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             if ( EntitlementGroup.hasOwnProperty( entitlement ) ) {
                 entitlement = EntitlementGroup[entitlement];
             } else {
-                if ( this.entitlement instanceof Array ) {
-                    let entitlementExpression = "";
-                    for (let i = 0; i < this.entitlement.length; i++) {
-                        (i === 0) ? entitlementExpression = this.entitlement[i]
-                                  : entitlementExpression = `${entitlementExpression}|${this.entitlement[i]}`;
-                    }
-                    contentVisible = this.navigation.evaluateEntitlementExpression( entitlementExpression );
-                } else {
-                    console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
-                }
+                throw new Error(`Warning: the entitlement expression 'EntitlementGroup.${entitlement}' does not reflect a valid entitlement group.  Are you using an outdated O3 constant?` );
             }
         }
         return entitlement;
@@ -154,7 +145,16 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             if ( typeof(this.entitlement) === "string" ) {
                 contentVisible = this.navigation.evaluateEntitlementExpression( this.entitlement );
             } else {
-                console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
+                if ( this.entitlement instanceof Array ) {
+                    let entitlementExpression = "";
+                    for (let i = 0; i < this.entitlement.length; i++) {
+                        (i === 0) ? entitlementExpression = this.entitlement[i]
+                                  : entitlementExpression = `${entitlementExpression}|${this.entitlement[i]}`;
+                    }
+                    contentVisible = this.navigation.evaluateEntitlementExpression( entitlementExpression );
+                } else {
+                    console.warn("AlProtectedContent: cannot evaluate entitlement expression that is not a string!" );
+                }
             }
 
         }
