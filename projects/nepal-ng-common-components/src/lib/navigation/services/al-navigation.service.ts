@@ -64,6 +64,11 @@ export class AlNavigationService implements AlNavigationHost
     public events                               =   new AlTriggerStream();
 
     /**
+     * EventEmitter to pass a css class to tertiary-content (al-archipeligo17-tertiary-menu)
+     */
+    public tertiaryContentClass$: EventEmitter<string|string[]|{[i:string]:boolean}> = new EventEmitter();
+
+    /**
      * This cluster of methods supports imperative navigation of different types.
      * Note that each method accepts an optional `params` parameter bag.  This parameters will be used
      * to satisfy a given route or target's route parameters (if any); any *remaining* parameters will be
