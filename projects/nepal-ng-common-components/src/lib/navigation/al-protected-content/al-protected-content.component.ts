@@ -112,7 +112,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
                     let entitlementExpression = "";
                     for (let i = 0; i < this.entitlement.length; i++) {
                         (i === 0) ? entitlementExpression = this.entitlement[i]
-                                  : entitlementExpression = entitlementExpression + "|" +this.entitlement[i];
+                                  : entitlementExpression = `${entitlementExpression}|${this.entitlement[i]}`;
                     }
                     contentVisible = this.navigation.evaluateEntitlementExpression( entitlementExpression );
                 } else {
