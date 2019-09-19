@@ -116,6 +116,10 @@ const appRoutes: Routes = [
     component: TypographyComponent
   },
   {
+    path: 'typography/:category',
+    component: TypographyComponent
+  },
+  {
     path: 'highcharts',
     component: HighChartsComponent
   },

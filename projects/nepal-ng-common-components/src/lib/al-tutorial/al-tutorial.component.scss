@@ -1,0 +1,43 @@
+:host ::ng-deep .ui-dialog {
+    .ui-dialog-titlebar {
+        display: none;
+    }
+
+    .ui-carousel {
+        .ui-carousel-header {
+            display: none;
+        }
+    }
+
+    .dialog-main-content {
+        width: 400px;
+        margin: auto;
+        .template-content {
+            text-align: center;
+        }
+    }
+
+    .side-buttons {
+        text-align:center;
+        height: 0px;
+        .prev-button {
+            right: 250px;
+            bottom: 95px;
+            height: 53px;
+            width: 53px;
+            background-color: #fff;
+        }
+        .next-button {
+            left: 265px;
+            bottom: 95px;
+            height: 53px;
+            width: 53px;
+            background-color: #fff;
+        }
+    }
+
+    .ui-dialog-buttonpane {
+        text-align:center;
+        height: 45px;
+    }
+}

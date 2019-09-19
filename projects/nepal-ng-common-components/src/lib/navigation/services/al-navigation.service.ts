@@ -376,6 +376,7 @@ export class AlNavigationService implements AlNavigationHost
      */
     public setRouteParameter( parameter:string, value:string ) {
         this.routeParameters[parameter] = value;
+        this.refreshMenus();
         this.contextNotifier.again();
     }
 
@@ -384,6 +385,7 @@ export class AlNavigationService implements AlNavigationHost
      */
     public deleteRouteParameter( parameter ) {
         delete this.routeParameters[parameter];
+        this.refreshMenus();
         this.contextNotifier.again();
     }
 
@@ -567,6 +569,7 @@ export class AlNavigationService implements AlNavigationHost
         this.routeData = aggregatedData;
         this.queryParams = aggregatedQueryParams;
 
+        console.log("Refreshing menu with URL...", this.currentUrl );
         this.refreshMenus();                            //  Refresh menus against the most current data
 
         this.contextNotifier.again();                   //  Notify child components
@@ -576,6 +579,7 @@ export class AlNavigationService implements AlNavigationHost
      * Listens for session start triggers from @al/session
      */
     protected onSessionStarted = ( event:AlSessionStartedEvent ) => {
+        this.refreshMenus();
         this.contextNotifier.again();
     }
 
@@ -585,6 +589,7 @@ export class AlNavigationService implements AlNavigationHost
     protected onActingAccountChanged = ( event:AlActingAccountChangedEvent ) => {
         if ( event.actingAccount.id !== this.routeParameters['accountId'] ) {
             this.routeParameters['accountId'] = event.actingAccount.id;
+            this.refreshMenus();
             this.contextNotifier.again();
         }
     }

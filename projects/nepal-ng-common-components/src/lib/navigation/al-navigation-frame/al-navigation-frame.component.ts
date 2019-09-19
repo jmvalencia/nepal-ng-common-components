@@ -33,8 +33,10 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     @Input() public experience:string = null;       //  this is only used to set the *initial* state.
     @Input() public schema:string = null;           //  this is only used to set the *initial* state.
 
-    primaryMenu:AlRoute = null;
-    userMenu:AlRoute = null;
+    primaryMenu:AlRoute;
+    userMenu:AlRoute;
+    contentMenu:AlRoute;
+    contentMenuCursor:AlRoute;
 
     displayNav:boolean = false;
 
@@ -93,6 +95,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         } else {
             this.userMenu = AlRoute.empty();
         }
+        this.evaluateActivatedContentMenu();
     }
 
     onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
@@ -100,6 +103,35 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
             this.disablePrimaryMenu = routeDirectives.includes( ALNAV_DISABLE_PRIMARY );
             this.disableTertiaryMenu = routeDirectives.includes( ALNAV_DISABLE_TERTIARY );
+        }
+        this.evaluateActivatedContentMenu();
+    }
+
+    /*  Finds the first activated route with `childOutlet === "content-menu"`.  This route will then be used
+     *  as the container for the al-archipeligo19-content-menu component.  */
+    evaluateActivatedContentMenu() {
+        let contentMenu:AlRoute = undefined;
+        let contentMenuFinder = ( container:AlRoute ):AlRoute => {
+            return container.children.find( route => {
+                if ( route.activated ) {
+                    if ( route.getProperty("childOutlet") === "content-menu" ) {
+                        contentMenu = route;
+                    } else {
+                        return contentMenuFinder( route );
+                    }
+                }
+            } );
+        };
+
+        if ( this.primaryMenu ) {
+            contentMenuFinder( this.primaryMenu );
+        }
+
+        if ( this.contentMenu !== contentMenu ) {
+            console.log("Content menu changed!" );
+            contentMenu.summarize( true );
+            this.contentMenu = contentMenu;
+            this.contentMenuCursor = contentMenu.children.find( c => c.activated );
         }
     }
 

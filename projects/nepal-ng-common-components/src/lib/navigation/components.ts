@@ -11,6 +11,7 @@ import { AlArchipeligo17TertiaryMenuComponent } from './archipeligo17/al-tertiar
  * Archipeligo 19/"SIEMless" Navigation Components
  */
 import { AlArchipeligo19AppHeaderComponent } from './archipeligo19/header/al-archipeligo19-app-header.component';
+import { AlArchipeligo19ContentMenuComponent } from './archipeligo19/content-menu/al-archipeligo19-content-menu.component';
 import { AlArchipeligo19NavHeaderComponent } from './archipeligo19/nav-header/al-archipeligo19-nav-header.component';
 import { AlArchipeligo19SidenavComponent } from './archipeligo19/sidenav/al-archipeligo19-sidenav.component';
 
@@ -26,6 +27,7 @@ const NAVIGATION_COMPONENTS = [
     AlArchipeligo17HeaderComponent,
 
     AlArchipeligo19AppHeaderComponent,
+    AlArchipeligo19ContentMenuComponent,
     AlArchipeligo19NavHeaderComponent,
     AlArchipeligo19SidenavComponent,
 
@@ -43,6 +45,7 @@ export {
     AlArchipeligo17AccountSelectorComponent,
     AlArchipeligo17HeaderComponent,
     AlArchipeligo19AppHeaderComponent,
+    AlArchipeligo19ContentMenuComponent,
     AlArchipeligo19NavHeaderComponent,
     AlArchipeligo19SidenavComponent,
     AlProtectedContentComponent,

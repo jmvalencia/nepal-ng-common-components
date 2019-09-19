@@ -1,0 +1,19 @@
+@import "~@al/design/styles/palette.scss";
+@import "~@al/design/styles/variables.scss";
+@import "~@al/design/styles/utility.scss";
+
+:host {
+    display: block;
+    span {
+        padding: 10px 20px;
+        display: inline-block;
+
+        > a {
+            text-decoration: none;
+        }
+
+        &.activated {
+            font-weight: bold;
+        }
+    }
+}

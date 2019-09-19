@@ -23,13 +23,40 @@
                         {
                             "caption": "Typography",
                             "properties": {
-                                "iconClass": "format-size"
+                                "iconClass": "format-size",
+                                "childOutlet": "content-menu"
                             },
                             "action": {
                                 "type": "link",
                                 "location": "usage-guide",
                                 "path": "/#/typography"
-                            }
+                            },
+                            "children": [
+                                {
+                                    "caption": "Basic",
+                                    "action": {
+                                        "type": "link",
+                                        "location": "usage-guide",
+                                        "path": "/#/typography/default"
+                                    }
+                                },
+                                {
+                                    "caption": "Advanced",
+                                    "action": {
+                                        "type": "link",
+                                        "location": "usage-guide",
+                                        "path": "/#/typography/advanced"
+                                    }
+                                },
+                                {
+                                    "caption": "AL Custom",
+                                    "action": {
+                                        "type": "link",
+                                        "location": "usage-guide",
+                                        "path": "/#/typography/al"
+                                    }
+                                }
+                            ]
                         },
                         {
                             "caption": "Color Palette",
