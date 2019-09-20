@@ -136,6 +136,9 @@ export interface WidgetButtonAction {
   url?: string;
   noData?: boolean;
   method?: WidgetButtonActionMethods;
+  query_params?: {
+    [p: string]: string
+  };
 }
 
 /**
