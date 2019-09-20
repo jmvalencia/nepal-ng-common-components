@@ -370,6 +370,16 @@ export class AlNavigationService implements AlNavigationHost
     }
 
     /**
+     * Implements `AlRoutingHost`'s decorateHref method, which allows it to manipulate the URLs generated
+     * by @al/common.
+     */
+    public decorateHref( route:AlRoute ) {
+        if ( route && route.href ) {
+            route.href = this.applyParameters( route.href, {}, true, true );        //  applies locid and aaid query parameters as appropriate
+        }
+    }
+
+    /**
      * Black magic function that, given a url with :variable placeholder, consumes provided parameters as route parameters
      * and compiles any remainders into a query string.
      *
