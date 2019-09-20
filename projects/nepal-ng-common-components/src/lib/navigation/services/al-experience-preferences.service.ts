@@ -28,9 +28,9 @@ export class AlExperiencePreferencesService {
         let expPreferences: ExperiencePreference;
         switch (value) {
             case 'initial':
-            case 'back-default':
                 this.deleteExperiencePreferences().then();
                 break;
+            case 'back-default':
             case 'dismiss-beta':
                 expPreferences = {
                     displayBetaNavigation: false,
