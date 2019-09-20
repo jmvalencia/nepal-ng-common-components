@@ -123,6 +123,7 @@ describe('AlAppHeaderComponent Test Suite', () => {
   describe('When calling logout', () => {
     it('should call deactivateSession on the ALSession instance', () => {
       spyOn(ALSession, 'deactivateSession').and.callFake(() => { });
+      spyOn(component.alNavigation.navigate, 'byLocation' ).and.callFake( () => {} );
       component.logout();
       expect(ALSession.deactivateSession).toHaveBeenCalled();
     });
