@@ -479,42 +479,48 @@ al-app-header {
   */
   .critical rect,
   path.critical,
-  rect.critical {
+  rect.critical,
+  .critical .highcharts-area {
     fill: #F04349;
     stroke: none;
   }
 
   .high rect,
   path.high,
-  rect.high {
+  rect.high,
+  .high .highcharts-area {
     fill: #F04349;
     stroke: none;
   }
 
   .medium rect,
   path.medium,
-  rect.medium {
+  rect.medium,
+  .medium  .highcharts-area {
     fill: #C84049;
     stroke: none;
   }
 
   .low rect,
   path.low,
-  rect.low {
+  rect.low,
+  .low .highcharts-area {
     fill: #A13E48;
     stroke: none;
   }
 
   .info rect,
   path.info,
-  rect.info {
+  rect.info
+  .info .highcharts-area {
     fill: #793C49;
     stroke: none;
   }
 
   .info2 rect,
   path.info2,
-  rect.info2 {
+  rect.info2,
+  .info2 .highcharts-area {
     fill: #5C3A49;
     stroke: none;
   }
