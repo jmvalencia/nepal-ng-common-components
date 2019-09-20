@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
 import {
+    AlConduitClient,
     ALSession,
     AlSessionStartedEvent,
     AlSessionEndedEvent,
@@ -122,6 +123,7 @@ export class AlNavigationService implements AlNavigationHost
     protected frameNotifier:AlStopwatch;
     protected contextNotifier:AlStopwatch;
     protected defaultSchema = new AlBehaviorPromise<AlNavigationSchema>();
+    protected conduit = new AlConduitClient();
 
     constructor( public http:HttpClient,
                  public router:Router,
@@ -182,7 +184,9 @@ export class AlNavigationService implements AlNavigationHost
             navigate: this.navigate
         } );
         this.listenForSignout();
-        // to fill the namedRouteDictionary
+        this.conduit.start();
+
+        // Start loading both schemas immediately in order to populate the namedRouteDictionary.
         this.getNavigationSchema("cie-plus2");
         this.getNavigationSchema("siemless");
     }
@@ -265,12 +269,25 @@ export class AlNavigationService implements AlNavigationHost
         );
     }
 
+    /**
+     * Retrieves a navigation schema (or resolves with the already-loaded schema).
+     *
+     * @param schemaId The identifier of the schema, currently either 'cie-plus2' or 'siemless' (although that is subject to change).
+     *
+     * The method will first attempt to retrieve the schema from conduit, and then fall back to retrieving a local copy using http.
+     */
     public getNavigationSchema( schemaId:string ):Promise<AlNavigationSchema> {
         if ( ! this.schemas.hasOwnProperty( schemaId ) ) {
-            let path = `assets/navigation/${schemaId}.json`;
-            this.schemas[schemaId] = this.http.get<AlNavigationSchema>( path )
-                .toPromise()
-                .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ) );
+            this.schemas[schemaId] = this.conduit.getGlobalResource( `navigation/${schemaId}`, 60 )
+                .then(
+                    schema => this.ingestNavigationSchema( schemaId, schema as AlNavigationSchema ),
+                    error => {
+                        let path = `assets/navigation/${schemaId}.json`;
+                        return this.http.get<AlNavigationSchema>( `assets/navigation/${schemaId}.json` )
+                                    .toPromise()
+                                    .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ) );
+                    }
+                );
         }
         return this.schemas[schemaId];
     }
