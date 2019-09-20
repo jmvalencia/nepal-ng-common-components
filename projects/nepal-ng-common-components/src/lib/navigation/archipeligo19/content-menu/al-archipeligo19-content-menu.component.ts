@@ -10,7 +10,7 @@ import { AlNavigationService } from '../../services/al-navigation.service';
 export class AlArchipeligo19ContentMenuComponent implements OnChanges
 {
     @Input() menu:AlRoute;
-    @Input() cursorItem:AlRoute;
+    // @Input() cursorItem:AlRoute;
 
     constructor( protected alNavigation:AlNavigationService ) {
     }

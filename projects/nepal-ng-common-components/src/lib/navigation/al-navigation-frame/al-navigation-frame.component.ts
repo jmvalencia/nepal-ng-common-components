@@ -99,6 +99,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     }
 
     onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
+        this.primaryMenu.refresh( true );
         if ( this.alNavigation.routeData.hasOwnProperty("alNavigation" ) && Array.isArray( this.alNavigation.routeData.alNavigation ) ) {
             const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
             this.disablePrimaryMenu = routeDirectives.includes( ALNAV_DISABLE_PRIMARY );
@@ -129,9 +130,9 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
 
         if ( this.contentMenu !== contentMenu ) {
             console.log("Content menu changed!" );
-            contentMenu.summarize( true );
             this.contentMenu = contentMenu;
-            this.contentMenuCursor = contentMenu.children.find( c => c.activated );
+            contentMenu.summarize( true );
+            // this.contentMenuCursor = contentMenu.children.find( c => c.activated );
         }
     }
 

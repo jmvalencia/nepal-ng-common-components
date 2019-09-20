@@ -50,7 +50,6 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, After
     onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
         if ( this.menu ) {
             console.log("Notification context changed with menu", this.menu );
-            this.menu.refresh( true );
         }
     }
 

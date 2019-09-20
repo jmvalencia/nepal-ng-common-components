@@ -8,12 +8,17 @@
         padding: 10px 20px;
         display: inline-block;
 
-        > a {
-            text-decoration: none;
+        & > a {
+          color: #535353;   /* mat-color(  ); */
+          text-decoration: none;
         }
 
         &.activated {
-            font-weight: bold;
+          border-bottom: 3px solid #FFB840; /* mat-color($al-orange, 300); */
+        }
+
+        &:hover {
+          border-bottom: 3px solid #FFB840; /* mat-color($al-orange, 300); */
         }
     }
 }

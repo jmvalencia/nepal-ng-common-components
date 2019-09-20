@@ -74,7 +74,6 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     onLocationChange = () => {
         let activeSecondaryItem = null;
         if ( this.menu ) {
-            this.menu.refresh( true );
             if ( ! this.externalChild ) {
                 this.primaryItems = this.menu.children;
                 const activeChild = this.findActiveChild(this.primaryItems);
