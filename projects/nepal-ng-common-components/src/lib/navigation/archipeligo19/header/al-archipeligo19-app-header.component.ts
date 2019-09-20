@@ -9,7 +9,7 @@ import {
 import { MenuItem, SelectItem, ConfirmationService } from 'primeng/api';
 import { AIMSAccount } from '@al/client';
 import { AlSubscriptionGroup } from '@al/common';
-import { AlLocatorService, AlInsightLocations } from '@al/common/locator';
+import { AlLocatorService, AlInsightLocations, AlLocation } from '@al/common/locator';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlDatacenterOptionsSummary, AlNavigationContextChanged } from '../../types/navigation.types';
 
@@ -118,6 +118,7 @@ export class AlArchipeligo19AppHeaderComponent implements OnInit, OnDestroy
 
   logout = () => {
     ALSession.deactivateSession();
+    this.alNavigation.navigate.byLocation( AlLocation.AccountsUI, '/#/logout' );
   }
 
   onAccountChanged() {

@@ -496,7 +496,7 @@ export class AlNavigationService implements AlNavigationHost
     }
 
     /**
-     * Registers a listener for the User.Navigation.Signout trigger, which should prompt local session destruction and a redirect to
+     * Registers a listener for the Navigation.User.Signout trigger, which should prompt local session destruction and a redirect to
      * console.account's logout route.
      */
     protected listenForSignout() {
