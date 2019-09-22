@@ -51,6 +51,7 @@ export class AlNavigationService implements AlNavigationHost
     public currentUrl:string                    =   '';
     public routeParameters                      =   {};
     public routeData:{[k:string]:string}        =   {};
+    public queryParams:{[k:string]:string}      =   {};
     public tertiaryMenu:AlRoute                 =   null;
 
     /**
@@ -230,7 +231,7 @@ export class AlNavigationService implements AlNavigationHost
         //  Capture original state -- accountId, acting node, acting base URL
         const originalActingAccountId = ALSession.getActingAccountId();
         const originalActingNode = AlLocatorService.getActingNode();
-        const originalBaseUrl = AlRoute.link( this, originalActingNode.locTypeId ).toHref();
+        const originalBaseUrl = AlLocatorService.resolveURL( originalActingNode.locTypeId );
 
         //  Change the acting account via @al/session
         return ALSession.setActingAccount( accountId ).then(
@@ -238,14 +239,14 @@ export class AlNavigationService implements AlNavigationHost
                 //  Update the accountId route parameter
                 this.setRouteParameter("accountId", accountId );
 
-                let actingBaseUrl = AlRoute.link( this, originalActingNode.locTypeId ).toHref();
+                let actingBaseUrl = AlLocatorService.resolveURL( originalActingNode.locTypeId );
                 if ( originalBaseUrl !== actingBaseUrl ) {
                     //  If these two strings don't match, the residency portal for the acting application has changed (e.g., we've switched from .com to .co.uk or vice-versa)
                     //  In this case, redirect to the correct target location.
                     let path = window.location.href.replace( originalBaseUrl, '' );
                     if ( originalActingAccountId ) {
                         //  Replace references to the previous acting account ID with references to the new one.
-                        //  This could hypothetically malfunctino for certain deep links -- so far, no issues have been reported (fingerscrossed)
+                        //  This could hypothetically malfunction for certain deep links -- so far, no issues have been reported (fingerscrossed)
                         path = path.replace( `/${originalActingAccountId}`, `/${accountId}` );
                     }
                     if ( path.indexOf( "?" ) >= 0 ) {
@@ -253,7 +254,7 @@ export class AlNavigationService implements AlNavigationHost
                         path = path.substring( 0, path.indexOf( "?" ) );
                     }
 
-                    console.warn("Portal residency changed; redirecting to [%s] [%s]", actingBaseUrl, path );
+                    console.warn("Portal residency changed; redirecting to", originalBaseUrl, actingBaseUrl, path );
                     AlRoute.link( this, originalActingNode.locTypeId, path ).dispatch();        //  GO!
                 }
                 return true;
@@ -374,7 +375,7 @@ export class AlNavigationService implements AlNavigationHost
      * by @al/common.
      */
     public decorateHref( route:AlRoute ) {
-        if ( route && route.href ) {
+        if ( route && route.href && route.visible ) {
             route.href = this.applyParameters( route.href, {}, true, true );        //  applies locid and aaid query parameters as appropriate
         }
     }
@@ -402,7 +403,8 @@ export class AlNavigationService implements AlNavigationHost
             } else if ( this.routeParameters.hasOwnProperty( variableId ) ) {
                 return this.routeParameters[variableId];
             } else {
-                console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
+                //  Missing route parameters should not occur under most circumstances
+                //  console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
                 return "(null)";
             }
         } );
@@ -506,6 +508,13 @@ export class AlNavigationService implements AlNavigationHost
     }
 
     /**
+     * Forces the user to login.
+     */
+    public forceAuthentication() {
+        this.navigate.byLocation( AlLocation.AccountsUI, '/#/login', { return: window.location.href } );
+    }
+
+    /**
      * Registers a listener for the Navigation.User.Signout trigger, which should prompt local session destruction and a redirect to
      * console.account's logout route.
      */
@@ -527,9 +536,11 @@ export class AlNavigationService implements AlNavigationHost
 
         //  Iterate through the router's root to accumulate all data from its children, and make that data public
         let aggregatedData = {};
+        let aggregatedQueryParams = {};
         if ( this.router.routerState.root.snapshot.children ) {
             let accumulator = ( element:ActivatedRouteSnapshot ) => {
                 Object.assign( aggregatedData, element.data );
+                Object.assign( aggregatedQueryParams, element.queryParams );
                 if ( element.children ) {
                     element.children.forEach( accumulator );
                 }
@@ -537,6 +548,7 @@ export class AlNavigationService implements AlNavigationHost
             accumulator( this.router.routerState.root.snapshot );
         }
         this.routeData = aggregatedData;
+        this.queryParams = aggregatedQueryParams;
 
         this.refreshMenus();                            //  Refresh menus against the most current data
 
