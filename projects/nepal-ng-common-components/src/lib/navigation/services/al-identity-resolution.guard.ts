@@ -9,7 +9,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subscriber, from, of as observableOf } from 'rxjs';
-import { AlNavigationService } from '../services';
+import { AlNavigationService } from '../services/al-navigation.service';
 import { ALSession } from '@al/session';
 
 @Injectable({
