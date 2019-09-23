@@ -19,28 +19,15 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, After
 
     documentEscapeListener: Function;
 
-    protected subscription:AlTriggerSubscription = null;
-
     constructor( alNavigation:AlNavigationService,
                 protected alManageExperience: AlManageExperienceService,
                 protected renderer: Renderer2) {
         }
 
     ngOnInit() {
-        this.subscription = ALSession.notifyStream.attach( "AlActingAccountResolved", () => {
-            //  Queue refresh task
-            if ( ! this.menu ) {
-            }
-            setTimeout( () => {
-                this.menu.refresh();
-            }, 1 );
-        } );
     }
 
     ngOnDestroy() {
-        if ( this.subscription ) {
-            this.subscription.cancel();
-        }
     }
 
     ngAfterViewInit() {
