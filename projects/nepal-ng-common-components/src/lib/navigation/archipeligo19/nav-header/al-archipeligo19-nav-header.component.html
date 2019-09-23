@@ -1,4 +1,4 @@
-<div class="nav-header-bar">
+<div class="nav-header-bar" *ngIf="authenticated">
   <div class="nav-header-content">
       <i class="material-icons menu-toggle" (click)="toggleClick()">menu</i>
       <i *ngIf="displayIconName.length > 0" [className]="'ui-icon-' + displayIconName"></i>

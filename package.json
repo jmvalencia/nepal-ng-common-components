@@ -48,9 +48,9 @@
   "dependencies": {
     "@al/aims": "^1.0.0",
     "@al/client": "^1.0.0",
-    "@al/common": "^1.0.9",
+    "@al/common": "^1.0.14",
     "@al/design": "^0.1.11",
-    "@al/session": "^1.0.1",
+    "@al/session": "^1.0.7",
     "@al/subscriptions": "^1.0.0",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",

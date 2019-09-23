@@ -1,6 +1,6 @@
-<div class="user-info-summary">
+<div class="user-info-summary" *ngIf="authenticated">
   <div class="al-header-logo"></div>
-  <div class="user-menus-container" *ngIf="authenticated">
+  <div class="user-menus-container">
     <p-menubar [model]="userMenuItems" styleClass="app-user-menu" [autoDisplay]="false"></p-menubar>
     <span class="separator">|</span>
     <ng-select #accountSelector

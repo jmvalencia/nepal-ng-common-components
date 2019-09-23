@@ -3,6 +3,7 @@ import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationContextChanged } from '../../types';
 import { AlRoute } from '@al/common/locator';
 import { AlSubscriptionGroup } from '@al/common';
+import { ALSession } from '@al/session';
 
 @Component({
   selector: 'al-archipeligo19-nav-header',
@@ -17,6 +18,7 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
     heading = '';
     displayIconName = '';
     subscriptions:AlSubscriptionGroup = new AlSubscriptionGroup( null );
+    authenticated = false;
 
 
     // TODO - Thinking instead we should have navigation component service, where we can emit toggle state and
@@ -28,9 +30,11 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscriptions.manage(
-            this.alNavigation.events.attach( "AlNavigationContextChanged", event => this.onMenuChange() )
-        );
+        this.authenticated = ALSession.isActive();
+        this.subscriptions.manage([
+            this.alNavigation.events.attach( "AlNavigationContextChanged", event => this.onMenuChange() ),
+            ALSession.notifyStream.attach('AlSessionStarted', this.onSessionStart)
+        ]);
     }
 
     ngOnChanges( changes:SimpleChanges ) {
@@ -42,6 +46,10 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
 
     ngOnDestroy() {
         this.subscriptions.cancelAll();
+    }
+
+    onSessionStart = () => {
+        this.authenticated = true;
     }
 
     toggleClick() {
