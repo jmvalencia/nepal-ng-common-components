@@ -86,6 +86,9 @@
                 }
                 > span {
                     margin-left: 24px;
+                    &.active {
+                        font-weight: bold;
+                    }
                 }
             }
         }

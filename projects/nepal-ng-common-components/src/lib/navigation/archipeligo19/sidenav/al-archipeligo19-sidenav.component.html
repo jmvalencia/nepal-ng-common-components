@@ -8,7 +8,7 @@
                         <div class="menu-item-children-container" [hidden]="!menuItem.properties.expanded" *ngIf="menuItem.children">
                             <ng-template ngFor let-childItem [ngForOf]="menuItem.children">
                                 <div class="menu-item-child" *ngIf="childItem.visible">
-                                    <span (click)="dispatch(childItem,$event)">{{childItem.caption}}</span>
+                                    <span [class.active]="childItem.activated" (click)="dispatch(childItem,$event)">{{childItem.caption}}</span>
                                 </div>
                             </ng-template>
                         </div>

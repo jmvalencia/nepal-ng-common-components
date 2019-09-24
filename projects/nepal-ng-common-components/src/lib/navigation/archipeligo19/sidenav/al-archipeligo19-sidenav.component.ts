@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, Input, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
+import { Sidebar } from 'primeng/primeng';
 import { AlRoute } from '@al/common/locator';
-import { AlTriggerSubscription } from '@al/common';
-import { ALSession } from '@al/session';
+import { AlSubscriptionGroup } from '@al/common';
+import { ALSession, AlActingAccountResolvedEvent } from '@al/session';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlManageExperienceService } from '../../services/al-manage-experience.service';
-import { Sidebar } from 'primeng/primeng';
+import { AlNavigationContextChanged } from '../../types/navigation.types';
 
 @Component({
     selector: 'al-archipeligo19-sidenav',
@@ -40,10 +41,6 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, After
 
     toggleItemExpanded = (menuItem) => {
         menuItem.setProperty( 'expanded', ! menuItem.getProperty( 'expanded', false ) );
-    }
-
-    logout = () => {
-        ALSession.deactivateSession();
     }
 
     dispatch( route:AlRoute, $event:Event ) {
