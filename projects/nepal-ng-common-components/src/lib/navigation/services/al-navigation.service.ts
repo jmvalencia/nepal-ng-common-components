@@ -160,6 +160,7 @@ export class AlNavigationService implements AlNavigationHost
             },
             setExperience: ( experience:string ) => {
                 this.setExperience( experience );
+                this.routeParameters["experience"] = experience;
             },
             setSchema: ( schema:string ) => {
                 this.setSchema( schema );
