@@ -18,7 +18,6 @@ export class AlArchipeligo19ContentMenuComponent implements OnChanges
     ngOnChanges( changes:SimpleChanges ) {
         if ( "menu" in changes ) {
             //  Refresh!
-            console.log("Got menu reference", this.menu );
         }
     }
 

@@ -569,7 +569,6 @@ export class AlNavigationService implements AlNavigationHost
         this.routeData = aggregatedData;
         this.queryParams = aggregatedQueryParams;
 
-        console.log("Refreshing menu with URL...", this.currentUrl );
         this.refreshMenus();                            //  Refresh menus against the most current data
 
         this.contextNotifier.again();                   //  Notify child components

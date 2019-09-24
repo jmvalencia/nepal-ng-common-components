@@ -43,16 +43,6 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, After
         menuItem.setProperty( 'expanded', ! menuItem.getProperty( 'expanded', false ) );
     }
 
-    onActingAccountResolved = ( event:AlActingAccountResolvedEvent ) => {
-        console.log("Acting account resolved", event );
-    }
-
-    onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
-        if ( this.menu ) {
-            console.log("Notification context changed with menu", this.menu );
-        }
-    }
-
     dispatch( route:AlRoute, $event:Event ) {
         if ( $event ) {
             $event.preventDefault();

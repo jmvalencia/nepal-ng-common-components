@@ -129,7 +129,6 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         }
 
         if ( this.contentMenu !== contentMenu ) {
-            console.log("Content menu changed!" );
             this.contentMenu = contentMenu;
             contentMenu.summarize( true );
             // this.contentMenuCursor = contentMenu.children.find( c => c.activated );
