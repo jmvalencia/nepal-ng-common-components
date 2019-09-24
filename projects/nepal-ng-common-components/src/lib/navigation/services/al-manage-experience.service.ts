@@ -168,7 +168,7 @@ export class AlManageExperienceService {
                 if (preferences.displayBetaNavigation) {
                     this.alNavigation.setExperience('beta');
                     this.alNavigation.setSchema('siemless');
-                    this.feedback.show();
+                    this.feedback.hide();
                     if (preferences.offerBetaTutorial) {
                         this.alToastService.showMessage('global-toast', this.toastBetaTutorial);
                     }
