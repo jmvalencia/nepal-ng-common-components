@@ -59,6 +59,10 @@
                     font-weight: bold;
                     cursor: pointer;
                 }
+                > a {
+                    text-decoration: none;
+                    color: inherit;
+                }
             }
 
             i {
@@ -88,6 +92,10 @@
                     margin-left: 24px;
                     &.active {
                         font-weight: bold;
+                    }
+                    > a {
+                        text-decoration: none;
+                        color: inherit;
                     }
                 }
             }
