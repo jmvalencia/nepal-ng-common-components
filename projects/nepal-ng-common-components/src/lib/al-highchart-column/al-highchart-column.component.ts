@@ -69,6 +69,7 @@ export class AlHighchartColumnComponent implements OnChanges {
                 title: {
                     text: this.config.description
                 },
+                allowDecimals: false
             },
             plotOptions: {
                 column: {
