@@ -160,7 +160,6 @@ export class AlNavigationService implements AlNavigationHost
             },
             setExperience: ( experience:string ) => {
                 this.setExperience( experience );
-                this.routeParameters["experience"] = experience;
             },
             setSchema: ( schema:string ) => {
                 this.setSchema( schema );
@@ -211,6 +210,7 @@ export class AlNavigationService implements AlNavigationHost
      * Sets the desired experience and notifies the navigation components of the changed setting.
      */
     public setExperience( experience:string ) {
+        this.routeParameters["experience"] = experience;        //  make the selected experience available for conditional routes to test against
         this.experience = experience;
         this.frameNotifier.again();
     }
