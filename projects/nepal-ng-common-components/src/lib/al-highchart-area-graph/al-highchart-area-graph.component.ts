@@ -49,6 +49,7 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
         },
         yAxis: {
             gridLineColor: 'transparent',
+            allowDecimals: false
         },
         tooltip: {
           headerFormat: '',
