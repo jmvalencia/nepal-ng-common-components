@@ -16,7 +16,7 @@
     "copy-readme": "cp README.md dist/nepal-ng-common-components",
     "copy-files": "npm run copy-license && npm run copy-readme",
     "npm_pack": "cd dist/nepal-ng-common-components && npm pack",
-    "compile-menu": "node ~/source/o3/modernization/ui-metadata/scripts/compile-menu.js navigation-schemas/usage-guide projects/usage-guide/src/assets/navigation/usage-guide.json",
+    "compile-menu": "node ~/source/o3/beta-navigation/ui-metadata/scripts/compile-menu.js navigation-schemas/usage-guide projects/usage-guide/src/assets/navigation/usage-guide.json",
     "sync-versions": "./scripts/syncVersions.sh",
     "package": "npm run sync-versions && npm run build && npm run copy-files && npm run npm_pack",
     "postinstall": "./scripts/installHooks.sh",

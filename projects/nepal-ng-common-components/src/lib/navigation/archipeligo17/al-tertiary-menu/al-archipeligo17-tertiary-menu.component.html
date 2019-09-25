@@ -16,8 +16,7 @@
                 </li>
               </ng-template>
             </ul>
-            <ng-content select=".left-nav"></ng-content>
-            <ng-content select="[below-tertiary-menu]"></ng-content>
+            <ng-content *ngTemplateOutlet="contentRef"></ng-content>
           </nav>
         </aside>
       </section>

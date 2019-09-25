@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AlRoute } from '@al/common/locator';
@@ -12,37 +12,37 @@ import { AlNavigationTertiarySelected } from '../../types/navigation.types';
     styleUrls: [ './al-archipeligo17-tertiary-menu.component.scss' ]
 })
 
-export class AlArchipeligo17TertiaryMenuComponent implements OnInit
+export class AlArchipeligo17TertiaryMenuComponent implements OnInit, OnChanges
 {
     @Input()
     public visible:boolean      =   true;
 
+    @Input()
     menu:AlRoute                =   null;
+
+    @Input()
+    contentRef:TemplateRef<any> =   null;
+
     public activeTabs:AlRoute   =   null;
     sidenavOpen:boolean         =   false;
     stateChanges: Subscription  =   null;
 
     constructor(public router:Router,
                 public alNavigation:AlNavigationService) {
-        this.alNavigation.events.attach( "AlNavigationTertiarySelected", this.onMenuChanged );
+
     }
 
     ngOnInit() {
-        this.router.events
-        .pipe(
-            filter(e => e instanceof NavigationEnd))
-        .subscribe(event => {
-          this.onLocationChange();
-        });
     }
 
-    onDestroy = () => {
+    ngOnChanges( changes:SimpleChanges ) {
+        if ( changes.hasOwnProperty( "menu" ) ) {
+            this.onMenuChanged();
+        }
     }
 
-    onMenuChanged = ( event:AlNavigationTertiarySelected ) => {
-        this.menu = this.alNavigation.tertiaryMenu || event.child;
-        this.alNavigation.setBookmark("tertiaryMenu", this.menu );
-        if ( this.menu && this.menu.children.length > 0 ) {
+    onMenuChanged = () => {
+        if ( ( this.menu && this.menu.children.length > 0 ) || this.contentRef ) {
             this.sidenavOpen = true;
             this.onLocationChange();
         } else {
@@ -81,7 +81,6 @@ export class AlArchipeligo17TertiaryMenuComponent implements OnInit
     onLocationChange = () => {
         this.activeTabs = null;
         if ( this.menu ) {
-            this.menu.refresh( true );
             for ( let i = 0; i < this.menu.children.length; i++ ) {
                 this.setMenuItemClasses( this.menu.children[i]);
                 if ( this.menu.children[i].activated ) {

@@ -45,6 +45,10 @@ export class AlNavigationContextChanged extends AlTriggeredEvent
     }
 }
 
+/**
+ * This event will be triggered when a route of type `trigger` is dispatched by AlNavigationService.
+ * Its `host` property will refer to AlNavigationService; its `triggerName` will indicate the name of the trigger.
+ */
 export class AlNavigationTrigger extends AlTriggeredEvent
 {
     constructor( public host:AlNavigationHost,
@@ -55,6 +59,9 @@ export class AlNavigationTrigger extends AlTriggeredEvent
     }
 }
 
+/**
+ * @deprecate
+ */
 export class AlNavigationSecondarySelected extends AlTriggeredEvent
 {
     constructor(public child: AlRoute) {
@@ -62,10 +69,29 @@ export class AlNavigationSecondarySelected extends AlTriggeredEvent
     }
 }
 
+/**
+ * @deprecate
+ */
 export class AlNavigationTertiarySelected extends AlTriggeredEvent
 {
     constructor(public child: AlRoute) {
         super( "AlNavigationTertiarySelected" );
+    }
+}
+
+/**
+ * This event is intended to replace AlNavigationSecondarySelected and AlNavigationTertiarySelected.
+ * It will be emitted when AlNavigationService detects activation (or deactivation) of a route with the
+ * `childOutlet` property set to a known content slot in the navigation frame.
+ *
+ * A listener can `respond` to the event with a `TemplateRef<any>` value, which (in the case of the sidenav) will be
+ * emitted into the appropriate content slot.
+ */
+export class AlNavigationRouteMounted extends AlTriggeredEvent
+{
+    constructor( public contentOutlet:string,
+                 public container:AlRoute       ) {
+        super( "AlNavigationRouteMounted" );
     }
 }
 
