@@ -47,6 +47,7 @@ export class AlArchipeligo19SidenavComponent implements OnInit, OnDestroy, After
         if ( $event ) {
             $event.preventDefault();
         }
+        this.toggleNav();
         route.dispatch();
     }
 
