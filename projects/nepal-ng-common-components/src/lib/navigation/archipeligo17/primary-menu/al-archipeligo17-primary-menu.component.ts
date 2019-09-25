@@ -23,11 +23,8 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     secondaryItems:AlRoute[]    =   [];             //  Subnav menu items
     activeSecondaryItem:AlRoute =   null;           //  Active secondary item
 
-    refresh:AlStopwatch         =   null;
-
     constructor( public router:Router,
                  public alNavigation:AlNavigationService ) {
-        this.refresh = AlStopwatch.later( this.onContextChanged );
     }
 
     ngOnInit() {
@@ -37,9 +34,6 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes:SimpleChanges) {
-        if ( changes.hasOwnProperty( "menu" ) ) {
-            this.refresh.again();
-        }
     }
 
     onActingAccountResolved = ( event:AlActingAccountResolvedEvent ) => {

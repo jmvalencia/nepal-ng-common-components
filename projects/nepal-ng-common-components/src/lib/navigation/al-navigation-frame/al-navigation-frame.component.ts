@@ -99,7 +99,9 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     }
 
     onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
-        this.primaryMenu.refresh( true );
+        if ( this.primaryMenu ) {
+            this.primaryMenu.refresh( true );
+        }
         if ( this.alNavigation.routeData.hasOwnProperty("alNavigation" ) && Array.isArray( this.alNavigation.routeData.alNavigation ) ) {
             const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
             this.disablePrimaryMenu = routeDirectives.includes( ALNAV_DISABLE_PRIMARY );
