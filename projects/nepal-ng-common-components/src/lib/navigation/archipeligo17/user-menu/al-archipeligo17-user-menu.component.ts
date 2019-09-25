@@ -76,9 +76,6 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
     }
 
     ngOnChanges(changes: SimpleChanges){
-        if (typeof changes['menu'] !== 'undefined') {
-            this.loadMenu();
-        }
         this.loadinitialsMenu();
     }
 
@@ -98,7 +95,6 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
                 this.datacenter = undefined;
             }
             if ( this.menu ) {
-                this.menu.refresh( true );
                 const activeChild = this.menu.children.find(child => child.activated);
                 if ( activeChild && activeChild !== this.activeChild ) {
                     this.activeChild = activeChild;
@@ -139,20 +135,6 @@ export class AlArchipeligo17UserMenuComponent implements OnInit, OnChanges, OnDe
             menuItem.icon = route.properties.iconClass;
         }
         return menuItem;
-    }
-
-    // load the menu
-    loadMenu() {
-        // Load the User Menu
-        this.alNavigation.getMenu(  'cie-plus2', 'user' ).then( menu => {
-                // this.viewReady = true;
-                this.menu = menu;
-                this.refresh.again();
-            },
-            err => {
-                console.error("Failed to retrieve menu 'user'; not instantiating.", err );
-                // this.menu = AlXRoute.abstract( this.navigation, "Empty Menu" );
-            });
     }
 
     // load the logout from user dropdown menu
