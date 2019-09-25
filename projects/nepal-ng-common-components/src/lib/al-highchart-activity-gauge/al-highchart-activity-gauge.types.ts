@@ -12,8 +12,8 @@ export const BASE_CONFIG: any = {
     },
 
     pane: {
-        startAngle: 360,
-        endAngle: 0,
+        startAngle: 0,
+        endAngle: 360,
         background: [{
             outerRadius: '112%',
             innerRadius: '95%',
