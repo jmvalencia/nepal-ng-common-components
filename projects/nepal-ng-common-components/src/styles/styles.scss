@@ -120,8 +120,13 @@ rect.info,
 
 .info2 rect,
 path.info2,
-rect.info2 {
+rect.info2,
+.info2 .highcharts-area,
+.info2 .highcharts-halo {
   fill: al-color($al-gray, 500);
+  stroke: none;
+}
+.info2 .highcharts-graph {
   stroke: none;
 }
 
