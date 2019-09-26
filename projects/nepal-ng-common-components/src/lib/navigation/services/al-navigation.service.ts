@@ -770,6 +770,7 @@ export class AlNavigationService implements AlNavigationHost
         }
         this.pendingSchemaCount--;
         if ( ! this.pendingSchemaCount ) {
+            console.log(`Notice: AlNavigationService has finished loading schema data and is ready to work.` );
             this.navigationReady.resolve( true );
         }
         return schema;
