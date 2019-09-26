@@ -104,6 +104,9 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         if ( this.primaryMenu ) {
             this.primaryMenu.refresh( true );
         }
+        if ( this.userMenu ) {
+            this.userMenu.refresh( true );
+        }
         this.evaluateMenuActivation();
         if ( this.alNavigation.routeData.hasOwnProperty("alNavigation" ) && Array.isArray( this.alNavigation.routeData.alNavigation ) ) {
             const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
