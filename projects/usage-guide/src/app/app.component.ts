@@ -1,6 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { AlNavigationService } from 'nepal-ng-common-components';
-import { ALSession } from '@al/session';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { AlNavigationService, AlNavigationRouteMounted } from 'nepal-ng-common-components';
+import { ALSession, AlSessionDetector, AlConduitClient } from '@al/session';
+import { AlGlobalizer } from '@al/common';
 
 @Component({
   selector: 'app-root',
@@ -25,33 +26,56 @@ export class AppComponent implements OnInit {
   rippleMouseDownListener: any;
   menuHoverActive: boolean;
   resetMenu: boolean;
+  @ViewChild('customUsageSidenav') customSidenavTemplateRef;
 
   constructor( public alNavigation:AlNavigationService, public zone:NgZone ) {
-    let w = <any>window;
-    w.app = {
-      authenticate: ( usernameOrToken:string, password?:string, mfa?:string ) => {
-        let promise;
-        if ( password ) {
-          promise = ALSession.authenticate( usernameOrToken, password, mfa );
-        } else {
-          promise = ALSession.authenticateWithAccessToken( usernameOrToken );
-        }
-        promise.then( result => {
-                        console.log("OK." );
-                      }, error => {
-                        console.warn("Failed to authenticate, sorry!", error );
-                      } );
-      },
-      deauthenticate: () => {
-        ALSession.deactivateSession();
-      },
-      setExperience: ( value:string ) => {
-        this.zone.run( () => this.selectedExperience = value );
-      }
-    };
+    AlGlobalizer.expose( 'al.usageGuide', {
+        detectSession: () => {
+            if ( ALSession.isActive() ) {
+                console.warn("A session is already active." );
+            } else {
+                let detector = new AlSessionDetector( new AlConduitClient(), false );
+                detector.detectSession().then(  result => {
+                                                    if ( result ) {
+                                                        console.log("Session detected!" );
+                                                    } else {
+                                                        console.log("No session was detected!  Please make sure you are logged into a local development environment.");
+                                                    }
+                                                },
+                                                error => {
+                                                    console.error("Session detection failed with an error", error );
+                                                } );
+            }
+        },
+        authenticate: ( usernameOrToken:string, password?:string, mfa?:string ) => {
+          let promise;
+          if ( password ) {
+            promise = ALSession.authenticate( usernameOrToken, password, mfa );
+          } else {
+            promise = ALSession.authenticateWithAccessToken( usernameOrToken );
+          }
+          promise.then( result => {
+                          console.log("OK." );
+                        }, error => {
+                          console.warn("Failed to authenticate, sorry!", error );
+                        } );
+        },
+        deauthenticate: () => {
+          ALSession.deactivateSession();
+        },
+    } );
   }
 
   ngOnInit() {
+    this.alNavigation.events.attach( 'AlNavigationRouteMounted', this.onNavigationRouteMounted );
+  }
+
+  onNavigationRouteMounted = ( event:AlNavigationRouteMounted ) => {
+    if ( event.container ) {
+        if ( event.contentOutlet === 'sidenav' ) {
+            event.respond( this.customSidenavTemplateRef );   //    Instruct navigation to embed our custom sidenav
+        }
+    }
   }
 
   toggleNav = () => {

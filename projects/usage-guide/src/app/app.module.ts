@@ -12,6 +12,7 @@ import {
     NepalNgCommonComponentsModule,
     NepalNgNavigationModule
 } from 'nepal-ng-common-components';
+import { CustomSidebarComponent } from './components/custom-sidebar/custom-sidebar.component';
 import { TypographyComponent } from './components/typography/typography.component';
 import { ColourPalettesComponent } from './components/colour-palettes/colour-palettes.component';
 import { DashboardExamplesComponent } from './components/dashboard-examples/dashboard-examples.component';
@@ -140,6 +141,7 @@ const appRoutes: Routes = [
     AppMenuComponent,
     AppSubMenuComponent,
     ColourPalettesComponent,
+    CustomSidebarComponent,
     HomeComponent,
     DashboardExamplesComponent,
     TableChartsComponent,
