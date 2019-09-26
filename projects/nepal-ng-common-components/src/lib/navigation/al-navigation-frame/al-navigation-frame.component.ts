@@ -45,6 +45,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     disablePrimaryMenu:boolean = false;
     disableTertiaryMenu:boolean = false;
 
+    headingText: string = null;
+
     constructor( public alNavigation:AlNavigationService,
                  public activatedRoute:ActivatedRoute,
                  public changeDetector:ChangeDetectorRef ) {
@@ -116,11 +118,15 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         }
     }
 
+    calculateHeadingText(activatedPath: AlRoute[]): string {
+        return activatedPath.filter((route: AlRoute) => route.caption !== "primary")
+               .map((route: AlRoute) => route.caption).join(" | ");
+    }
+
     evaluateMenuActivation() {
         if ( ! this.primaryMenu ) {
             return;
         }
-
         let activatedPath = this.primaryMenu.getActivationCursorFlat();
         if ( ! activatedPath ) {
             return;
@@ -140,6 +146,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
 
         console.log("Activated path: ", activatedPath );
 
+        this.headingText = this.calculateHeadingText(activatedPath);
         if ( ! contentMenu && ! sidenavMenu && activatedPath.length > 3 ) {
             sidenavMenu = activatedPath[2];
         }
