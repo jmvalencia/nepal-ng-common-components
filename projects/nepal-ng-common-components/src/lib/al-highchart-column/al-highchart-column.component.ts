@@ -69,7 +69,12 @@ export class AlHighchartColumnComponent implements OnChanges {
                 title: {
                     text: this.config.description
                 },
-                allowDecimals: false
+                allowDecimals: false,
+                type: 'logarithmic',
+                minorTickInterval: 1,
+                lineWidth: 0,
+                gridLineWidth: 0,
+                minorGridLineWidth: 0
             },
             plotOptions: {
                 column: {
