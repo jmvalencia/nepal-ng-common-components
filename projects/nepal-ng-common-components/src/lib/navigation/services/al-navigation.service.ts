@@ -185,6 +185,7 @@ export class AlNavigationService implements AlNavigationHost
             },
             navigate: this.navigate
         } );
+        AlGlobalizer.expose( 'al.registry.AlNavigationService', this );
         this.listenForSignout();
         this.conduit.start();
 
@@ -294,6 +295,7 @@ export class AlNavigationService implements AlNavigationHost
                 .then(
                     schema => this.ingestNavigationSchema( schemaId, schema as AlNavigationSchema ),
                     error => {
+                        console.log(`Notice: failed to retrieve schema with id '${schemaId}' from conduit; falling back to local version.` );
                         let path = `assets/navigation/${schemaId}.json`;
                         return this.http.get<AlNavigationSchema>( `assets/navigation/${schemaId}.json` )
                                     .toPromise()
@@ -768,6 +770,7 @@ export class AlNavigationService implements AlNavigationHost
         }
         this.pendingSchemaCount--;
         if ( ! this.pendingSchemaCount ) {
+            console.log(`Notice: AlNavigationService has finished loading schema data and is ready to work.` );
             this.navigationReady.resolve( true );
         }
         return schema;

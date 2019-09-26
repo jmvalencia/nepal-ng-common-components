@@ -5,7 +5,7 @@
  * This can also be assigned programmatically via AlNavigationService.
  */
 
-import { Component, OnInit, OnChanges, SimpleChanges, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AlNavigationHost,
@@ -46,7 +46,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     disableTertiaryMenu:boolean = false;
 
     constructor( public alNavigation:AlNavigationService,
-                 public activatedRoute:ActivatedRoute ) {
+                 public activatedRoute:ActivatedRoute,
+                 public changeDetector:ChangeDetectorRef ) {
     }
 
     ngOnInit() {
@@ -86,16 +87,16 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             return;
         }
         this.experience = event.experience;
-        this.schema = event.schema;
-        if ( event.schema.menus.hasOwnProperty("primary") ) {
-            this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
-        } else {
-            this.primaryMenu = AlRoute.empty();
-        }
-        if ( event.schema.menus.hasOwnProperty("user") ) {
-            this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
-        } else {
-            this.userMenu = AlRoute.empty();
+        if ( this.schema !== event.schema ) {
+            this.schema = event.schema;
+            if ( event.schema.menus.hasOwnProperty("primary") ) {
+                console.log("Assigning primary menu!" );
+                this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
+            }
+            if ( event.schema.menus.hasOwnProperty("user") ) {
+                this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
+            }
+            this.changeDetector.detectChanges();
         }
         this.evaluateMenuActivation();
     }
