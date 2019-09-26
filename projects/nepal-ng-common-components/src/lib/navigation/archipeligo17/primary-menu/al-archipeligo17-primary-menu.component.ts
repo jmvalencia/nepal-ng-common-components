@@ -34,6 +34,9 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes:SimpleChanges) {
+        if ( ! this.viewReady ) {
+            this.onLocationChange();
+        }
     }
 
     onActingAccountResolved = ( event:AlActingAccountResolvedEvent ) => {
