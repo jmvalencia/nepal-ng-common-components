@@ -43,8 +43,10 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
             $event.preventDefault();
         }
         route.dispatch();
-        this.displayNav = false;
-        this.displayNavChanged.emit( false );
+        if( !route.children || route.parent.caption !== "primary"){
+            this.displayNav = false;
+            this.displayNavChanged.emit( false );
+        }
     }
 
     dispatchParent( route:AlRoute, $event:Event ) {
