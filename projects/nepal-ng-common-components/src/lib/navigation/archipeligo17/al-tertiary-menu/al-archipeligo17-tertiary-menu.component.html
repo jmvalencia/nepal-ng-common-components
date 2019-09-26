@@ -3,7 +3,6 @@
       <section class="tertiary-navigation-bar">
         <aside>
           <nav class="sideNav">
-            <ng-content select="[above-tertiary-menu]"></ng-content>
             <ul *ngIf="menu">
               <ng-template ngFor let-menuItem [ngForOf]="menu.children">
                 <li *ngIf="menuItem.visible"

@@ -20,6 +20,8 @@ import { AlNavigationFrameComponent } from './al-navigation-frame/al-navigation-
 import { AlNavigationOverlaysComponent } from './al-navigation-overlays/al-navigation-overlays.component';
 import { AlDefenderSessionLinkComponent  } from './al-defender-session-link/al-defender-session-link.component';
 
+import { AlNavigationCustomSidenav } from './directives/al-navigation-custom-sidenav.directive';
+
 const NAVIGATION_COMPONENTS = [
     AlArchipeligo17PrimaryMenuComponent,
     AlArchipeligo17UserMenuComponent,
@@ -35,6 +37,7 @@ const NAVIGATION_COMPONENTS = [
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
     AlArchipeligo17TertiaryMenuComponent,
+    AlNavigationCustomSidenav,
     AlDefenderSessionLinkComponent
 ];
 
@@ -52,5 +55,6 @@ export {
     AlNavigationFrameComponent,
     AlNavigationOverlaysComponent,
     AlArchipeligo17TertiaryMenuComponent,
+    AlNavigationCustomSidenav,
     AlDefenderSessionLinkComponent
 };
