@@ -51,13 +51,17 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
         this.onLocationChange();
     }
 
-    onClick( menuItem:AlRoute, $event:any ) {
+    onClick( menuItem:AlRoute, $event: MouseEvent ) {
         if ( menuItem.properties.hasOwnProperty("target") && menuItem.properties.target === '_blank' ) {
             return;
         }
         if ( $event ) {
             $event.stopPropagation();
             $event.preventDefault();
+        }
+        // open in a new tab if user using the combo: (CMD + click)  or (Ctrl + click) or (middle click)
+        if ($event.metaKey || $event.ctrlKey || $event.which === 2) {
+            return window.open(menuItem.href, '_blank');
         }
         menuItem.dispatch();
     }

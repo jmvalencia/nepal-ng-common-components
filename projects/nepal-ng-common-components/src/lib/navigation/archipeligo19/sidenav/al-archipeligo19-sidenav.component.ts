@@ -38,9 +38,13 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
         this.bindDocumentEscapeListener();
     }
 
-    dispatch( route:AlRoute, $event:Event ) {
+    dispatch( route: AlRoute, $event: MouseEvent ) {
         if ( $event ) {
             $event.preventDefault();
+        }
+        // open in a new tab if user using the combo: (CMD + click)  or (Ctrl + click) or (middle click)
+        if ($event.metaKey || $event.ctrlKey || $event.which === 2) {
+          return window.open(route.href, '_blank');
         }
         route.dispatch();
         if( !route.children || route.parent.caption !== "primary"){
@@ -49,7 +53,7 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
         }
     }
 
-    dispatchParent( route:AlRoute, $event:Event ) {
+    dispatchParent( route: AlRoute, $event: MouseEvent ) {
         if ( $event ) {
             $event.preventDefault();
         }
