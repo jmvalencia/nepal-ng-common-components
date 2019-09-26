@@ -140,7 +140,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         console.log("Activated path: ", activatedPath );
 
         if ( ! contentMenu && ! sidenavMenu && activatedPath.length > 3 ) {
-            sidenavMenu = activatedPath[3];
+            sidenavMenu = activatedPath[2];
         }
 
         if ( this.contentMenu !== contentMenu ) {
