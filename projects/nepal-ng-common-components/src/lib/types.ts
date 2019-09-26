@@ -54,7 +54,8 @@ export enum WidgetContentType {
   Area,
   Bubble,
   Doughnut,
-  Map
+  Map,
+  Line
 }
 
 
