@@ -1,6 +1,6 @@
 {
   "name": "@al/nepal-ng-common-components",
-  "version": "0.2.55",
+  "version": "0.2.56",
   "license": "MIT",
   "description": "Alert Logic Component Library for Angular projects",
   "scripts": {
