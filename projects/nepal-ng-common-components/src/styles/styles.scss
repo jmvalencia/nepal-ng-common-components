@@ -67,66 +67,96 @@ al-dashboard-widget {
 .critical rect,
 path.critical,
 rect.critical,
-.high rect,
-path.high,
-rect.high,
 .critical .highcharts-area,
-.critical .highcharts-halo {
+.critical .highcharts-halo,
+.highcharts-column-series.critical rect,
+.highcharts-pie-series .highcharts-point.critical,
+.highcharts-tracker.critical path {
   fill: al-color($al-red, 500);
-  stroke: none;
 }
-.critical .highcharts-graph {
-  stroke: none;
+.highcharts-data-label-connector.critical,
+.highcharts-line-series.critical {
+  stroke: al-color($al-red, 500);
+  fill: none;
 }
 
 .medium rect,
 path.medium,
 rect.medium,
 .medium .highcharts-area,
-.medium .highcharts-halo {
+.medium .highcharts-halo,
+.highcharts-column-series.medium rect,
+.highcharts-pie-series .highcharts-point.medium,
+.highcharts-tracker.medium path {
   fill: al-color($al-orange, 500);
-  stroke: none;
 }
-.medium .highcharts-graph {
-  stroke: none;
+.highcharts-data-label-connector.medium,
+.highcharts-line-series.medium {
+  stroke: al-color($al-orange, 500);
+  fill: none;
 }
 
 .low rect,
 path.low,
 rect.low,
 .low .highcharts-area,
-.low .highcharts-halo {
+.low .highcharts-halo,
+.highcharts-column-series.low rect,
+.highcharts-pie-series .highcharts-point.low,
+.highcharts-tracker.low path,
+.low.highcharts-point-hover {
   fill: al-color($al-yellow, 500);
-  stroke: none;
 }
-.low .highcharts-graph {
-  stroke: none;
+.highcharts-data-label-connector.low,
+.highcharts-line-series.low {
+  stroke: al-color($al-yellow, 500);
+  fill: none;
 }
+
 .highcharts-series-hover.highcharts-markers {
-  fill: black;
+  path:nth-of-type(2) {
+    fill: black;
+  }
 }
 
 .info rect,
 path.info,
 rect.info,
 .info .highcharts-area,
-.info .highcharts-halo {
-  fill: al-color($al-gray, 300);
-  stroke: none;
+.info .highcharts-halo,
+.highcharts-column-series.info rect,
+.highcharts-line-series.info,
+.highcharts-pie-series .highcharts-point.info,
+.highcharts-tracker.info path {
+  fill: al-color($al-gray, 300)
 }
-.info .highcharts-graph {
-  stroke: none;
+.highcharts-data-label-connector.info,
+.highcharts-line-series.info {
+  stroke: al-color($al-gray, 300);
+  fill: none;
 }
 
 .info2 rect,
 path.info2,
 rect.info2,
 .info2 .highcharts-area,
-.info2 .highcharts-halo {
+.info2 .highcharts-halo,
+.highcharts-column-series.info2 rect,
+.highcharts-line-series.info2,
+.highcharts-pie-series .highcharts-point.info2,
+.highcharts-tracker.info2 path {
   fill: al-color($al-gray, 500);
+}
+.highcharts-data-label-connector.info2 {
+  stroke: al-color($al-gray, 500);
+  fill: none;
+}
+
+.highcharts-area-series {
+  fill: none;
   stroke: none;
 }
-.info2 .highcharts-graph {
+.highcharts-minor-grid-line {
   stroke: none;
 }
 

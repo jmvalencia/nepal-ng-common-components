@@ -49,7 +49,10 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
 
     private populateConfig = (): void => {
         const service = this.utilityService;
+        const legend: Highcharts.LegendOptions = this.legendConfig();
+
         this.doughnutChart = Highcharts.chart(this.chart.nativeElement, {
+            legend,
             chart: {
                 type: 'pie',
                 width: this.containerWidth,
@@ -100,10 +103,6 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
                     <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
                 `,
             },
-            legend: {
-                labelFormat: '{name}',
-                layout: 'horizontal',
-            },
             credits: {
                 enabled: false
             },
@@ -115,9 +114,40 @@ export class AlHighchartDoughnutComponent implements OnChanges  {
         });
     }
 
+    /*
+     * When the point count gets above 4 change the legend so that it shows in two
+     * vertical columns
+     */
+    private legendConfig (): Highcharts.LegendOptions {
+      if (this.config.length > 3) {
+        const width: number = this.containerWidth - 20;
+        const itemWidth: number = width / 2;
+        const itemStyleWidth: number = itemWidth - 15;
+
+        return {
+          width,
+          itemWidth,
+          labelFormat: '{name}',
+          itemStyle: {
+            width: itemStyleWidth
+          }
+        };
+      } else {
+        return {
+          labelFormat: '{name}',
+          layout: 'horizontal'
+        };
+      }
+    }
+
+    /*
+     *
+     */
     private updateSeries = (): void => {
-        this.doughnutChart.update({
-            series: this.config
-        });
+      const legend: Highcharts.LegendOptions = this.legendConfig();
+      this.doughnutChart.update({
+        legend,
+        series: this.config
+      });
     }
 }

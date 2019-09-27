@@ -5,7 +5,7 @@
  * This can also be assigned programmatically via AlNavigationService.
  */
 
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AlNavigationHost,
@@ -19,6 +19,7 @@ import { AIMSClient } from '@al/aims';
 import { AlRoute } from '@al/common/locator';
 import { AlTriggerStream } from '@al/common';
 import { AlNavigationService } from '../services/al-navigation.service';
+import { AlNavigationRouteMounted } from '../types/navigation.types';
 
 @Component({
     selector: 'al-navigation-frame',
@@ -36,7 +37,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     primaryMenu:AlRoute;
     userMenu:AlRoute;
     contentMenu:AlRoute;
-    contentMenuCursor:AlRoute;
+    sidenavMenu:AlRoute;
+    sidenavContentRef:TemplateRef<any>;
 
     displayNav:boolean = false;
 
@@ -44,7 +46,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     disableTertiaryMenu:boolean = false;
 
     constructor( public alNavigation:AlNavigationService,
-                 public activatedRoute:ActivatedRoute ) {
+                 public activatedRoute:ActivatedRoute,
+                 public changeDetector:ChangeDetectorRef ) {
     }
 
     ngOnInit() {
@@ -84,54 +87,77 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             return;
         }
         this.experience = event.experience;
-        this.schema = event.schema;
-        if ( event.schema.menus.hasOwnProperty("primary") ) {
-            this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
-        } else {
-            this.primaryMenu = AlRoute.empty();
+        if ( this.schema !== event.schema ) {
+            this.schema = event.schema;
+            if ( event.schema.menus.hasOwnProperty("primary") ) {
+                console.log("Assigning primary menu!" );
+                this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
+            }
+            if ( event.schema.menus.hasOwnProperty("user") ) {
+                this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
+            }
+            this.changeDetector.detectChanges();
         }
-        if ( event.schema.menus.hasOwnProperty("user") ) {
-            this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
-        } else {
-            this.userMenu = AlRoute.empty();
-        }
-        this.evaluateActivatedContentMenu();
+        this.evaluateMenuActivation();
     }
 
     onNavigationContextChanged = ( event:AlNavigationContextChanged ) => {
-        this.primaryMenu.refresh( true );
+        if ( this.primaryMenu ) {
+            this.primaryMenu.refresh( true );
+        }
+        if ( this.userMenu ) {
+            this.userMenu.refresh( true );
+        }
+        this.evaluateMenuActivation();
         if ( this.alNavigation.routeData.hasOwnProperty("alNavigation" ) && Array.isArray( this.alNavigation.routeData.alNavigation ) ) {
             const routeDirectives = <string[]>this.alNavigation.routeData.alNavigation;
             this.disablePrimaryMenu = routeDirectives.includes( ALNAV_DISABLE_PRIMARY );
             this.disableTertiaryMenu = routeDirectives.includes( ALNAV_DISABLE_TERTIARY );
         }
-        this.evaluateActivatedContentMenu();
     }
 
-    /*  Finds the first activated route with `childOutlet === "content-menu"`.  This route will then be used
-     *  as the container for the al-archipeligo19-content-menu component.  */
-    evaluateActivatedContentMenu() {
-        let contentMenu:AlRoute = undefined;
-        let contentMenuFinder = ( container:AlRoute ):AlRoute => {
-            return container.children.find( route => {
-                if ( route.activated ) {
-                    if ( route.getProperty("childOutlet") === "content-menu" ) {
-                        contentMenu = route;
-                    } else {
-                        return contentMenuFinder( route );
-                    }
-                }
-            } );
-        };
+    evaluateMenuActivation() {
+        if ( ! this.primaryMenu ) {
+            return;
+        }
 
-        if ( this.primaryMenu ) {
-            contentMenuFinder( this.primaryMenu );
+        let activatedPath = this.primaryMenu.getActivationCursorFlat();
+        if ( ! activatedPath ) {
+            return;
+        }
+
+        let contentMenu:AlRoute = undefined;
+        let sidenavMenu:AlRoute = undefined;
+
+        activatedPath.forEach( ( route:AlRoute, index:number ) => {
+            let outlet = route.getProperty("childOutlet", "none" );
+            if ( outlet === "content-menu" ) {
+                contentMenu = route;
+            } else if ( outlet === "sidenav" ) {
+                sidenavMenu = route;
+            }
+        } );
+
+        console.log("Activated path: ", activatedPath );
+
+        if ( ! contentMenu && ! sidenavMenu && activatedPath.length > 3 ) {
+            sidenavMenu = activatedPath[2];
         }
 
         if ( this.contentMenu !== contentMenu ) {
+            console.log("New content menu...", contentMenu );
             this.contentMenu = contentMenu;
-            contentMenu.summarize( true );
-            // this.contentMenuCursor = contentMenu.children.find( c => c.activated );
+            let event = new AlNavigationRouteMounted( "content-menu", this.contentMenu );
+            this.alNavigation.events.trigger( event );
+        }
+
+        if ( this.sidenavMenu !== sidenavMenu ) {
+            console.log("New content menu...", sidenavMenu );
+            this.sidenavMenu = sidenavMenu;
+            let event = new AlNavigationRouteMounted( "sidenav", this.sidenavMenu );
+            this.alNavigation.events.trigger( event );
+            this.sidenavContentRef = event.response();
+            console.log("Receiving in response to mounting sidenav: ", this.sidenavContentRef );
         }
     }
 

@@ -113,18 +113,19 @@ export class AlNavigationService implements AlNavigationHost
         }
     };
 
-    protected experience:string                    =   null;
-    protected navigationSchemaId:string            =   null;
+    protected experience:string                     =   null;
+    protected navigationSchemaId:string             =   null;
+    protected pendingSchemaCount:number             =   0;
+    protected navigationReady                       =   new AlBehaviorPromise<boolean>();
+    protected conduit                               =   new AlConduitClient();
 
-    protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
-    protected loadedMenus:{[fullMenuId:string]:AlRoute} = {};
-    protected bookmarks:{[bookmarkId:string]:AlRoute} = {};
-    protected namedRouteDictionary:{[routeId:string]:AlRouteDefinition} = {};
+    protected schemas:{[schema:string]:Promise<AlNavigationSchema>}     =   {};
+    protected loadedMenus:{[fullMenuId:string]:AlRoute}                 =   {};
+    protected bookmarks:{[bookmarkId:string]:AlRoute}                   =   {};
+    protected namedRouteDictionary:{[routeId:string]:AlRouteDefinition} =   {};
 
     protected frameNotifier:AlStopwatch;
     protected contextNotifier:AlStopwatch;
-    protected defaultSchema = new AlBehaviorPromise<AlNavigationSchema>();
-    protected conduit = new AlConduitClient();
 
     constructor( public http:HttpClient,
                  public router:Router,
@@ -184,12 +185,20 @@ export class AlNavigationService implements AlNavigationHost
             },
             navigate: this.navigate
         } );
+        AlGlobalizer.expose( 'al.registry.AlNavigationService', this );
         this.listenForSignout();
         this.conduit.start();
 
         // Start loading both schemas immediately in order to populate the namedRouteDictionary.
         this.getNavigationSchema("cie-plus2");
         this.getNavigationSchema("siemless");
+    }
+
+    /**
+     * Returns a promise(-like object) that resolves when the navigation service is ready to navigate.
+     */
+    public ready():Promise<boolean> {
+        return this.navigationReady.then( r => r, e => e );
     }
 
     /**
@@ -280,14 +289,18 @@ export class AlNavigationService implements AlNavigationHost
      */
     public getNavigationSchema( schemaId:string ):Promise<AlNavigationSchema> {
         if ( ! this.schemas.hasOwnProperty( schemaId ) ) {
+            this.navigationReady.rescind();     //  navigation isn't ready until there are no pending schemas
+            this.pendingSchemaCount++;
             this.schemas[schemaId] = this.conduit.getGlobalResource( `navigation/${schemaId}`, 60 )
                 .then(
                     schema => this.ingestNavigationSchema( schemaId, schema as AlNavigationSchema ),
                     error => {
+                        console.log(`Notice: failed to retrieve schema with id '${schemaId}' from conduit; falling back to local version.` );
                         let path = `assets/navigation/${schemaId}.json`;
                         return this.http.get<AlNavigationSchema>( `assets/navigation/${schemaId}.json` )
                                     .toPromise()
-                                    .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ) );
+                                    .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ),
+                                           error => this.ingestNavigationSchema( schemaId, undefined ) );
                     }
                 );
         }
@@ -616,7 +629,7 @@ export class AlNavigationService implements AlNavigationHost
      * Internal handler for navigation by named route.
      */
     protected navigateByNamedRoute( namedRouteId:string, parameters:{[p:string]:string} = {}, options:any = {} ) {
-        this.defaultSchema.then( schema => {
+        this.navigationReady.then( schema => {
             let definition = this.getRouteByName( namedRouteId );
             if ( ! definition ) {
                 throw new Error("Imperative navigation could not be executed." );
@@ -707,7 +720,7 @@ export class AlNavigationService implements AlNavigationHost
         }
         this.getNavigationSchema( this.navigationSchemaId ).then( schema => {
             this.schema = schema;
-            this.defaultSchema.resolve( schema );
+            this.navigationReady.resolve( true );
             this.ngZone.run( () => {
                 let event = new AlNavigationFrameChanged( this, schema, this.experience );
                 this.events.trigger( event );
@@ -733,23 +746,32 @@ export class AlNavigationService implements AlNavigationHost
     /**
      * Processes a schema when it is loaded for the first time -- hydrates its menus, stores its named routes, etc.
      */
-    protected ingestNavigationSchema( schemaId:string, schema:AlNavigationSchema ):AlNavigationSchema {
-        //  First ingest named routes and add them to the internal dictionary
-        if ( schema.namedRoutes ) {
-            Object.entries( schema.namedRoutes )
-                .forEach( ( [ routeId, routeDefinition ]:[ string, AlRouteDefinition ] ) => {
-                    this.namedRouteDictionary[routeId] = routeDefinition;
-                } );
+    protected ingestNavigationSchema( schemaId:string, schema:AlNavigationSchema|undefined ):AlNavigationSchema {
+        if ( schema ) {
+            //  First ingest named routes and add them to the internal dictionary
+            if ( schema.namedRoutes ) {
+                Object.entries( schema.namedRoutes )
+                    .forEach( ( [ routeId, routeDefinition ]:[ string, AlRouteDefinition ] ) => {
+                        this.namedRouteDictionary[routeId] = routeDefinition;
+                    } );
+            }
+            //  Then build living menus from their definitions
+            if ( schema.menus ) {
+                Object.entries( schema.menus )
+                    .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
+                        const menuKey = `${schemaId}:${menuId}`;
+                        if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                            this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
+                        }
+                    } );
+            }
+        } else {
+            console.warn(`AlNavigationService: failed to retrieve navigation schema '${schemaId}'`);
         }
-        //  Then build living menus from their definitions
-        if ( schema.menus ) {
-            Object.entries( schema.menus )
-                .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
-                    const menuKey = `${schemaId}:${menuId}`;
-                    if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
-                        this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
-                    }
-                } );
+        this.pendingSchemaCount--;
+        if ( ! this.pendingSchemaCount ) {
+            console.log(`Notice: AlNavigationService has finished loading schema data and is ready to work.` );
+            this.navigationReady.resolve( true );
         }
         return schema;
     }

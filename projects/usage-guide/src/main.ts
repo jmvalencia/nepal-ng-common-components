@@ -15,6 +15,7 @@ const locations:AlLocationDescriptor[] = [  {
         environment: 'development'
     } ];
 AlLocatorService.setLocations( locations );
+AlLocatorService.setActingUri( window.location.origin );
 
 if (environment.production) {
   enableProdMode();
