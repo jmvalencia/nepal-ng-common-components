@@ -14,8 +14,7 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
 
     @Input() menu:AlRoute = AlRoute.empty();
     @Input() userMenu:AlRoute = AlRoute.empty();
-
-    heading = '';
+    @Input() heading: string = '';
     displayIconName = '';
     subscriptions:AlSubscriptionGroup = new AlSubscriptionGroup( null );
     authenticated = false;
@@ -59,7 +58,6 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
     onMenuChange = () => {
         let activatedChild = this.findActivatedChild( this.menu ) || this.findActivatedChild( this.userMenu );
         if ( activatedChild ) {
-            this.heading = activatedChild.caption;
             this.displayIconName = activatedChild.getProperty("iconClass", "");
         }
     }

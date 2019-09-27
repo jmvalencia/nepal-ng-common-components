@@ -34,6 +34,7 @@
             <al-archipeligo19-app-header></al-archipeligo19-app-header>
             <al-archipeligo19-nav-header (toggleButtonClick)="toggleNav()" 
                                         [menu]="primaryMenu"
+                                        [heading]="headingText"
                                         [userMenu]="userMenu"></al-archipeligo19-nav-header>
             <al-archipeligo19-sidenav   *ngIf="!disablePrimaryMenu"
                                         [menu]="primaryMenu"
