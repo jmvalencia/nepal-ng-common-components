@@ -11,7 +11,7 @@
                         <svg *ngIf="step.svg" id="{{step.svg}}" width="400" height="200" viewBox="0 0 400 200"></svg>
                     </div>
                     <h1 class="tutorial-title" *ngIf="step.title"> {{step.title}} </h1>
-                    <p *ngIf="step.text"> {{step.text}} </p>
+                    <p class="tutorial-text" *ngIf="step.text"> {{step.text}} </p>
                 </div>
             </ng-template>
         </p-carousel>
