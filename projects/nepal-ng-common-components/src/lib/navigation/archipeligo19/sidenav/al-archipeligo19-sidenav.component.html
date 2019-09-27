@@ -6,15 +6,16 @@
                     <div class="menu-item-container" *ngIf="menuItem.visible">
                         <div class="menu-item-parent" (click)="toggleItemExpanded(menuItem);">
                             <i class="material-icons">{{menuItem.properties.iconClass}}</i>
-                            <span [class.active]="menuItem.activated" (click)="dispatch(menuItem,$event)">
-                                <a [href]="menuItem.href">{{menuItem.caption}}</a>
+                            <span [class.active]="menuItem.activated">
+                                <div *ngIf="!menuItem.href">{{menuItem.caption}}</div>
+                                <a *ngIf="menuItem.href" [href]="menuItem.href">{{menuItem.caption}}</a>
                             </span>
                         </div>
                         <div class="menu-item-children-container" [hidden]="!menuItem.properties.expanded" *ngIf="menuItem.children">
                             <ng-template ngFor let-childItem [ngForOf]="menuItem.children">
                                 <div class="menu-item-child" *ngIf="childItem.visible">
                                     <span [class.active]="childItem.activated" (click)="dispatch(childItem,$event)">
-                                        <a [href]="childItem.href">{{childItem.caption}}</a>
+                                        <a [href]="childItem.href" [target]="childItem.properties.target ? childItem.properties.target : ''">{{childItem.caption}}</a>
                                     </span>
                                 </div>
                             </ng-template>
