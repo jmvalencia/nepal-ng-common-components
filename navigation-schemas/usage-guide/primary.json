@@ -22,17 +22,47 @@
                         "path": "/#/typography"
                     },
                     "properties": {
-                        "iconClass": "format-size"
-                    }
+                        "iconClass": "format-size",
+                        "childOutlet": "content-menu"
+
+                    },
+                    "children": [
+                        {
+                            "caption": "Basic",
+                            "action": {
+                                "location": "usage-guide",
+                                "path": "/#/typography/basic"
+                            },
+                            "bubble": true
+                        },
+                        {
+                            "caption": "Advanced",
+                            "action": {
+                                "location": "usage-guide",
+                                "path": "/#/typography/advanced"
+                            },
+                            "bubble": true
+                        },
+                        {
+                            "caption": "Alert Logic",
+                            "action": {
+                                "location": "usage-guide",
+                                "path": "/#/typography/alert-logic"
+                            },
+                            "bubble": true
+                        }
+                    ]
                 },
                 {
                     "caption": "Color Palette",
+                    "id": "custom-sidenav-test",
                     "action": {
                         "location": "usage-guide",
                         "path": "/#/colour-palettes"
                     },
                     "properties": {
-                        "iconClass": "palette"
+                        "iconClass": "palette",
+                        "childOutlet": "sidenav"
                     }
                 }
             ]

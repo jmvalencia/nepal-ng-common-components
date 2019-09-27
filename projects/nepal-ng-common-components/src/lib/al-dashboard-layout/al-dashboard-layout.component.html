@@ -1,6 +1,6 @@
 <div #dashboardLayout class="dashboard-layout">
-    <al-dashboard-widget 
-        *ngFor="let configItem of config" 
+    <al-dashboard-widget
+        *ngFor="let configItem of config"
         [ngClass]="{'w2': configItem.metrics.width === 2, 'h2': configItem.metrics.height === 2 }"
         [config]="configItem">
       <div class="interior" [ngClass]="{'noFooter': !hasActions(configItem)}" *ngIf="configItem.content && configItem.content.data && !configItem.content.data.nodata">
@@ -37,6 +37,9 @@
           <al-highmap-chart
             *ngIf="configItem.content.type === contentType.Map"
             [config]="configItem.content.data"></al-highmap-chart>
+          <al-highchart-line
+            *ngIf="configItem.content.type === contentType.Line"
+            [config]="configItem.content.data"></al-highchart-line>
       </div>
       <div class="interior" *ngIf="configItem.content && configItem.content.data && configItem.content.data.nodata">
         <al-content-zero-data [contentType]="configItem.content.type" [config]="configItem.content.data"></al-content-zero-data>

@@ -49,7 +49,12 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
         },
         yAxis: {
             gridLineColor: 'transparent',
-            allowDecimals: false
+            allowDecimals: false,
+            type: 'logarithmic',
+            minorTickInterval: 1,
+            lineWidth: 0,
+            gridLineWidth: 0,
+            minorGridLineWidth: 0
         },
         tooltip: {
           headerFormat: '',
