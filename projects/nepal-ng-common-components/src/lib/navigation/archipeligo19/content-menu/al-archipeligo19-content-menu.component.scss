@@ -4,9 +4,14 @@
 
 :host {
     display: block;
+    background: #F6F6F6;
+    border-bottom: 2px solid;
+    border-color: #EDEDED;
+
     span {
         padding: 10px 20px;
         display: inline-block;
+        margin-bottom: -2px;
 
         & > a {
           color: #535353;   /* mat-color(  ); */
