@@ -1,5 +1,6 @@
+import { TemplateRef } from '@angular/core';
 import { AlRoute, AlRouteDefinition, AlRoutingHost, AlNavigationSchema } from '@al/common/locator';
-import { AlTriggerStream, AlTriggeredEvent } from '@al/common';
+import { AlTrigger, AlTriggerStream, AlTriggeredEvent } from '@al/common';
 import { AlActingAccountResolvedEvent, AlSessionInstance } from '@al/session';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
@@ -21,12 +22,13 @@ export interface AlNavigationHost extends AlRoutingHost
  * A triggered event that indicates something in the parent frame has changed -- either a new schema is being installed, the experience setting has changed.
  * This event will not fire until the schema has been fully loaded.
  */
-export class AlNavigationFrameChanged extends AlTriggeredEvent
+@AlTrigger("AlNavigationFrameChanged")
+export class AlNavigationFrameChanged extends AlTriggeredEvent<void>
 {
     constructor( public host:AlNavigationHost,
                  public schema:AlNavigationSchema,
                  public experience:string ) {
-        super( "AlNavigationFrameChanged" );
+        super();
     }
 }
 
@@ -37,32 +39,37 @@ export class AlNavigationFrameChanged extends AlTriggeredEvent
  *     - Acting account/effective eEntitlements have changed
  *     - Authentication status has changed
  */
-export class AlNavigationContextChanged extends AlTriggeredEvent
+@AlTrigger("AlNavigationContextChanged")
+export class AlNavigationContextChanged extends AlTriggeredEvent<void>
 {
     constructor( public host:AlNavigationHost,
                  public session: AlSessionInstance ) {
-        super( "AlNavigationContextChanged" );
+        super();
     }
 }
 
 /**
  * This event will be triggered when a route of type `trigger` is dispatched by AlNavigationService.
  * Its `host` property will refer to AlNavigationService; its `triggerName` will indicate the name of the trigger.
+ *
+ * This event type can accept boolean responses indicating whether the event was handled as expected.
  */
-export class AlNavigationTrigger extends AlTriggeredEvent
+@AlTrigger("AlNavigationTrigger")
+export class AlNavigationTrigger extends AlTriggeredEvent<boolean>
 {
     constructor( public host:AlNavigationHost,
                  public triggerName:string,
                  public definition:AlRouteDefinition,
                  public route:AlRoute ) {
-        super("AlNavigationTrigger");
+        super();
     }
 }
 
 /**
  * @deprecate
  */
-export class AlNavigationSecondarySelected extends AlTriggeredEvent
+@AlTrigger("AlNavigationSecondarySelected")
+export class AlNavigationSecondarySelected extends AlTriggeredEvent<void>
 {
     constructor(public child: AlRoute) {
         super( "AlNavigationSecondarySelected" );
@@ -72,7 +79,8 @@ export class AlNavigationSecondarySelected extends AlTriggeredEvent
 /**
  * @deprecate
  */
-export class AlNavigationTertiarySelected extends AlTriggeredEvent
+@AlTrigger("AlNavigationTertiarySelected")
+export class AlNavigationTertiarySelected extends AlTriggeredEvent<void>
 {
     constructor(public child: AlRoute) {
         super( "AlNavigationTertiarySelected" );
@@ -87,7 +95,8 @@ export class AlNavigationTertiarySelected extends AlTriggeredEvent
  * A listener can `respond` to the event with a `TemplateRef<any>` value, which (in the case of the sidenav) will be
  * emitted into the appropriate content slot.
  */
-export class AlNavigationRouteMounted extends AlTriggeredEvent
+@AlTrigger("AlNavigationRouteMounted")
+export class AlNavigationRouteMounted extends AlTriggeredEvent<TemplateRef<any>>
 {
     constructor( public contentOutlet:string,
                  public container:AlRoute       ) {
