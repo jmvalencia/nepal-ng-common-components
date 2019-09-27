@@ -3,7 +3,6 @@
       <section class="tertiary-navigation-bar">
         <aside>
           <nav class="sideNav">
-            <ng-content select="[above-tertiary-menu]"></ng-content>
             <ul *ngIf="menu">
               <ng-template ngFor let-menuItem [ngForOf]="menu.children">
                 <li *ngIf="menuItem.visible"
@@ -16,13 +15,12 @@
                 </li>
               </ng-template>
             </ul>
-            <ng-content select=".left-nav"></ng-content>
-            <ng-content select="[below-tertiary-menu]"></ng-content>
+            <ng-content *ngTemplateOutlet="contentRef"></ng-content>
           </nav>
         </aside>
       </section>
     </div>
-    <div class="tertiary-content">
+    <div class="tertiary-content" [ngClass]="alNavigation.tertiaryContentClass$ | async">
         <section class="navigation-tabs" *ngIf="activeTabs && activeTabs.children.length > 1">
             <div class="tab-container">
                 <ng-template ngFor let-tab [ngForOf]="activeTabs.children">

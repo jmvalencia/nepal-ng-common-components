@@ -1,5 +1,5 @@
 /**
- * @author Megan Castleton <megan.castleton@alertlogic.com>
+ * @author Robert Parker <robert.parker@alertlogic.com>
  *
  * @copyright Alert Logic, Inc 2019
  */
@@ -9,11 +9,11 @@ import * as Highcharts from 'highcharts';
 
 
 @Component({
-    selector: 'al-highchart-column',
-    templateUrl: './al-highchart-column.component.html',
-    styleUrls: ['./al-highchart-column.component.scss']
+    selector: 'al-highchart-line',
+    templateUrl: './al-highchart-line.component.html',
+    styleUrls: ['./al-highchart-line.component.scss']
 })
-export class AlHighchartColumnComponent implements OnChanges {
+export class AlHighchartLineComponent implements OnChanges {
     @ViewChild('chart') chart: ElementRef;
 
     public columnChart: any;
@@ -42,7 +42,7 @@ export class AlHighchartColumnComponent implements OnChanges {
         const service = this.utilityService;
         this.columnChart = Highcharts.chart(this.chart.nativeElement, {
             chart: {
-                type: 'column',
+                type: 'line',
                 styledMode: true
             },
             credits: {
@@ -58,7 +58,7 @@ export class AlHighchartColumnComponent implements OnChanges {
                 pointFormat: `
                     <span class="detail">{point.category}</span><br>
                     <span class="description">{series.name}:</span> <span class="detail">{point.y}</span><br>
-                    <span class="description">% of Total:</span> <span class="detail">{point.percentage:.1f}%</span>
+                    <span class="description">% of Total:</span> <span class="detail">{point.percent}%</span>
                 `,
             },
             xAxis: {
@@ -69,7 +69,6 @@ export class AlHighchartColumnComponent implements OnChanges {
                 title: {
                     text: this.config.description
                 },
-                allowDecimals: false,
                 type: 'logarithmic',
                 minorTickInterval: 1,
                 lineWidth: 0,
@@ -77,8 +76,12 @@ export class AlHighchartColumnComponent implements OnChanges {
                 minorGridLineWidth: 0
             },
             plotOptions: {
-                column: {
-                    stacking: 'normal'
+                line: {
+                  marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2
+                  }
                 },
                 series: {
                     events: {

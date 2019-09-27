@@ -23,11 +23,8 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     secondaryItems:AlRoute[]    =   [];             //  Subnav menu items
     activeSecondaryItem:AlRoute =   null;           //  Active secondary item
 
-    refresh:AlStopwatch         =   null;
-
     constructor( public router:Router,
                  public alNavigation:AlNavigationService ) {
-        this.refresh = AlStopwatch.later( this.onContextChanged );
     }
 
     ngOnInit() {
@@ -37,8 +34,8 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes:SimpleChanges) {
-        if ( changes.hasOwnProperty( "menu" ) ) {
-            this.refresh.again();
+        if ( ! this.viewReady ) {
+            this.onLocationChange();
         }
     }
 
@@ -57,13 +54,17 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
         this.onLocationChange();
     }
 
-    onClick( menuItem:AlRoute, $event:any ) {
+    onClick( menuItem:AlRoute, $event: MouseEvent ) {
         if ( menuItem.properties.hasOwnProperty("target") && menuItem.properties.target === '_blank' ) {
             return;
         }
         if ( $event ) {
             $event.stopPropagation();
             $event.preventDefault();
+        }
+        // open in a new tab if user using the combo: (CMD + click)  or (Ctrl + click) or (middle click)
+        if ($event.metaKey || $event.ctrlKey || $event.which === 2) {
+            return window.open(menuItem.href, '_blank');
         }
         menuItem.dispatch();
     }
@@ -74,7 +75,6 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     onLocationChange = () => {
         let activeSecondaryItem = null;
         if ( this.menu ) {
-            this.menu.refresh( true );
             if ( ! this.externalChild ) {
                 this.primaryItems = this.menu.children;
                 const activeChild = this.findActiveChild(this.primaryItems);

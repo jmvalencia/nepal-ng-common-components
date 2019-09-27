@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
 
 import {
+    AlConduitClient,
     ALSession,
     AlSessionStartedEvent,
     AlSessionEndedEvent,
@@ -51,6 +52,7 @@ export class AlNavigationService implements AlNavigationHost
     public currentUrl:string                    =   '';
     public routeParameters                      =   {};
     public routeData:{[k:string]:string}        =   {};
+    public queryParams:{[k:string]:string}      =   {};
     public tertiaryMenu:AlRoute                 =   null;
 
     /**
@@ -62,6 +64,11 @@ export class AlNavigationService implements AlNavigationHost
      * Navigation triggers (named events referenced by menu data) emit through this event channel.
      */
     public events                               =   new AlTriggerStream();
+
+    /**
+     * EventEmitter to pass a css class to tertiary-content (al-archipeligo17-tertiary-menu)
+     */
+    public tertiaryContentClass$: EventEmitter<string|string[]|{[i:string]:boolean}> = new EventEmitter();
 
     /**
      * This cluster of methods supports imperative navigation of different types.
@@ -106,17 +113,19 @@ export class AlNavigationService implements AlNavigationHost
         }
     };
 
-    protected experience:string                    =   null;
-    protected navigationSchemaId:string            =   null;
+    protected experience:string                     =   null;
+    protected navigationSchemaId:string             =   null;
+    protected pendingSchemaCount:number             =   0;
+    protected navigationReady                       =   new AlBehaviorPromise<boolean>();
+    protected conduit                               =   new AlConduitClient();
 
-    protected schemas:{[schema:string]:Promise<AlNavigationSchema>} = {};
-    protected loadedMenus:{[fullMenuId:string]:AlRoute} = {};
-    protected bookmarks:{[bookmarkId:string]:AlRoute} = {};
-    protected namedRouteDictionary:{[routeId:string]:AlRouteDefinition} = {};
+    protected schemas:{[schema:string]:Promise<AlNavigationSchema>}     =   {};
+    protected loadedMenus:{[fullMenuId:string]:AlRoute}                 =   {};
+    protected bookmarks:{[bookmarkId:string]:AlRoute}                   =   {};
+    protected namedRouteDictionary:{[routeId:string]:AlRouteDefinition} =   {};
 
     protected frameNotifier:AlStopwatch;
     protected contextNotifier:AlStopwatch;
-    protected defaultSchema = new AlBehaviorPromise<AlNavigationSchema>();
 
     constructor( public http:HttpClient,
                  public router:Router,
@@ -176,7 +185,20 @@ export class AlNavigationService implements AlNavigationHost
             },
             navigate: this.navigate
         } );
+        AlGlobalizer.expose( 'al.registry.AlNavigationService', this );
         this.listenForSignout();
+        this.conduit.start();
+
+        // Start loading both schemas immediately in order to populate the namedRouteDictionary.
+        this.getNavigationSchema("cie-plus2");
+        this.getNavigationSchema("siemless");
+    }
+
+    /**
+     * Returns a promise(-like object) that resolves when the navigation service is ready to navigate.
+     */
+    public ready():Promise<boolean> {
+        return this.navigationReady.then( r => r, e => e );
     }
 
     /**
@@ -197,6 +219,7 @@ export class AlNavigationService implements AlNavigationHost
      * Sets the desired experience and notifies the navigation components of the changed setting.
      */
     public setExperience( experience:string ) {
+        this.routeParameters["experience"] = experience;        //  make the selected experience available for conditional routes to test against
         this.experience = experience;
         this.frameNotifier.again();
     }
@@ -222,7 +245,7 @@ export class AlNavigationService implements AlNavigationHost
         //  Capture original state -- accountId, acting node, acting base URL
         const originalActingAccountId = ALSession.getActingAccountId();
         const originalActingNode = AlLocatorService.getActingNode();
-        const originalBaseUrl = AlRoute.link( this, originalActingNode.locTypeId ).toHref();
+        const originalBaseUrl = AlLocatorService.resolveURL( originalActingNode.locTypeId );
 
         //  Change the acting account via @al/session
         return ALSession.setActingAccount( accountId ).then(
@@ -230,14 +253,14 @@ export class AlNavigationService implements AlNavigationHost
                 //  Update the accountId route parameter
                 this.setRouteParameter("accountId", accountId );
 
-                let actingBaseUrl = AlRoute.link( this, originalActingNode.locTypeId ).toHref();
+                let actingBaseUrl = AlLocatorService.resolveURL( originalActingNode.locTypeId );
                 if ( originalBaseUrl !== actingBaseUrl ) {
                     //  If these two strings don't match, the residency portal for the acting application has changed (e.g., we've switched from .com to .co.uk or vice-versa)
                     //  In this case, redirect to the correct target location.
                     let path = window.location.href.replace( originalBaseUrl, '' );
                     if ( originalActingAccountId ) {
                         //  Replace references to the previous acting account ID with references to the new one.
-                        //  This could hypothetically malfunctino for certain deep links -- so far, no issues have been reported (fingerscrossed)
+                        //  This could hypothetically malfunction for certain deep links -- so far, no issues have been reported (fingerscrossed)
                         path = path.replace( `/${originalActingAccountId}`, `/${accountId}` );
                     }
                     if ( path.indexOf( "?" ) >= 0 ) {
@@ -245,7 +268,7 @@ export class AlNavigationService implements AlNavigationHost
                         path = path.substring( 0, path.indexOf( "?" ) );
                     }
 
-                    console.warn("Portal residency changed; redirecting to [%s] [%s]", actingBaseUrl, path );
+                    console.warn("Portal residency changed; redirecting to", originalBaseUrl, actingBaseUrl, path );
                     AlRoute.link( this, originalActingNode.locTypeId, path ).dispatch();        //  GO!
                 }
                 return true;
@@ -257,12 +280,29 @@ export class AlNavigationService implements AlNavigationHost
         );
     }
 
+    /**
+     * Retrieves a navigation schema (or resolves with the already-loaded schema).
+     *
+     * @param schemaId The identifier of the schema, currently either 'cie-plus2' or 'siemless' (although that is subject to change).
+     *
+     * The method will first attempt to retrieve the schema from conduit, and then fall back to retrieving a local copy using http.
+     */
     public getNavigationSchema( schemaId:string ):Promise<AlNavigationSchema> {
         if ( ! this.schemas.hasOwnProperty( schemaId ) ) {
-            let path = `assets/navigation/${schemaId}.json`;
-            this.schemas[schemaId] = this.http.get<AlNavigationSchema>( path )
-                .toPromise()
-                .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ) );
+            this.navigationReady.rescind();     //  navigation isn't ready until there are no pending schemas
+            this.pendingSchemaCount++;
+            this.schemas[schemaId] = this.conduit.getGlobalResource( `navigation/${schemaId}`, 60 )
+                .then(
+                    schema => this.ingestNavigationSchema( schemaId, schema as AlNavigationSchema ),
+                    error => {
+                        console.log(`Notice: failed to retrieve schema with id '${schemaId}' from conduit; falling back to local version.` );
+                        let path = `assets/navigation/${schemaId}.json`;
+                        return this.http.get<AlNavigationSchema>( `assets/navigation/${schemaId}.json` )
+                                    .toPromise()
+                                    .then( ( schema:AlNavigationSchema ) => this.ingestNavigationSchema( schemaId, schema ),
+                                           error => this.ingestNavigationSchema( schemaId, undefined ) );
+                    }
+                );
         }
         return this.schemas[schemaId];
     }
@@ -350,6 +390,7 @@ export class AlNavigationService implements AlNavigationHost
      */
     public setRouteParameter( parameter:string, value:string ) {
         this.routeParameters[parameter] = value;
+        this.refreshMenus();
         this.contextNotifier.again();
     }
 
@@ -358,7 +399,18 @@ export class AlNavigationService implements AlNavigationHost
      */
     public deleteRouteParameter( parameter ) {
         delete this.routeParameters[parameter];
+        this.refreshMenus();
         this.contextNotifier.again();
+    }
+
+    /**
+     * Implements `AlRoutingHost`'s decorateHref method, which allows it to manipulate the URLs generated
+     * by @al/common.
+     */
+    public decorateHref( route:AlRoute ) {
+        if ( route && route.href && route.visible ) {
+            route.href = this.applyParameters( route.href, {}, true, true );        //  applies locid and aaid query parameters as appropriate
+        }
     }
 
     /**
@@ -384,7 +436,8 @@ export class AlNavigationService implements AlNavigationHost
             } else if ( this.routeParameters.hasOwnProperty( variableId ) ) {
                 return this.routeParameters[variableId];
             } else {
-                console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
+                //  Missing route parameters should not occur under most circumstances
+                //  console.warn(`AlNavigationService: cannot fully construct URL which requires missing parameter '${variableId}'`);
                 return "(null)";
             }
         } );
@@ -488,7 +541,14 @@ export class AlNavigationService implements AlNavigationHost
     }
 
     /**
-     * Registers a listener for the User.Navigation.Signout trigger, which should prompt local session destruction and a redirect to
+     * Forces the user to login.
+     */
+    public forceAuthentication() {
+        this.navigate.byLocation( AlLocation.AccountsUI, '/#/login', { return: window.location.href } );
+    }
+
+    /**
+     * Registers a listener for the Navigation.User.Signout trigger, which should prompt local session destruction and a redirect to
      * console.account's logout route.
      */
     protected listenForSignout() {
@@ -509,9 +569,11 @@ export class AlNavigationService implements AlNavigationHost
 
         //  Iterate through the router's root to accumulate all data from its children, and make that data public
         let aggregatedData = {};
+        let aggregatedQueryParams = {};
         if ( this.router.routerState.root.snapshot.children ) {
             let accumulator = ( element:ActivatedRouteSnapshot ) => {
                 Object.assign( aggregatedData, element.data );
+                Object.assign( aggregatedQueryParams, element.queryParams );
                 if ( element.children ) {
                     element.children.forEach( accumulator );
                 }
@@ -519,6 +581,7 @@ export class AlNavigationService implements AlNavigationHost
             accumulator( this.router.routerState.root.snapshot );
         }
         this.routeData = aggregatedData;
+        this.queryParams = aggregatedQueryParams;
 
         this.refreshMenus();                            //  Refresh menus against the most current data
 
@@ -529,6 +592,7 @@ export class AlNavigationService implements AlNavigationHost
      * Listens for session start triggers from @al/session
      */
     protected onSessionStarted = ( event:AlSessionStartedEvent ) => {
+        this.refreshMenus();
         this.contextNotifier.again();
     }
 
@@ -538,6 +602,7 @@ export class AlNavigationService implements AlNavigationHost
     protected onActingAccountChanged = ( event:AlActingAccountChangedEvent ) => {
         if ( event.actingAccount.id !== this.routeParameters['accountId'] ) {
             this.routeParameters['accountId'] = event.actingAccount.id;
+            this.refreshMenus();
             this.contextNotifier.again();
         }
     }
@@ -564,7 +629,7 @@ export class AlNavigationService implements AlNavigationHost
      * Internal handler for navigation by named route.
      */
     protected navigateByNamedRoute( namedRouteId:string, parameters:{[p:string]:string} = {}, options:any = {} ) {
-        this.defaultSchema.then( schema => {
+        this.navigationReady.then( schema => {
             let definition = this.getRouteByName( namedRouteId );
             if ( ! definition ) {
                 throw new Error("Imperative navigation could not be executed." );
@@ -655,7 +720,7 @@ export class AlNavigationService implements AlNavigationHost
         }
         this.getNavigationSchema( this.navigationSchemaId ).then( schema => {
             this.schema = schema;
-            this.defaultSchema.resolve( schema );
+            this.navigationReady.resolve( true );
             this.ngZone.run( () => {
                 let event = new AlNavigationFrameChanged( this, schema, this.experience );
                 this.events.trigger( event );
@@ -681,23 +746,32 @@ export class AlNavigationService implements AlNavigationHost
     /**
      * Processes a schema when it is loaded for the first time -- hydrates its menus, stores its named routes, etc.
      */
-    protected ingestNavigationSchema( schemaId:string, schema:AlNavigationSchema ):AlNavigationSchema {
-        //  First ingest named routes and add them to the internal dictionary
-        if ( schema.namedRoutes ) {
-            Object.entries( schema.namedRoutes )
-                .forEach( ( [ routeId, routeDefinition ]:[ string, AlRouteDefinition ] ) => {
-                    this.namedRouteDictionary[routeId] = routeDefinition;
-                } );
+    protected ingestNavigationSchema( schemaId:string, schema:AlNavigationSchema|undefined ):AlNavigationSchema {
+        if ( schema ) {
+            //  First ingest named routes and add them to the internal dictionary
+            if ( schema.namedRoutes ) {
+                Object.entries( schema.namedRoutes )
+                    .forEach( ( [ routeId, routeDefinition ]:[ string, AlRouteDefinition ] ) => {
+                        this.namedRouteDictionary[routeId] = routeDefinition;
+                    } );
+            }
+            //  Then build living menus from their definitions
+            if ( schema.menus ) {
+                Object.entries( schema.menus )
+                    .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
+                        const menuKey = `${schemaId}:${menuId}`;
+                        if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                            this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
+                        }
+                    } );
+            }
+        } else {
+            console.warn(`AlNavigationService: failed to retrieve navigation schema '${schemaId}'`);
         }
-        //  Then build living menus from their definitions
-        if ( schema.menus ) {
-            Object.entries( schema.menus )
-                .forEach( ( [ menuId, menuDefinition ]:[ string, AlRouteDefinition ] ) => {
-                    const menuKey = `${schemaId}:${menuId}`;
-                    if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
-                        this.loadedMenus[`${schemaId}:${menuId}`] = new AlRoute( this, menuDefinition );
-                    }
-                } );
+        this.pendingSchemaCount--;
+        if ( ! this.pendingSchemaCount ) {
+            console.log(`Notice: AlNavigationService has finished loading schema data and is ready to work.` );
+            this.navigationReady.resolve( true );
         }
         return schema;
     }

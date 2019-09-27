@@ -9,6 +9,7 @@ import { NepalNgCommonComponentsModule } from '../nepal-ng-common-components.mod
 
 import * as components from './components';
 import { AlNavigationService } from './services/al-navigation.service';
+import { AlIdentityResolutionGuard } from './services/al-identity-resolution.guard';
 import { AlExperiencePreferencesService } from './services/al-experience-preferences.service';
 import { AlManageExperienceService } from './services/al-manage-experience.service';
 import { AlUrlFilterService } from "./services/al-url-filter.service";

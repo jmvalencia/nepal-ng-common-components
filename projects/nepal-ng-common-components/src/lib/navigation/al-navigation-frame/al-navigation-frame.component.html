@@ -1,6 +1,9 @@
 <ng-template #mainContent>
-    <al-navigation-overlays></al-navigation-overlays>
-    <ng-content></ng-content>
+    <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu" [menu]="sidenavMenu" [contentRef]="sidenavContentRef">
+        <al-navigation-overlays></al-navigation-overlays>
+        <al-archipeligo19-content-menu [menu]="contentMenu"></al-archipeligo19-content-menu>
+        <ng-content></ng-content>
+    </al-archipeligo17-tertiary-menu>
 </ng-template>
 
 
@@ -22,19 +25,13 @@
                     <al-archipeligo17-primary-menu [menu]="primaryMenu"></al-archipeligo17-primary-menu>
                 </div>
             </al-archipeligo17-header>
-            <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu">
-                <ng-content select="[above-tertiary-menu]" ngProjectAs="*"></ng-content>
-                <ng-content select="[below-tertiary-menu]" ngProjectAs="*"></ng-content>
-                <ng-container *ngTemplateOutlet="mainContent"></ng-container>
-            </al-archipeligo17-tertiary-menu>
+            <ng-container *ngTemplateOutlet="mainContent"></ng-container>
         </div>
     </div>
 
     <div *ngIf="experience === 'beta'">
         <div class="nav-container">
-            <al-archipeligo19-app-header>
-                <ng-content select="[in-header]"></ng-content>
-            </al-archipeligo19-app-header>
+            <al-archipeligo19-app-header></al-archipeligo19-app-header>
             <al-archipeligo19-nav-header (toggleButtonClick)="toggleNav()" 
                                         [menu]="primaryMenu"
                                         [userMenu]="userMenu"></al-archipeligo19-nav-header>
@@ -43,9 +40,7 @@
                                         [(displayNav)]="displayNav"></al-archipeligo19-sidenav>
         </div>
         <div class="mainContent">
-            <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu">
-                <ng-container *ngTemplateOutlet="mainContent"></ng-container>
-            </al-archipeligo17-tertiary-menu>
+            <ng-container *ngTemplateOutlet="mainContent"></ng-container>
         </div>
     </div>
 

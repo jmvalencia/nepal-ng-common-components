@@ -1,0 +1,8 @@
+<ng-container *ngIf="menu">
+    <ng-container *ngFor="let child of menu.children">
+      <span *ngIf="child.visible" [ngClass]="{ 'activated': child.activated }" (click)="dispatch(child,$event)">
+          <a [href]="child.href">{{child.caption}}</a>
+      </span>
+    </ng-container>
+</ng-container>
+
