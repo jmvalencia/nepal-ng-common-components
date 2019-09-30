@@ -39,6 +39,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     contentMenu:AlRoute;
     sidenavMenu:AlRoute;
     sidenavContentRef:TemplateRef<any>;
+    showLoginLogo:boolean = true;
 
     displayNav:boolean = false;
 
@@ -56,6 +57,9 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         this.alNavigation.events.attach( "AlNavigationFrameChanged", this.onNavigationChanged );
         this.alNavigation.events.attach( "AlNavigationContextChanged", this.onNavigationContextChanged );
         this.activatedRoute.queryParams.subscribe( this.onQueryParamsChanged );
+        if ( ALSession.isActive() ) {
+            this.showLoginLogo = false;
+        }
     }
 
     ngOnChanges( changes:SimpleChanges ) {
