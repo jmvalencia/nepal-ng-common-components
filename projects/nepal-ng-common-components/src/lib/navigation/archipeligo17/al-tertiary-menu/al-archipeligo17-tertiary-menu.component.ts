@@ -36,7 +36,7 @@ export class AlArchipeligo17TertiaryMenuComponent implements OnInit, OnChanges
     }
 
     ngOnChanges( changes:SimpleChanges ) {
-        if ( changes.hasOwnProperty( "menu" ) ) {
+        if ( changes.hasOwnProperty( "menu" ) || changes.hasOwnProperty( "contentRef" ) ) {
             this.onMenuChanged();
         }
     }
