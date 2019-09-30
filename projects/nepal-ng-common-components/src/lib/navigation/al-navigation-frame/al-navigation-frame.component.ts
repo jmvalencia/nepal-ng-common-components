@@ -151,8 +151,16 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         console.log("Activated path: ", activatedPath );
 
         this.headingText = this.calculateHeadingText(activatedPath);
-        if ( ! contentMenu && ! sidenavMenu && activatedPath.length > 3 ) {
-            sidenavMenu = activatedPath[2];
+        if ( ! contentMenu && ! sidenavMenu ) {
+            if ( this.alNavigation.getSchema() === 'cie-plus2' ) {
+                if (activatedPath.length > 3) {
+                    sidenavMenu = activatedPath[3];
+                }
+            } else {
+                if (activatedPath.length > 4) {
+                    sidenavMenu = activatedPath[4];
+                }
+            }
         }
 
         if ( this.contentMenu !== contentMenu ) {
