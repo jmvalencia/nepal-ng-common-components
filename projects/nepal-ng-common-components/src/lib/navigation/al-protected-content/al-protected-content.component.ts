@@ -34,6 +34,8 @@ import { AlRoute } from '@al/common/locator';
 import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { AlEntitlementCollection } from '@al/subscriptions';
 import { EntitlementGroup } from '../types/entitlement-group.class';
+import { AlExperiencePreferencesService } from '../services/al-experience-preferences.service';
+import { Experience } from '../types/navigation.types';
 
 @Component({
     selector: 'al-protected-content',
@@ -45,6 +47,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     public contentVisible:boolean = null;
 
     @Input() entitlement:string|string[];
+    @Input() experienceAllowed:Experience|Experience[]          =   ['default','beta'];// experiences allowed by default
 
     @Input() accountChangeRoute:string|string[]|boolean         =   null;
     @Input() unentitledRoute:string|string[]|boolean            =   null;
@@ -57,7 +60,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     protected subscriptions = new AlSubscriptionGroup( null );
 
     constructor( public router:Router,
-                 public navigation:AlNavigationService ) {
+                 public navigation:AlNavigationService,
+                 public experiencePreferences: AlExperiencePreferencesService ) {
         this.subscriptions.manage( ALSession.notifyStream.attach("AlActingAccountChanged", this.onAccountChanged ) );
         this.subscriptions.manage( ALSession.notifyStream.attach("AlActingAccountResolved", this.onAccountResolved ) );
     }
@@ -135,7 +139,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
         this.unentitled.emit( invalidEntitlements );
     }
 
-    evaluateAccessibility( entitlements:AlEntitlementCollection = null ):boolean {
+    async evaluateAccessibility( entitlements:AlEntitlementCollection = null ):Promise<boolean> {
         if ( ! entitlements ) {
             entitlements = this.navigation.entitlements;
         }
@@ -151,6 +155,24 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             }
 
         }
+        // Check the experience preferences
+        let experience: Experience = null;
+        try{
+            await this.experiencePreferences.getExperiencePreferences();// to avoid getExperience() 'null' due to the delay to set the experience
+            experience = this.navigation.getExperience() as Experience;
+        }catch(err){
+            console.error(err);
+        }
+        /**
+        * Before show content: verify the experience
+        * if it is equal to experienceAllowed then should set the contentVisible as true
+        */
+        if ( this.experienceAllowed instanceof Array ) {
+            contentVisible = !(-1 === this.experienceAllowed.indexOf(experience));
+        }else if ( typeof (this.experienceAllowed) === "string" ) {
+            contentVisible = experience === this.experienceAllowed;
+        }
+
         if ( contentVisible ) {
             this.onDisplay.emit();
         } else {

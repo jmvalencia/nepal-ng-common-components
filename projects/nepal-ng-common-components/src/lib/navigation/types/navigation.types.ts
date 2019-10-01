@@ -121,3 +121,5 @@ export interface AlDatacenterOptionsSummary
 
 export const ALNAV_DISABLE_PRIMARY = "alNavigation.disablePrimary";
 export const ALNAV_DISABLE_TERTIARY = "alNavigation.disableTertiary";
+
+export type Experience = "default" | "beta"; // Experience types used to define the content to display
