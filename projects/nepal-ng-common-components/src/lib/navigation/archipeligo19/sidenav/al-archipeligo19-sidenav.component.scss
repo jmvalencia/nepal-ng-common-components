@@ -49,6 +49,11 @@
             align-items: center;
             padding: 12px 24px 12px 60px;
 
+            &:hover {
+                color: al-color($al-gray, 900);
+                cursor: pointer;
+            }
+
             &.active {
                 font-weight: bold;
             }
@@ -56,7 +61,7 @@
             > span {
                 margin-left: 12px;
                 &:hover {
-                    font-weight: bold;
+                    color: al-color($al-gray, 900);
                     cursor: pointer;
                 }
                 > a {
@@ -79,12 +84,12 @@
 
             .menu-item-child{
                 margin-left: 46px;
-                border-left: 2px solid rgba(0,0,0, 0.16);
+                border-left: 3px solid rgba(0,0,0, 0.16);
                 height: 36px;
                 display: flex;
                 align-items: center;
                 &:hover {
-                    font-weight: bold;
+                    color: al-color($al-gray, 900);
                     border-left: 3px solid al-color($al-gray, 500);
                     cursor: pointer;
                 }
