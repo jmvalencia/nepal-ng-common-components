@@ -25,38 +25,6 @@ div.full-height {
 
 }
 
-.darkMode {
-
-  .no-chart {
-    @include center();
-    flex-direction: column;
-    h1 {
-      font-weight: normal;
-      color: al-color($al-gray, 100);
-    }
-    i {
-      font-size: 100px;
-      color: al-color($al-gray, 500);
-    }
-  }
-}
-
-.blueTheme {
-  
-  .no-chart {
-    @include center();
-    flex-direction: column;
-    h1 {
-      font-weight: normal;
-      color: al-color($al-gray, 100);
-    }
-    i {
-      font-size: 100px;
-      color: al-color($db-blue, 800);
-    }
-  }
-}
-
 .tree-map {
   @include center();
   div {
