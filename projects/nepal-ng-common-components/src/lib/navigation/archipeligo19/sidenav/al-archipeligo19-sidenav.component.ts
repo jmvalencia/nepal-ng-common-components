@@ -55,18 +55,19 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
         if ( $event ) {
             $event.preventDefault();
         }
-        if ( route.activated ) {
-            //  This item corresponds to the currently activated route -- dispatch it
-            this.dispatch( route, $event );
-        } else {
-            let visibleChildren = route.children.reduce<boolean>( ( alpha, child ) => alpha || child.visible, false );
-            if ( visibleChildren && ! route.getProperty( 'expanded', false ) ) {
-                //  Expose children
+
+        let visibleChildren = route.children.reduce<boolean>( ( alpha, child ) => alpha || child.visible, false );
+        if ( visibleChildren) {
+            if(!route.getProperty( 'expanded', false )) {
+                // Expose children
                 route.setProperty( 'expanded', true );
             } else {
-                //  Children already exposed, just dispatch!
-                this.dispatch( route, $event );
+                // Unexposed children
+                route.setProperty( 'expanded', false );
             }
+        } else {
+            //  Children already exposed, just dispatch!
+            this.dispatch( route, $event );
         }
     }
 
