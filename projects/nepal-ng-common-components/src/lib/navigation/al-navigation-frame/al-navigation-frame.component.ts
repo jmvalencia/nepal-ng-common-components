@@ -33,20 +33,19 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
      */
     @Input() public experience:string = null;       //  this is only used to set the *initial* state.
     @Input() public schema:string = null;           //  this is only used to set the *initial* state.
+    public displayNav:boolean = false;
+    public headingText: string = null;
 
-    primaryMenu:AlRoute;
-    userMenu:AlRoute;
-    contentMenu:AlRoute;
-    sidenavMenu:AlRoute;
-    sidenavContentRef:TemplateRef<any>;
+    public primaryMenu:AlRoute;
+    public userMenu:AlRoute;
+    public contentMenu:AlRoute;
+    public sidenavMenu:AlRoute;
+    public sidenavContentRef:TemplateRef<any>;
+
     showLoginLogo:boolean = true;
-
-    displayNav:boolean = false;
 
     disablePrimaryMenu:boolean = false;
     disableTertiaryMenu:boolean = false;
-
-    headingText: string = null;
 
     constructor( public alNavigation:AlNavigationService,
                  public activatedRoute:ActivatedRoute,
@@ -96,7 +95,6 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         if ( this.schema !== event.schema ) {
             this.schema = event.schema;
             if ( event.schema.menus.hasOwnProperty("primary") ) {
-                console.log("Assigning primary menu!" );
                 this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
             }
             if ( event.schema.menus.hasOwnProperty("user") ) {
@@ -148,7 +146,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             }
         } );
 
-        console.log("Activated path: ", activatedPath );
+        console.log("Notice: AlNavigationService activated path: ", activatedPath );
 
         this.headingText = this.calculateHeadingText(activatedPath);
         if ( ! contentMenu && ! sidenavMenu ) {
@@ -164,19 +162,17 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         }
 
         if ( this.contentMenu !== contentMenu ) {
-            console.log("New content menu...", contentMenu );
             this.contentMenu = contentMenu;
             let event = new AlNavigationRouteMounted( "content-menu", this.contentMenu );
             this.alNavigation.events.trigger( event );
         }
 
         if ( this.sidenavMenu !== sidenavMenu ) {
-            console.log("New content menu...", sidenavMenu );
             this.sidenavMenu = sidenavMenu;
             let event = new AlNavigationRouteMounted( "sidenav", this.sidenavMenu );
             this.alNavigation.events.trigger( event );
             this.sidenavContentRef = event.response();
-            console.log("Receiving in response to mounting sidenav: ", this.sidenavContentRef );
+            console.log("Notice: AlNavigationService received response to AlNavigationRouteMounted event: ", this.sidenavContentRef );
         }
     }
 
