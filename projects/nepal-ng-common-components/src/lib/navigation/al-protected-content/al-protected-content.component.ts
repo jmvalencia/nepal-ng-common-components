@@ -35,7 +35,7 @@ import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { AlEntitlementCollection } from '@al/subscriptions';
 import { EntitlementGroup } from '../types/entitlement-group.class';
 import { AlExperiencePreferencesService } from '../services/al-experience-preferences.service';
-import { Experience } from '../types/navigation.types';
+import { AlExperience } from '../types/navigation.types';
 
 @Component({
     selector: 'al-protected-content',
@@ -47,7 +47,7 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     public contentVisible:boolean = null;
 
     @Input() entitlement:string|string[];
-    @Input() experienceAllowed:Experience|Experience[]          =   ['default','beta'];// experiences allowed by default
+    @Input() experienceAllowed:AlExperience|AlExperience[]      =   ['beta','default', null];// experience allowed by default
 
     @Input() accountChangeRoute:string|string[]|boolean         =   null;
     @Input() unentitledRoute:string|string[]|boolean            =   null;
@@ -155,22 +155,14 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             }
 
         }
-        // Check the experience preferences
-        let experience: Experience = null;
+        // Check the experience preference
         try{
             await this.experiencePreferences.getExperiencePreferences();// to avoid getExperience() 'null' due to the delay to set the experience
-            experience = this.navigation.getExperience() as Experience;
+            const experience = this.navigation.getExperience();// get the current experience
+            const isExperienceAllowed = this.experienceAllowed instanceof Array ? this.experienceAllowed.includes(experience) : this.experienceAllowed === experience;
+            contentVisible = contentVisible && isExperienceAllowed;
         }catch(err){
             console.error(err);
-        }
-        /**
-        * Before show content: verify the experience
-        * if it is equal to experienceAllowed then should set the contentVisible as true
-        */
-        if ( this.experienceAllowed instanceof Array ) {
-            contentVisible = !(-1 === this.experienceAllowed.indexOf(experience));
-        }else if ( typeof (this.experienceAllowed) === "string" ) {
-            contentVisible = experience === this.experienceAllowed;
         }
 
         if ( contentVisible ) {

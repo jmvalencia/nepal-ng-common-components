@@ -40,7 +40,8 @@ import {
     AlNavigationContextChanged,
     AlNavigationTrigger,
     AlNavigationTertiarySelected,
-    ExperiencePreference
+    ExperiencePreference,
+    AlExperience
 } from '../types';
 
 @Injectable({
@@ -113,7 +114,7 @@ export class AlNavigationService implements AlNavigationHost
         }
     };
 
-    protected experience:string                     =   null;
+    protected experience:AlExperience               =   null;
     protected navigationSchemaId:string             =   null;
     protected pendingSchemaCount:number             =   0;
     protected navigationReady                       =   new AlBehaviorPromise<boolean>();
@@ -159,7 +160,7 @@ export class AlNavigationService implements AlNavigationHost
                 AlLocatorService.setContext( context );
                 this.refreshMenus();
             },
-            setExperience: ( experience:string ) => {
+            setExperience: ( experience:AlExperience ) => {
                 this.setExperience( experience );
             },
             setSchema: ( schema:string ) => {
@@ -204,7 +205,7 @@ export class AlNavigationService implements AlNavigationHost
     /**
      * Returns the experience
      */
-    public getExperience() {
+    public getExperience():AlExperience {
         return this.experience;
     }
 
@@ -218,7 +219,7 @@ export class AlNavigationService implements AlNavigationHost
     /**
      * Sets the desired experience and notifies the navigation components of the changed setting.
      */
-    public setExperience( experience:string ) {
+    public setExperience( experience:AlExperience ) {
         this.routeParameters["experience"] = experience;        //  make the selected experience available for conditional routes to test against
         this.experience = experience;
         this.frameNotifier.again();

@@ -19,7 +19,7 @@ import { AIMSClient } from '@al/aims';
 import { AlRoute } from '@al/common/locator';
 import { AlTriggerStream } from '@al/common';
 import { AlNavigationService } from '../services/al-navigation.service';
-import { AlNavigationRouteMounted } from '../types/navigation.types';
+import { AlNavigationRouteMounted, AlExperience } from '../types/navigation.types';
 
 @Component({
     selector: 'al-navigation-frame',
@@ -31,7 +31,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     /**
      * Instance properties
      */
-    @Input() public experience:string = null;       //  this is only used to set the *initial* state.
+    @Input() public experience:AlExperience = null;       //  this is only used to set the *initial* state.
     @Input() public schema:string = null;           //  this is only used to set the *initial* state.
 
     primaryMenu:AlRoute;
@@ -92,7 +92,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             console.warn("Cannot assign menus for the current experience in the absence of a navigation scheme!  Ignoring." );
             return;
         }
-        this.experience = event.experience;
+        this.experience = event.experience as AlExperience;
         if ( this.schema !== event.schema ) {
             this.schema = event.schema;
             if ( event.schema.menus.hasOwnProperty("primary") ) {
