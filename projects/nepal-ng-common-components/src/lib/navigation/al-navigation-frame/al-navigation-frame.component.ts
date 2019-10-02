@@ -33,16 +33,17 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
      */
     @Input() public experience:AlExperience = null;       //  this is only used to set the *initial* state.
     @Input() public schema:string = null;           //  this is only used to set the *initial* state.
+    public displayNav:boolean = false;
+    public headingText: string = null;
 
-    primaryMenu:AlRoute;
-    userMenu:AlRoute;
-    contentMenu:AlRoute;
-    sidenavMenu:AlRoute;
-    sidenavContentRef:TemplateRef<any>;
-    breadcrumbs:AlRoute[] = [];
+    public primaryMenu:AlRoute;
+    public userMenu:AlRoute;
+    public contentMenu:AlRoute;
+    public sidenavMenu:AlRoute;
+    public sidenavContentRef:TemplateRef<any>;
+    public breadcrumbs:AlRoute[] = [];
+
     showLoginLogo:boolean = true;
-
-    displayNav:boolean = false;
 
     disablePrimaryMenu:boolean = false;
     disableTertiaryMenu:boolean = false;
@@ -142,7 +143,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             }
         } );
 
-        console.log("Activated path: ", activatedPath );
+        console.log("Notice: AlNavigationService activated path: ", activatedPath );
 
         if ( ! contentMenu && ! sidenavMenu ) {
             if ( this.alNavigation.getSchema() === 'cie-plus2' ) {
@@ -168,7 +169,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             this.alNavigation.events.trigger( event );
             this.sidenavContentRef = event.response();
             if ( this.sidenavContentRef ) {
-                console.log("AlNavigationFrame: received response to AlNavigationRouteMounted event: ", this.sidenavContentRef );
+                console.log("Notice: AlNavigationService received response to AlNavigationRouteMounted event: ", this.sidenavContentRef );
             }
         }
 
