@@ -74,6 +74,15 @@ export class AlHighchartAreaGraphComponent implements OnChanges {
                 // tslint:disable-next-line
                 legendItemClick: function(e: Highcharts.SeriesLegendItemClickEventObject) {
                   service.seriesLegendClickHandler(e);
+                },
+                // tslint:disable-next-line
+                click: function(event) {
+                  event.target.dispatchEvent(new CustomEvent('data-element-clicked', {
+                    detail: {
+                      recordLink: event.point.recordLink
+                    },
+                    bubbles: true
+                  }));
                 }
               },
               marker: {

@@ -244,6 +244,7 @@ export class AlNavigationService implements AlNavigationHost
 
         //  Capture original state -- accountId, acting node, acting base URL
         const originalActingAccountId = ALSession.getActingAccountId();
+        const originalDatacenterId = ALSession.getActiveDatacenter();
         const originalActingNode = AlLocatorService.getActingNode();
         const originalBaseUrl = AlLocatorService.resolveURL( originalActingNode.locTypeId );
 
@@ -268,8 +269,20 @@ export class AlNavigationService implements AlNavigationHost
                         path = path.substring( 0, path.indexOf( "?" ) );
                     }
 
-                    console.warn("Portal residency changed; redirecting to", originalBaseUrl, actingBaseUrl, path );
+                    console.warn("AlNavigationService.setActingAccount: portal residency changed; redirecting to", originalBaseUrl, actingBaseUrl, path );
                     AlRoute.link( this, originalActingNode.locTypeId, path ).dispatch();        //  GO!
+                } else {
+                    /* A note for posterity: there are *definitely* ways that the following URL rewrite can cause problems.  For instance, if the user is looking at a
+                     * specific account's deployment, then the URL will be rewritten to look at account A and deployment belonging to account B.
+                     * However, a more systemically "correct" way of redirecting after account change is not yet available.  Someday soon, one hopes.
+                     */
+                    let href = window.location.href.replace(`aaid=${originalActingAccountId}`, `aaid=${ALSession.getActingAccountId()}` )
+                                .replace(`locid=${originalDatacenterId}`, `locid=${ALSession.getActiveDatacenter()}` )
+                                .replace(`/${originalActingAccountId}`, `/${ALSession.getActingAccountId()}` );
+                    if ( href !== window.location.href ) {
+                        console.log("AlNavigationService.setActingAccount: acting account changed, acting URI rewritten to", href );
+                        window.location.href = href;
+                    }
                 }
                 return true;
             },
