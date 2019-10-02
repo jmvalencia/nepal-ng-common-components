@@ -899,3 +899,9 @@ path.highcharts-pane {
 .highcharts-area {
   fill-opacity: 1;
 }
+rect.segment-outline {
+  outline-width: 2px;
+  outline-offset: -3px;
+  outline-style: solid;
+  outline-color: al-color($al-purple, 500);
+}
