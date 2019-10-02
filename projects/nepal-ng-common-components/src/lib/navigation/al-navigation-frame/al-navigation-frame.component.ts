@@ -19,7 +19,7 @@ import { AIMSClient } from '@al/aims';
 import { AlRoute } from '@al/common/locator';
 import { AlTriggerStream } from '@al/common';
 import { AlNavigationService } from '../services/al-navigation.service';
-import { AlNavigationRouteMounted } from '../types/navigation.types';
+import { AlNavigationRouteMounted, AlExperience } from '../types/navigation.types';
 
 @Component({
     selector: 'al-navigation-frame',
@@ -31,7 +31,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     /**
      * Instance properties
      */
-    @Input() public experience:string = null;       //  this is only used to set the *initial* state.
+    @Input() public experience:AlExperience = null;       //  this is only used to set the *initial* state.
     @Input() public schema:string = null;           //  this is only used to set the *initial* state.
 
     primaryMenu:AlRoute;
@@ -39,14 +39,13 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     contentMenu:AlRoute;
     sidenavMenu:AlRoute;
     sidenavContentRef:TemplateRef<any>;
+    breadcrumbs:AlRoute[] = [];
     showLoginLogo:boolean = true;
 
     displayNav:boolean = false;
 
     disablePrimaryMenu:boolean = false;
     disableTertiaryMenu:boolean = false;
-
-    headingText: string = null;
 
     constructor( public alNavigation:AlNavigationService,
                  public activatedRoute:ActivatedRoute,
@@ -92,11 +91,10 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             console.warn("Cannot assign menus for the current experience in the absence of a navigation scheme!  Ignoring." );
             return;
         }
-        this.experience = event.experience;
+        this.experience = event.experience as AlExperience;
         if ( this.schema !== event.schema ) {
             this.schema = event.schema;
             if ( event.schema.menus.hasOwnProperty("primary") ) {
-                console.log("Assigning primary menu!" );
                 this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
             }
             if ( event.schema.menus.hasOwnProperty("user") ) {
@@ -122,18 +120,17 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         }
     }
 
-    calculateHeadingText(activatedPath: AlRoute[]): string {
-        return activatedPath.filter((route: AlRoute) => route.caption !== "primary")
-               .map((route: AlRoute) => route.caption).join(" | ");
-    }
-
     evaluateMenuActivation() {
-        if ( ! this.primaryMenu ) {
+        this.breadcrumbs = [];
+        if ( ! this.primaryMenu && ! this.userMenu ) {
             return;
         }
         let activatedPath = this.primaryMenu.getActivationCursorFlat();
         if ( ! activatedPath ) {
-            return;
+            activatedPath = this.userMenu.getActivationCursorFlat();
+            if ( ! activatedPath ) {
+                return;
+            }
         }
 
         let contentMenu:AlRoute = undefined;
@@ -150,34 +147,36 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
 
         console.log("Activated path: ", activatedPath );
 
-        this.headingText = this.calculateHeadingText(activatedPath);
         if ( ! contentMenu && ! sidenavMenu ) {
-            if ( this.alNavigation.getSchema() === 'cie-plus2' ) {
-                if (activatedPath.length > 3) {
-                    sidenavMenu = activatedPath[3];
-                }
-            } else {
-                if (activatedPath.length > 4) {
-                    sidenavMenu = activatedPath[4];
-                }
+            // it should only get here to display regular tertiary menu
+            if (activatedPath.length > 3) {
+                sidenavMenu = activatedPath[2];
             }
         }
 
         if ( this.contentMenu !== contentMenu ) {
-            console.log("New content menu...", contentMenu );
             this.contentMenu = contentMenu;
             let event = new AlNavigationRouteMounted( "content-menu", this.contentMenu );
             this.alNavigation.events.trigger( event );
         }
 
         if ( this.sidenavMenu !== sidenavMenu ) {
-            console.log("New content menu...", sidenavMenu );
             this.sidenavMenu = sidenavMenu;
             let event = new AlNavigationRouteMounted( "sidenav", this.sidenavMenu );
             this.alNavigation.events.trigger( event );
             this.sidenavContentRef = event.response();
-            console.log("Receiving in response to mounting sidenav: ", this.sidenavContentRef );
+            if ( this.sidenavContentRef ) {
+                console.log("AlNavigationFrame: received response to AlNavigationRouteMounted event: ", this.sidenavContentRef );
+            }
         }
+
+        //  Store a reference to the activation path, with duplicate items/breadcrumb-suppressed items removed
+        this.breadcrumbs = activatedPath.filter( ( item, index ) => {
+            if ( index > 0 && item.caption !== activatedPath[index-1].caption ) {
+                return item.getProperty("breadcrumb", true ) === true;
+            }
+            return false;
+        } );
     }
 
     toggleNav() {
