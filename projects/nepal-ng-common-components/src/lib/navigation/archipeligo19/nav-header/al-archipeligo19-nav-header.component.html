@@ -2,7 +2,15 @@
   <div class="nav-header-content">
       <i class="material-icons menu-toggle" (click)="toggleClick()">menu</i>
       <i *ngIf="displayIconName.length > 0" [className]="'ui-icon-' + displayIconName"></i>
-      <span>{{heading}}</span>
+      <span *ngIf="breadcrumbs && breadcrumbs.length" class="breadcrumbs">
+          <ng-container *ngFor="let breadcrumb of breadcrumbs; let i = index">
+              <span *ngIf="i > 0" class="breadcrumb-separator"> | </span>
+              <span class="breadcrumb">
+                  <a *ngIf="breadcrumb.href" [href]="breadcrumb.href" (click)="dispatch(breadcrumb,$event)">{{breadcrumb.caption}}</a>
+                  <ng-container *ngIf="!breadcrumb.href" (click)="dispatch(breadcrumb,$event)">{{breadcrumb.caption}}</ng-container>
+              </span>
+          </ng-container>
+      </span>
   </div>
   <div class="nav-header-actions">
       <!-- <button pButton type="button" label="Add +"></button> -->
