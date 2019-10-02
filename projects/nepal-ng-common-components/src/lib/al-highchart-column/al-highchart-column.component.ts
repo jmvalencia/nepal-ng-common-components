@@ -70,15 +70,18 @@ export class AlHighchartColumnComponent implements OnChanges {
                     text: this.config.description
                 },
                 allowDecimals: false,
-                type: 'logarithmic',
+                type: this.config.yAxisType || 'logarithmic',
                 minorTickInterval: 1,
                 lineWidth: 0,
                 gridLineWidth: 0,
-                minorGridLineWidth: 0
+                minorGridLineWidth: 0,
+                labels: {
+                    format: this.config.stacking === 'percent' ? '{value}%' : '{value}'
+                }
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal'
+                    stacking: this.config.stacking || 'normal'
                 },
                 series: {
                     events: {
