@@ -1,6 +1,6 @@
 import { Component,
          OnInit, OnDestroy, OnChanges, SimpleChanges, AfterViewInit,
-         Input, Output, ViewChild, EventEmitter, Renderer2 } from '@angular/core';
+         Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { Sidebar } from 'primeng/primeng';
 import { AlRoute } from '@al/common/locator';
 import { AlSubscriptionGroup } from '@al/common';
@@ -17,9 +17,7 @@ import { AlNavigationContextChanged } from '../../types/navigation.types';
 export class AlArchipeligo19SidenavComponent implements OnChanges {
     @Input() displayNav = false;    // See al-nav-header toggle button click handling, this should be based on value from a service (observable)
     @Input() menu:AlRoute = null;
-    @Output() displayNavChanged = new EventEmitter<boolean>();
-
-    @ViewChild(Sidebar) sidebar: Sidebar;
+    @Output() displayNavChange = new EventEmitter<boolean>();
 
     documentEscapeListener: Function;
 
@@ -49,7 +47,7 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
         route.dispatch();
         if( !route.children || route.parent.caption !== "primary"){
             this.displayNav = false;
-            this.displayNavChanged.emit( false );
+            this.displayNavChange.emit( false );
         }
     }
 
@@ -92,8 +90,9 @@ export class AlArchipeligo19SidenavComponent implements OnChanges {
 
     bindDocumentEscapeListener() {
       this.documentEscapeListener = this.renderer.listen('document', 'keydown', (event) => {
-        if (event.which === 27) {
-          this.sidebar.close(event);
+        if (event.which === 27 && this.displayNav ) {
+          this.displayNav = false;
+          this.displayNavChange.emit( false );
         }
       });
     }
