@@ -258,17 +258,34 @@ export class DashboardExamplesComponent implements OnInit {
     public columnRedData = {
         title: '',
         description: 'Count of Incidents',
-        dateOptions: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        stacking: 'percent',
+        yAxisType: 'linear',
+        dateOptions: ['brute-force', 'suspicious-activity', 'application-attack', 'recon', 'log-review'],
         series: [
           {
-              name: 'High',
-              data: [[0, 25], [1, 15], [2, 15], [3, 4], [4, 25], [5, 1], [6, 15]],
-              className: 'high'
+              name: 'Top 20%',
+              data: [25, 15, 15, 4, 25],
+              className: 'al-blue-200'
           },
           {
-              name: 'Medium',
-              data: [[0, 5], [1, 10], [2, 25], [3, 30], [4, 5], [5, 12], [6, 15]],
-              className: 'low'
+              name: '2th 20%',
+              data: [5, 10, 25, 30, 5],
+              className: 'al-blue-300'
+          },
+          {
+            name: 'Middle 20%',
+            data: [5, 10, 25, 30, 5],
+            className: 'al-blue-900'
+          },
+          {
+            name: '4th 20%',
+            data: [5, 10, 25, 30, 5],
+            className: 'al-blue-600'
+          },
+          {
+            name: 'Bottom 20%',
+            data: [5, 10, 25, 30, 5],
+            className: 'al-blue-800'
           }
         ]
     };
@@ -292,13 +309,13 @@ export class DashboardExamplesComponent implements OnInit {
         series: [
           {
               type: 'bar',
-              name: 'Internal',
+              name: 'Top 20%',
               data: [ 5, 4, 3, 2 ],
               className: 'high'
           },
           {
               type: 'bar',
-              name: 'External',
+              name: 'next top20%',
               data: [ 3, 3, 2, 1 ],
               className: 'medium'
           }
