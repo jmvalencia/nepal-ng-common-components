@@ -1,9 +1,8 @@
 import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Output, EventEmitter, Input } from '@angular/core';
 import { AlNavigationService } from '../../services/al-navigation.service';
-import { AlNavigationContextChanged } from '../../types';
 import { AlRoute } from '@al/common/locator';
 import { AlSubscriptionGroup } from '@al/common';
-import { ALSession } from '@al/session';
+import { ALSession, AlSessionStartedEvent, AlSessionEndedEvent } from '@al/session';
 
 @Component({
   selector: 'al-archipeligo19-nav-header',
@@ -14,7 +13,8 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
 
     @Input() menu:AlRoute = AlRoute.empty();
     @Input() userMenu:AlRoute = AlRoute.empty();
-    @Input() heading: string = '';
+    @Input() breadcrumbs: AlRoute[] = [];
+
     displayIconName = '';
     subscriptions:AlSubscriptionGroup = new AlSubscriptionGroup( null );
     authenticated = false;
@@ -31,15 +31,14 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
     ngOnInit() {
         this.authenticated = ALSession.isActive();
         this.subscriptions.manage([
-            this.alNavigation.events.attach( "AlNavigationContextChanged", event => this.onMenuChange() ),
-            ALSession.notifyStream.attach('AlSessionStarted', this.onSessionStart)
+            ALSession.notifyStream.attach( AlSessionStartedEvent, this.onSessionStart ),
+            ALSession.notifyStream.attach( AlSessionEndedEvent, this.onSessionEnd )
         ]);
     }
 
     ngOnChanges( changes:SimpleChanges ) {
-        if ( changes.hasOwnProperty("menu") || changes.hasOwnProperty("userMenu" ) ) {
-            //  Refresh if our menu inputs are modified
-            this.onMenuChange();
+        if ( changes.hasOwnProperty( "breadcrumbs" ) ) {
+            this.inferIconFromBreadcrumbs( this.breadcrumbs || [] );
         }
     }
 
@@ -47,29 +46,31 @@ export class AlArchipeligo19NavHeaderComponent implements OnInit {
         this.subscriptions.cancelAll();
     }
 
-    onSessionStart = () => {
+    onSessionStart = ( event:AlSessionStartedEvent ) => {
         this.authenticated = true;
+    }
+
+    onSessionEnd = ( event:AlSessionEndedEvent ) => {
+        this.authenticated = false;
     }
 
     toggleClick() {
         this.toggleButtonClick.emit();
     }
 
-    onMenuChange = () => {
-        let activatedChild = this.findActivatedChild( this.menu ) || this.findActivatedChild( this.userMenu );
-        if ( activatedChild ) {
-            this.displayIconName = activatedChild.getProperty("iconClass", "");
-        }
+    inferIconFromBreadcrumbs( breadcrumbs:AlRoute[] ) {
+        let breadcrumbIcon = '';
+        breadcrumbs.forEach( breadcrumb => {
+            breadcrumbIcon = breadcrumb.getProperty("iconClass", breadcrumbIcon );
+        } );
+        this.displayIconName = breadcrumbIcon;
     }
 
-    protected findActivatedChild( route:AlRoute ) {
-        if ( ! route || ! route.activated ) {
-            return null;
+    dispatch( route:AlRoute, event:MouseEvent ) {
+        if ( event ) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-        if ( route.children.length ) {
-            let activatedChild = route.children.find( r => r.activated );
-            return activatedChild || route;
-        }
-        return null;
+        route.dispatch();
     }
 }
