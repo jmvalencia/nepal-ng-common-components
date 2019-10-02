@@ -34,7 +34,7 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
     }
 
     ngOnChanges(changes:SimpleChanges) {
-        if ( ! this.viewReady ) {
+        if ( changes.hasOwnProperty( "menu" ) ) {
             this.onLocationChange();
         }
     }
@@ -123,6 +123,7 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
             this.secondaryItems = [];
             this.externalChild = false;
         }
+        this.onContextChanged();
     }
 
     /**
