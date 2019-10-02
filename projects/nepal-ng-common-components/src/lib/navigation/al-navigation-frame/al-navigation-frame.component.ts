@@ -122,12 +122,15 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
 
     evaluateMenuActivation() {
         this.breadcrumbs = [];
-        if ( ! this.primaryMenu ) {
+        if ( ! this.primaryMenu && ! this.userMenu ) {
             return;
         }
         let activatedPath = this.primaryMenu.getActivationCursorFlat();
         if ( ! activatedPath ) {
-            return;
+            activatedPath = this.userMenu.getActivationCursorFlat();
+            if ( ! activatedPath ) {
+                return;
+            }
         }
 
         let contentMenu:AlRoute = undefined;
@@ -145,14 +148,9 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         console.log("Activated path: ", activatedPath );
 
         if ( ! contentMenu && ! sidenavMenu ) {
-            if ( this.alNavigation.getSchema() === 'cie-plus2' ) {
-                if (activatedPath.length > 3) {
-                    sidenavMenu = activatedPath[3];
-                }
-            } else {
-                if (activatedPath.length > 4) {
-                    sidenavMenu = activatedPath[4];
-                }
+            // it should only get here to display regular tertiary menu
+            if (activatedPath.length > 3) {
+                sidenavMenu = activatedPath[2];
             }
         }
 
