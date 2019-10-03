@@ -8,8 +8,7 @@ import {
 } from '@al/session';
 import { MenuItem, SelectItem, ConfirmationService } from 'primeng/api';
 import { AIMSAccount } from '@al/client';
-import { AlSubscriptionGroup } from '@al/common';
-import { AlLocatorService, AlInsightLocations, AlLocation } from '@al/common/locator';
+import { AlSubscriptionGroup, AlLocatorService, AlInsightLocations, AlLocation } from '@al/common';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlDatacenterOptionsSummary, AlNavigationContextChanged } from '../../types/navigation.types';
 

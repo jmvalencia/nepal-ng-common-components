@@ -1,5 +1,5 @@
 import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { AlRoute } from '@al/common/locator';
+import { AlRoute } from '@al/common';
 import { AlNavigationService } from '../../services/al-navigation.service';
 
 @Component({

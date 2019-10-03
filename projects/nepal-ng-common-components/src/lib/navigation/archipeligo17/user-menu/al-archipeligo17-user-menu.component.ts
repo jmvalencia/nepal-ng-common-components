@@ -4,8 +4,7 @@ import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem'
 import { ConfirmationService } from 'primeng/api';
 import { ALSession } from '@al/session';
 import { AIMSAccount } from '@al/aims';
-import { AlRoute, AlLocation, AlLocatorService, AlInsightLocations } from '@al/common/locator';
-import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
+import { AlRoute, AlLocation, AlLocatorService, AlInsightLocations, AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { AlArchipeligo17AccountSelectorComponent } from '../account-selector/al-archipeligo17-account-selector.component';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationContextChanged, AlNavigationSecondarySelected, AlNavigationTertiarySelected, AlDatacenterOptionsSummary } from '../../types';
