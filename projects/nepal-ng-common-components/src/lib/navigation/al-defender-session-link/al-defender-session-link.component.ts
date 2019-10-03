@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
-import { AlLocation, AlLocatorService, AlLocationContext } from '@al/common/locator';
+import { AlStopwatch, AlSubscriptionGroup, AlLocation, AlLocatorService, AlLocationContext } from '@al/common';
 import { ALSession } from '@al/session';
 import { AIMSAuthentication } from '@al/client';
 import { AlNavigationContextChanged } from '../types';

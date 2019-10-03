@@ -29,15 +29,14 @@ import {
     AlRouteCondition,
     AlLocatorService,
     AlNavigationSchema,
-    AlNavigationHost
-} from '@al/common/locator';
+    AlGlobalizer, AlStopwatch, AlTriggerStream, AlBehaviorPromise
+} from '@al/common';
 import { AlEntitlementCollection } from '@al/subscriptions';
-import { AlGlobalizer, AlStopwatch, AlTriggerStream, AlBehaviorPromise } from '@al/common';
 import { AlExperiencePreferencesService } from './al-experience-preferences.service';
 import {
     AlDatacenterOptionsSummary,
-    AlNavigationFrameChanged,
     AlNavigationContextChanged,
+    AlNavigationFrameChanged,
     AlNavigationTrigger,
     AlNavigationTertiarySelected,
     ExperiencePreference,
@@ -47,7 +46,7 @@ import {
 @Injectable({
     providedIn: 'root'
 })
-export class AlNavigationService implements AlNavigationHost
+export class AlNavigationService implements AlRoutingHost
 {
     public schema:AlNavigationSchema            =   null;
     public currentUrl:string                    =   '';
@@ -156,7 +155,7 @@ export class AlNavigationService implements AlNavigationHost
                     context.residency = residency;
                 }
                 if ( locationId ) {
-                    context.location = locationId;
+                    context.insightLocationId = locationId;
                 }
                 AlLocatorService.setContext( context );
                 this.refreshMenus();
@@ -337,16 +336,16 @@ export class AlNavigationService implements AlNavigationHost
      */
     public getRouteById( routeId:string ):AlRouteDefinition {
         console.warn("AlNavigationService.getRouteById is deprecated; please use getRouteByName instead." );
-        return this.getRouteByName;
+        return this.getRouteByName( routeId );
     }
 
     public getMenu( schemaId:string, menuId:string ):Promise<AlRoute> {
         return this.getNavigationSchema( schemaId ).then( schema => {
             let menuKey = `${schemaId}:${menuId}`;
-            if ( this.loadedMenus.hasOwnProperty( menuKey ) ) {
-                return this.loadedMenus[menuKey];
+            if ( ! this.loadedMenus.hasOwnProperty( menuKey ) ) {
+                throw new Error( `Navigation schema '${schemaId}' does not have a menu with ID '${menuId}'` );
             }
-            return Promise.reject( new Error( `Navigation schema '${schemaId}' does not have a menu with ID '${menuId}'` ) );
+            return this.loadedMenus[menuKey];
         } );
     }
 
@@ -677,7 +676,7 @@ export class AlNavigationService implements AlNavigationHost
             }
         } else {
             //  Find first visible child with an action and go there instead
-            let eligibleChild = route.children.find( child => child.visible && child.definition.action );
+            let eligibleChild = route.children.find( child => child.visible && typeof( child.definition.action ) !== 'undefined' );
             if ( eligibleChild ) {
                 return this.navigateByRoute( eligibleChild, parameters, options );
             } else {
@@ -737,7 +736,7 @@ export class AlNavigationService implements AlNavigationHost
             this.schema = schema;
             this.navigationReady.resolve( true );
             this.ngZone.run( () => {
-                let event = new AlNavigationFrameChanged( this, schema, this.experience );
+                let event = new AlNavigationFrameChanged( this, this.navigationSchemaId, schema, this.experience );
                 this.events.trigger( event );
             } );
         } );
