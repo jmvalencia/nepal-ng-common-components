@@ -326,7 +326,7 @@ path.unhealthy {
 
   svg {
     path.zero-state {
-      fill: al-color($al-gray, 200);
+      fill: al-color($al-gray, 50);
     }
   }
   tbody {
@@ -346,6 +346,9 @@ path.unhealthy {
       stroke: al-color($al-gray, 300) !important;
       fill: #585858 !important;
     }
+  }
+  .highcharts-series-hover.highcharts-markers path:nth-of-type(2) {
+    fill: white;
   }
 }
 
@@ -701,6 +704,9 @@ al-app-header {
     .highcharts-column-series rect.highcharts-point {
       stroke: #3C3C3C;
     }
+    .highcharts-series-hover.highcharts-markers path:nth-of-type(2) {
+      fill: white;
+    }
   }
 
   /*
@@ -774,7 +780,32 @@ al-app-header {
   .not-scanned {
     fill: #566578;
   }
-
+  al-highchart-line {
+    .highcharts-line-series.critical {
+      stroke: #F04349;
+      fill: none;
+    }
+    .highcharts-line-series.high {
+      stroke: #F04349;
+      fill: none;
+    }
+    .highcharts-line-series.medium {
+      stroke: #C84049;
+      fill: none;
+    }
+    .highcharts-line-series.low {
+      stroke: #A13E48;
+      fill: none;
+    }
+    .highcharts-line-series.info {
+      stroke: #793C49;
+      fill: none;
+    }
+    .highcharts-line-series.info2 {
+      stroke: #5C3A49;
+      fill: none;
+    }
+  }
   .nav-header-bar {
     background-color: #2A3849 !important;
     color: al-color($al-gray, 50) !important;
@@ -833,7 +864,7 @@ al-app-header {
     }
 
     &:enabled:focus {
-      background-color: lighten(#536984, 10%);
+      background-color: lighten(#536984, 20%);
     }
 
     &:enabled:focus {
