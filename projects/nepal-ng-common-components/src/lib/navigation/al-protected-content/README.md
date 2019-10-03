@@ -16,8 +16,11 @@ It also provides functionality to automatically redirect to a more appropriate r
 </al-protected-content>
 ```
 
-The `entitlement` attribute can be any valid entitlement expression (e.g., `"cloud_insight&!active_watch_premier|web_security_managed"`), a named entitlement group (e.g., `"EntitlementGroup.Incidents"`),
-OR the string constant `'*'` (which will always display the content).
+The `entitlement` attribute can be any valid entitlement expression (e.g., `"cloud_insight&!active_watch_premier|web_security_managed"`) or array of entitlement expressions.
+It can also be a named entitlement group (e.g., `"EntitlementGroup.Incidents"`) or one of two special string constants.
+
+* `"*"` This expression is always evaluated as true, so that the content will always be displayed (unless other conditions are applied).
+* `"@schema"` This constant will cause the component to interrogate the currently activated route (according to AlNavigationService) and its ancestors for a valid entitlement expression.  Please note that this shorthand has _significant_ limitations when dealing with routes with complex, compound, or negated visibility conditions.
 
 _Best Practice_: Embed your entitlement expression or group directly into your component's markup instead of storing it in a public property on your component.  This makes it easier to tell when and how the component should work from its markup.
 

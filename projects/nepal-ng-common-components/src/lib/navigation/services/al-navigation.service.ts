@@ -55,6 +55,7 @@ export class AlNavigationService implements AlNavigationHost
     public routeData:{[k:string]:string}        =   {};
     public queryParams:{[k:string]:string}      =   {};
     public tertiaryMenu:AlRoute                 =   null;
+    public activatedRoute:AlRoute               =   null;
 
     /**
      * Acting entitlements (distinct from primary entitlements); initially empty.
@@ -136,10 +137,10 @@ export class AlNavigationService implements AlNavigationHost
         this.contextNotifier = AlStopwatch.later( this.emitContextChanges );
         this.currentUrl = window.location.href;
         this.router.events.pipe( filter( event => event instanceof NavigationEnd ) ).subscribe( this.onNavigationComplete );
-        ALSession.notifyStream.attach( "AlSessionStarted", this.onSessionStarted );
-        ALSession.notifyStream.attach( "AlActingAccountChanged", this.onActingAccountChanged );
-        ALSession.notifyStream.attach( "AlActingAccountResolved", this.onActingAccountResolved );
-        ALSession.notifyStream.attach( "AlSessionEnded", this.onSessionEnded );
+        ALSession.notifyStream.attach( AlSessionStartedEvent, this.onSessionStarted );
+        ALSession.notifyStream.attach( AlActingAccountChangedEvent, this.onActingAccountChanged );
+        ALSession.notifyStream.attach( AlActingAccountResolvedEvent, this.onActingAccountResolved );
+        ALSession.notifyStream.attach( AlSessionEndedEvent, this.onSessionEnded );
         ALSession.getEffectiveEntitlements().then( entitlements => {
             this.entitlements = entitlements;
         } );
