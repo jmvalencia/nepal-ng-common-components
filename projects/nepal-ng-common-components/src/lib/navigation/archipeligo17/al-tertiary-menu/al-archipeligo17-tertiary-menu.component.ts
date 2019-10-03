@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AlRoute } from '@al/common/locator';
+import { AlRoute } from '@al/common';
 import { filter } from 'rxjs/operators';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationTertiarySelected } from '../../types/navigation.types';
@@ -74,7 +74,7 @@ export class AlArchipeligo17TertiaryMenuComponent implements OnInit, OnChanges
             classes.push( "cuarto-tab" );
         }
 
-        classes.push( route.id ? route.id.replace( /\:/g, "_" ) : route.caption.replace( /\s/g, "_" ) );
+        classes.push( route.definition.id ? route.definition.id.replace( /\:/g, "_" ) : route.caption.replace( /\s/g, "_" ) );
         route.setProperty( "consolidated_css_classes", classes.join(" " ) );
     }
 

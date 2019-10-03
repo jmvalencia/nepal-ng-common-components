@@ -2,8 +2,7 @@ import { Component,
          OnInit, OnDestroy, OnChanges, SimpleChanges, AfterViewInit,
          Input, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { Sidebar } from 'primeng/primeng';
-import { AlRoute } from '@al/common/locator';
-import { AlSubscriptionGroup } from '@al/common';
+import { AlRoute, AlSubscriptionGroup } from '@al/common';
 import { ALSession, AlActingAccountResolvedEvent } from '@al/session';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlManageExperienceService } from '../../services/al-manage-experience.service';

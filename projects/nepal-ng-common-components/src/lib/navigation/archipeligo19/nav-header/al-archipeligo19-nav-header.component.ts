@@ -1,7 +1,6 @@
 import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Output, EventEmitter, Input } from '@angular/core';
 import { AlNavigationService } from '../../services/al-navigation.service';
-import { AlRoute } from '@al/common/locator';
-import { AlSubscriptionGroup } from '@al/common';
+import { AlRoute, AlSubscriptionGroup } from '@al/common';
 import { ALSession, AlSessionStartedEvent, AlSessionEndedEvent } from '@al/session';
 
 @Component({

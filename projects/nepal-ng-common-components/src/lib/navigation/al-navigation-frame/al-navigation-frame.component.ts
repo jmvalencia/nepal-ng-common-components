@@ -8,7 +8,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
-    AlNavigationHost,
     AlNavigationFrameChanged,
     AlNavigationContextChanged,
     ALNAV_DISABLE_PRIMARY,
@@ -16,8 +15,7 @@ import {
 } from '../types';
 import { ALSession } from '@al/session';
 import { AIMSClient } from '@al/aims';
-import { AlRoute } from '@al/common/locator';
-import { AlTriggerStream } from '@al/common';
+import { AlRoute, AlTriggerStream } from '@al/common';
 import { AlNavigationService } from '../services/al-navigation.service';
 import { AlNavigationRouteMounted, AlExperience } from '../types/navigation.types';
 
@@ -31,8 +29,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     /**
      * Instance properties
      */
-    @Input() public experience:AlExperience = null;       //  this is only used to set the *initial* state.
-    @Input() public schema:string = null;           //  this is only used to set the *initial* state.
+    @Input() public experience:AlExperience = null;     //  this is only used to set the *initial* state.
+    @Input() public schema:string = null;               //  this is only used to set the *initial* state.
     public displayNav:boolean = false;
     public headingText: string = null;
 
@@ -54,8 +52,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
     }
 
     ngOnInit() {
-        this.alNavigation.events.attach( "AlNavigationFrameChanged", this.onNavigationChanged );
-        this.alNavigation.events.attach( "AlNavigationContextChanged", this.onNavigationContextChanged );
+        this.alNavigation.events.attach( AlNavigationFrameChanged, this.onNavigationChanged );
+        this.alNavigation.events.attach( AlNavigationContextChanged, this.onNavigationContextChanged );
         this.activatedRoute.queryParams.subscribe( this.onQueryParamsChanged );
         if ( ALSession.isActive() ) {
             this.showLoginLogo = false;
@@ -93,8 +91,8 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             return;
         }
         this.experience = event.experience as AlExperience;
-        if ( this.schema !== event.schema ) {
-            this.schema = event.schema;
+        if ( this.schema !== event.schemaId ) {
+            this.schema = event.schemaId;
             if ( event.schema.menus.hasOwnProperty("primary") ) {
                 this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
             }

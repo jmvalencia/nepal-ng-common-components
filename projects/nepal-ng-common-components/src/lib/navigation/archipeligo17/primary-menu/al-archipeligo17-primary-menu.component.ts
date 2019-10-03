@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlStopwatch } from '@al/common';
-import { AlRoute } from '@al/common/locator';
+import { AlStopwatch, AlRoute } from '@al/common';
 import { AlActingAccountResolvedEvent } from '@al/session';
 import { AlNavigationService } from '../../services/al-navigation.service';
 import { AlNavigationTertiarySelected } from '../../types';
@@ -111,7 +110,7 @@ export class AlArchipeligo17PrimaryMenuComponent implements OnInit, OnChanges, O
             classes.push( "disabled" );
         }
 
-        classes.push( route.id ? route.id.replace( /\:/g, "_" ) : route.caption.replace( /\s/g, "_" ) );
+        classes.push( route.definition.id ? route.definition.id.replace( /\:/g, "_" ) : route.caption.replace( /\s/g, "_" ) );
         route.setProperty( "consolidated_css_classes", classes.join(" " ) );
     }
 

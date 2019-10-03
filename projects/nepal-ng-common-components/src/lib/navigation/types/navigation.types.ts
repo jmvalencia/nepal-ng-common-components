@@ -1,22 +1,7 @@
 import { TemplateRef } from '@angular/core';
-import { AlRoute, AlRouteDefinition, AlRoutingHost, AlNavigationSchema } from '@al/common/locator';
-import { AlTrigger, AlTriggerStream, AlTriggeredEvent } from '@al/common';
+import { AlRoute, AlRouteDefinition, AlRoutingHost, AlNavigationSchema, AlTrigger, AlTriggerStream, AlTriggeredEvent } from '@al/common';
 import { AlActingAccountResolvedEvent, AlSessionInstance } from '@al/session';
 import { MenuItem as PrimengMenuItem } from 'primeng/components/common/menuitem';
-
-/**
- * This interface is used to abstract services that a host application must provide to top-level navigation components
- * in order for them to request data and adapt to their environment.  Most of this external functionality is already described
- * by the AlRoutingHost interface in @al/common/locator; this interface extends that one.
- */
-export interface AlNavigationHost extends AlRoutingHost
-{
-    /**
-     * A method to retrieve a menu definition (identified by `schema` and `menuId`)
-     * from the local execution environment.
-     */
-    getMenu( schema:string, menuId:string ):Promise<AlRoute>;
-}
 
 /**
  * A triggered event that indicates something in the parent frame has changed -- either a new schema is being installed, the experience setting has changed.
@@ -25,7 +10,8 @@ export interface AlNavigationHost extends AlRoutingHost
 @AlTrigger("AlNavigationFrameChanged")
 export class AlNavigationFrameChanged extends AlTriggeredEvent<void>
 {
-    constructor( public host:AlNavigationHost,
+    constructor( public host:AlRoutingHost,
+                 public schemaId:string,
                  public schema:AlNavigationSchema,
                  public experience:string ) {
         super();
@@ -42,7 +28,7 @@ export class AlNavigationFrameChanged extends AlTriggeredEvent<void>
 @AlTrigger("AlNavigationContextChanged")
 export class AlNavigationContextChanged extends AlTriggeredEvent<void>
 {
-    constructor( public host:AlNavigationHost,
+    constructor( public host:AlRoutingHost,
                  public session: AlSessionInstance ) {
         super();
     }
@@ -57,7 +43,7 @@ export class AlNavigationContextChanged extends AlTriggeredEvent<void>
 @AlTrigger("AlNavigationTrigger")
 export class AlNavigationTrigger extends AlTriggeredEvent<boolean>
 {
-    constructor( public host:AlNavigationHost,
+    constructor( public host:AlRoutingHost,
                  public triggerName:string,
                  public definition:AlRouteDefinition,
                  public route:AlRoute ) {
@@ -72,7 +58,7 @@ export class AlNavigationTrigger extends AlTriggeredEvent<boolean>
 export class AlNavigationSecondarySelected extends AlTriggeredEvent<void>
 {
     constructor(public child: AlRoute) {
-        super( "AlNavigationSecondarySelected" );
+        super();
     }
 }
 
@@ -83,7 +69,7 @@ export class AlNavigationSecondarySelected extends AlTriggeredEvent<void>
 export class AlNavigationTertiarySelected extends AlTriggeredEvent<void>
 {
     constructor(public child: AlRoute) {
-        super( "AlNavigationTertiarySelected" );
+        super();
     }
 }
 
@@ -100,7 +86,7 @@ export class AlNavigationRouteMounted extends AlTriggeredEvent<TemplateRef<any>>
 {
     constructor( public contentOutlet:string,
                  public container:AlRoute       ) {
-        super( "AlNavigationRouteMounted" );
+        super();
     }
 }
 
