@@ -99,6 +99,14 @@ export class AlHighchartColumnComponent implements OnChanges {
                         }));
                       }
                     }
+                },
+                line: {
+                    tooltip: {
+                        pointFormat: `
+                            <span class="detail">{point.category}</span><br>
+                            <span class="description">{series.name}:</span> <span class="detail">{point.y}%</span><br>
+                        `,
+                    }
                 }
             },
             series: this.config.series

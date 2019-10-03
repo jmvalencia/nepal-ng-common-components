@@ -326,7 +326,7 @@ path.unhealthy {
 
   svg {
     path.zero-state {
-      fill: al-color($al-gray, 200);
+      fill: al-color($al-gray, 50);
     }
   }
   tbody {
@@ -346,6 +346,9 @@ path.unhealthy {
       stroke: al-color($al-gray, 300) !important;
       fill: #585858 !important;
     }
+  }
+  .highcharts-series-hover.highcharts-markers path:nth-of-type(2) {
+    fill: white;
   }
 }
 
@@ -516,7 +519,8 @@ al-app-header {
   .critical rect,
   path.critical,
   rect.critical,
-  .critical .highcharts-area {
+  .critical .highcharts-area,
+  .highcharts-point.critical {
     fill: #F04349;
     stroke: none;
   }
@@ -524,7 +528,8 @@ al-app-header {
   .high rect,
   path.high,
   rect.high,
-  .high .highcharts-area {
+  .high .highcharts-area,
+  .highcharts-point.high {
     fill: #F04349;
     stroke: none;
   }
@@ -532,7 +537,8 @@ al-app-header {
   .medium rect,
   path.medium,
   rect.medium,
-  .medium  .highcharts-area {
+  .medium  .highcharts-area,
+  .highcharts-point.medium {
     fill: #C84049;
     stroke: none;
   }
@@ -540,7 +546,8 @@ al-app-header {
   .low rect,
   path.low,
   rect.low,
-  .low .highcharts-area {
+  .low .highcharts-area,
+  .highcharts-point.low {
     fill: #A13E48;
     stroke: none;
   }
@@ -548,7 +555,8 @@ al-app-header {
   .info rect,
   path.info,
   rect.info
-  .info .highcharts-area {
+  .info .highcharts-area,
+  .highcharts-point.info {
     fill: #793C49;
     stroke: none;
   }
@@ -556,7 +564,8 @@ al-app-header {
   .info2 rect,
   path.info2,
   rect.info2,
-  .info2 .highcharts-area {
+  .info2 .highcharts-area,
+  .highcharts-point.info2 {
     fill: #5C3A49;
     stroke: none;
   }
@@ -692,6 +701,12 @@ al-app-header {
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
     }
+    .highcharts-column-series rect.highcharts-point {
+      stroke: #3C3C3C;
+    }
+    .highcharts-series-hover.highcharts-markers path:nth-of-type(2) {
+      fill: white;
+    }
   }
 
   /*
@@ -765,7 +780,32 @@ al-app-header {
   .not-scanned {
     fill: #566578;
   }
-
+  al-highchart-line {
+    .highcharts-line-series.critical {
+      stroke: #F04349;
+      fill: none;
+    }
+    .highcharts-line-series.high {
+      stroke: #F04349;
+      fill: none;
+    }
+    .highcharts-line-series.medium {
+      stroke: #C84049;
+      fill: none;
+    }
+    .highcharts-line-series.low {
+      stroke: #A13E48;
+      fill: none;
+    }
+    .highcharts-line-series.info {
+      stroke: #793C49;
+      fill: none;
+    }
+    .highcharts-line-series.info2 {
+      stroke: #5C3A49;
+      fill: none;
+    }
+  }
   .nav-header-bar {
     background-color: #2A3849 !important;
     color: al-color($al-gray, 50) !important;
@@ -824,7 +864,7 @@ al-app-header {
     }
 
     &:enabled:focus {
-      background-color: lighten(#536984, 10%);
+      background-color: lighten(#536984, 20%);
     }
 
     &:enabled:focus {
