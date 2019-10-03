@@ -30,7 +30,7 @@ import { Router } from '@angular/router';
 import { AlNavigationService } from '../services/al-navigation.service';
 import { AIMSAccount } from '@al/aims';
 import { ALSession, AlActingAccountChangedEvent, AlActingAccountResolvedEvent } from '@al/session';
-import { AlRoute } from '@al/common/locator';
+import { AlRoute, AlRouteDefinition, AlRouteCondition } from '@al/common/locator';
 import { AlStopwatch, AlSubscriptionGroup } from '@al/common';
 import { AlEntitlementCollection } from '@al/subscriptions';
 import { EntitlementGroup } from '../types/entitlement-group.class';
@@ -57,18 +57,20 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     @Output() unentitled:EventEmitter<AlEntitlementCollection>  =   new EventEmitter<AlEntitlementCollection>();
     @Output() onAccountChange:EventEmitter<any>                 =   new EventEmitter<AIMSAccount>();
 
-    protected subscriptions = new AlSubscriptionGroup( null );
+    protected subscriptions = new AlSubscriptionGroup();
 
     constructor( public router:Router,
                  public navigation:AlNavigationService,
                  public experiencePreferences: AlExperiencePreferencesService ) {
-        this.subscriptions.manage( ALSession.notifyStream.attach("AlActingAccountChanged", this.onAccountChanged ) );
-        this.subscriptions.manage( ALSession.notifyStream.attach("AlActingAccountResolved", this.onAccountResolved ) );
+        this.subscriptions.manage(
+            ALSession.notifyStream.attach("AlActingAccountChanged", this.onAccountChanged ),
+            ALSession.notifyStream.attach("AlActingAccountResolved", this.onAccountResolved )
+        );
     }
 
     ngOnInit() {
         this.setEntitlements( this.entitlement );
-        ALSession.resolved().then( () => {
+        Promise.all( [ ALSession.resolved(), this.navigation.ready() ] ).then( () => {
             if ( this.evaluateAccessibility() ) {
                 this.onAccountChange.emit( ALSession.getActingAccount() );
             }
@@ -107,13 +109,16 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     }
 
     setEntitlementGroup = ( entitlement:string ):string=> {
-        if ( entitlement.indexOf("EntitlementGroup.") === 0 ) {
+        if ( entitlement.startsWith("EntitlementGroup.") ) {
             entitlement = entitlement.substring( 17 );
             if ( EntitlementGroup.hasOwnProperty( entitlement ) ) {
                 entitlement = EntitlementGroup[entitlement];
             } else {
                 throw new Error(`Warning: the entitlement expression 'EntitlementGroup.${entitlement}' does not reflect a valid entitlement group.  Are you using an outdated O3 constant?` );
             }
+        } else if ( entitlement === '@schema' ) {
+            entitlement = this.getEntitlementsFromSchema();
+            console.log(`Notice: al-protected-content extracted entitlement expression "${entitlement}" from currently activated route` );
         }
         return entitlement;
     }
@@ -197,5 +202,47 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
             route = route.map( el => el.replace( ":accountId", event.actingAccount.id ) );
             this.navigation.navigate.byNgRoute( route );
         }
+    }
+
+    /**
+     * Attempts to retrieve a valid entitlement expression from the current activated route.
+     */
+    getEntitlementsFromSchema() {
+        if ( ! this.navigation.activatedRoute ) {
+            console.warn("Warning: al-protected-content cannot extract entitlements from schema; no activated route is currently set." );
+            return "void_entitlement";
+        }
+        let route = this.navigation.activatedRoute;
+        while( route ) {
+            if ( typeof( route.definition.visible ) === 'object' ) {
+                let entitlementExpression = this.getEntitlementsFromRouteCondition( route.definition.visible );
+                if ( entitlementExpression ) {
+                    return entitlementExpression;
+                }
+            }
+            route = route.parent;
+        }
+
+        console.warn("Warning: al-protected-content cannot extract entitlements from schema; activated route hierarchy does not contain any entitlement conditions." );
+        return "void_entitlement";
+    }
+
+    /**
+     * Attempts to retrieve a valid entitlement expression from a route condition (or nested condition).  PLEASE NOTE
+     * that this will not yield the desired results in cases of complex or compound route conditions.
+     */
+    getEntitlementsFromRouteCondition( condition:AlRouteCondition ):string {
+        if ( condition.entitlements ) {
+            return condition.entitlements;
+        }
+        if ( condition.conditions && condition.rule === 'all' ) {
+            for ( let i = 0; i < condition.conditions.length; i++ ) {
+                let entitlementExpression = this.getEntitlementsFromRouteCondition( condition.conditions[i] );
+                if ( entitlementExpression ) {
+                    return entitlementExpression;
+                }
+            }
+        }
+        return null;
     }
 }

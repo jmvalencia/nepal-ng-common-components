@@ -130,6 +130,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
         if ( ! activatedPath ) {
             activatedPath = this.userMenu.getActivationCursorFlat();
             if ( ! activatedPath ) {
+                this.alNavigation.activatedRoute = null;
                 return;
             }
         }
@@ -145,8 +146,6 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
                 sidenavMenu = route;
             }
         } );
-
-        console.log("Notice: AlNavigationService activated path: ", activatedPath );
 
         if ( ! contentMenu && ! sidenavMenu ) {
             // it should only get here to display regular tertiary menu
@@ -178,6 +177,7 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             }
             return false;
         } );
+        this.alNavigation.activatedRoute = activatedPath[activatedPath.length-1];
     }
 
     toggleNav() {
