@@ -516,7 +516,8 @@ al-app-header {
   .critical rect,
   path.critical,
   rect.critical,
-  .critical .highcharts-area {
+  .critical .highcharts-area,
+  .highcharts-point.critical {
     fill: #F04349;
     stroke: none;
   }
@@ -524,7 +525,8 @@ al-app-header {
   .high rect,
   path.high,
   rect.high,
-  .high .highcharts-area {
+  .high .highcharts-area,
+  .highcharts-point.high {
     fill: #F04349;
     stroke: none;
   }
@@ -532,7 +534,8 @@ al-app-header {
   .medium rect,
   path.medium,
   rect.medium,
-  .medium  .highcharts-area {
+  .medium  .highcharts-area,
+  .highcharts-point.medium {
     fill: #C84049;
     stroke: none;
   }
@@ -540,7 +543,8 @@ al-app-header {
   .low rect,
   path.low,
   rect.low,
-  .low .highcharts-area {
+  .low .highcharts-area,
+  .highcharts-point.low {
     fill: #A13E48;
     stroke: none;
   }
@@ -548,7 +552,8 @@ al-app-header {
   .info rect,
   path.info,
   rect.info
-  .info .highcharts-area {
+  .info .highcharts-area,
+  .highcharts-point.info {
     fill: #793C49;
     stroke: none;
   }
@@ -556,7 +561,8 @@ al-app-header {
   .info2 rect,
   path.info2,
   rect.info2,
-  .info2 .highcharts-area {
+  .info2 .highcharts-area,
+  .highcharts-point.info2 {
     fill: #5C3A49;
     stroke: none;
   }
@@ -690,6 +696,9 @@ al-app-header {
     }
 
     .highcharts-pie-series .highcharts-point {
+      stroke: #3C3C3C;
+    }
+    .highcharts-column-series rect.highcharts-point {
       stroke: #3C3C3C;
     }
   }
