@@ -1,7 +1,7 @@
 <ng-template #mainContent>
     <al-archipeligo17-tertiary-menu [visible]="!disableTertiaryMenu" [menu]="sidenavMenu" [contentRef]="sidenavContentRef">
         <al-navigation-overlays></al-navigation-overlays>
-        <al-archipeligo19-content-menu [menu]="contentMenu"></al-archipeligo19-content-menu>
+        <al-archipeligo19-content-menu [menu]="contentMenu" *ngIf="contentMenu"></al-archipeligo19-content-menu>
         <ng-content></ng-content>
     </al-archipeligo17-tertiary-menu>
 </ng-template>
