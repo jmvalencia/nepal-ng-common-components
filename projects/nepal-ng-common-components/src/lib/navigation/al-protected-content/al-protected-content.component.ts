@@ -69,8 +69,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
 
     ngOnInit() {
         this.setEntitlements( this.entitlement );
-        Promise.all( [ ALSession.resolved(), this.navigation.ready() ] ).then( () => {
-            if ( this.evaluateAccessibility() ) {
+        Promise.all( [ ALSession.resolved(), this.navigation.ready() ] ).then( async () => {
+            if ( await this.evaluateAccessibility() ) {
                 this.onAccountChange.emit( ALSession.getActingAccount() );
             }
         });
@@ -123,8 +123,8 @@ export class AlProtectedContentComponent implements OnInit, OnChanges, OnDestroy
     }
 
     onAccountResolved = ( event:AlActingAccountResolvedEvent ) => {
-        AlStopwatch.once( () => {
-            if ( this.evaluateAccessibility( event.entitlements ) ) {
+        AlStopwatch.once( async () => {
+            if ( await this.evaluateAccessibility( event.entitlements ) ) {
                 this.onAccountChange.emit( event.actingAccount );
             }
         }, 10 );
