@@ -91,16 +91,14 @@ export class AlNavigationFrameComponent implements OnInit, OnChanges
             return;
         }
         this.experience = event.experience as AlExperience;
-        if ( this.schema !== event.schemaId ) {
-            this.schema = event.schemaId;
-            if ( event.schema.menus.hasOwnProperty("primary") ) {
-                this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
-            }
-            if ( event.schema.menus.hasOwnProperty("user") ) {
-                this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
-            }
-            this.changeDetector.detectChanges();
+        this.schema = event.schemaId;
+        if ( event.schema.menus.hasOwnProperty("primary") ) {
+            this.primaryMenu = new AlRoute( this.alNavigation, event.schema.menus.primary );
         }
+        if ( event.schema.menus.hasOwnProperty("user") ) {
+            this.userMenu = new AlRoute( this.alNavigation, event.schema.menus.user );
+        }
+        this.changeDetector.detectChanges();
         this.evaluateMenuActivation();
     }
 
