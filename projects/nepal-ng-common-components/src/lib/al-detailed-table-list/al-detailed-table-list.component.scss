@@ -113,9 +113,19 @@ al-detailed-table-list {
 
 .tablecell-tooltip {
   box-shadow: 2px 1px 3px 2px rgba(0,0,0,.3) !important;
+  opacity: .9 !important;
   .ui-overlaypanel-content {
     max-width: 400px;
     font-family: 'Open Sans',Arial,sans-serif !important;
     font-size: 12px;
+    opacity: .9!important;
+  }
+  &.ui-overlaypanel {
+    &:before {
+      border-width: 8px !important;
+    }
+    &:after {
+      border-width: 6px !important;
+    }
   }
 }
