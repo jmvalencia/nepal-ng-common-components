@@ -1,6 +1,7 @@
 @import "~@al/design/styles/palette";
 @import "~@al/design/styles/utility";
 @import "./paletteClassNames";
+@import "./utilities";
 
 // TODO - below should live in @al/design (core theme style)??x
 html,
@@ -209,6 +210,9 @@ path.unhealthy {
         }
       }
     }
+    td.multiline-content > div {
+      @include multiLineEllipsis($lineHeight: 1.4em, $lineCount: 2, $bgColor: #3C3C3C);
+    }
 
     .highcharts-pie-series .highcharts-point {
       stroke: #3C3C3C;
@@ -330,9 +334,14 @@ path.unhealthy {
     }
   }
   tbody {
-    tr:hover td {
+    tr:hover {
+      td {
         background-color: al-color($al-gray, 400) !important;
+        &.multiline-content > div {
+          @include multiLineEllipsis($lineHeight: 1.4em, $lineCount: 2, $bgColor: al-color($al-gray, 400));
+        }
       }
+    }
   }
   al-highmap-chart {
     svg g text {
@@ -437,13 +446,19 @@ al-app-header {
           color: #793C49;
         }
       }
-
+    }
+    td.multiline-content > div {
+      @include multiLineEllipsis($lineHeight: 1.4em, $lineCount: 2, $bgColor: #2A3849);
     }
 
-    tr,
-    td {
-      &:hover {
-        background-color: #6883A4 !important;
+    tbody {
+      tr:hover {
+        td {
+          background-color: #6883A4 !important;
+          &.multiline-content > div {
+            @include multiLineEllipsis($lineHeight: 1.4em, $lineCount: 2, $bgColor: #6883A4);
+          }
+        }
       }
     }
 

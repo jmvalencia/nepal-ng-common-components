@@ -38,14 +38,28 @@ export class TableChartsComponent {
 
     public config3: TableListConfig = {
         headers: [
-            { name: 'Host Name', field: 'summary' },
+            { name: 'Name', field: 'name', class: 'multiline-content' },
             { name: 'Count', field: 'count', style: 'right' },
         ],
-        body: [
-            { summary: '123.234.45', count: '12.3k' },
-            { summary: '123.234.456', count: '12.36' },
-            { summary: '123.4.45', count: '12' }
-        ]
+        body: [{
+              name: 'A very long massive piece of test that goes on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on',
+              count: '12.3k'
+            }, {
+              name: 'A not so long piece of text that fits onto two lines just fine',
+              count: '12.36'
+            }, {
+              name: 'A single line piece of text',
+              count: '12'
+            }, {
+              name: 'A very long massive piece of test that goes on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on',
+              count: '12'
+            }, {
+              name: 'A very long massive piece of test that goes on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on',
+              count: '12'
+            }, {
+              name: 'A single line piece of text',
+              count: '12'
+            }]
     };
 
     constructor(private breadcrumbService: BreadcrumbService) {
