@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewEncapsulation, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 import { TableListConfig } from '../types';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'al-detailed-table-list',
@@ -10,11 +11,16 @@ import { TableListConfig } from '../types';
 export class AlDetailedTableListComponent implements OnInit, OnChanges {
 
     public tableConfig: TableListConfig;
+    public mouseOverContent: string;
+    public showTooltip = false;
 
     /*
      * Configuration of the table
      */
     @Input() config: TableListConfig;
+
+
+    @ViewChild('op') op: OverlayPanel;
 
     constructor(private el: ElementRef) {}
 
@@ -39,5 +45,19 @@ export class AlDetailedTableListComponent implements OnInit, OnChanges {
         console.log('No record link data attribute found for selected table row!');
       }
 
+    }
+
+    onContentMouseOver(event, overlayTarget, content: string, classList: string) {
+      if(classList &&  classList.includes('multiline-content')) {
+        this.mouseOverContent = content;
+        this.op.show(event, overlayTarget);
+      } else {
+        this.op.hide();
+      }
+
+    }
+    onContentMouseOut(event) {
+      this.mouseOverContent = null;
+      this.op.hide();
     }
 }
