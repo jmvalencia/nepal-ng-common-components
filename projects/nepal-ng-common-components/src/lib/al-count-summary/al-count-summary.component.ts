@@ -14,6 +14,7 @@ import {
   ViewChild,
   ElementRef } from '@angular/core';
 import { numberContract } from '../formatters';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface Summary {
   count: string;
@@ -32,7 +33,7 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
   public containerHeight: number;
   public containerFontSize: number;
   public numberFontSize: number;
-
+  public showTooltip = false;
   public summary: Summary = {
     count: '',
     origCount: '',
@@ -41,45 +42,45 @@ export class AlCountSummaryComponent implements OnInit, OnChanges {
   public themeToggle = false;
 
   @ViewChild('container') containerEl: ElementRef;
+  @ViewChild('countText') countEl: ElementRef;
 
-
-    /**
-     * Count to display in widget
-     */
+	/**
+	 * Count to display in widget
+	 */
   @Input() config = '';
 
-    /**
-     * Event to emit the selected count item
-     */
+	/**
+	 * Event to emit the selected count item
+	 */
   @Output() countSelected: EventEmitter<any> = new EventEmitter();
 
-    /*
-     *  Detect a change to the value
-     */
+	/*
+	 *  Detect a change to the value
+	 */
   ngOnChanges(changes: SimpleChanges): void {
-      this.updateCount(this.config);
-      this.reflow();
-    }
+		this.updateCount(this.config);
+		this.reflow();
+	}
 
-    /*
-     *
-     */
+	/*
+	 *
+	 */
   ngOnInit() {
-      this.updateCount(this.config);
-      this.reflow();
-    }
+		this.updateCount(this.config);
+		this.reflow();
+	}
 
   onCountSelect( event ) {
-        this.countSelected.emit(event);
-    }
+		this.countSelected.emit(event);
+	}
 
   toggleTheme() {
-        this.themeToggle = !this.themeToggle;
-    }
+		this.themeToggle = !this.themeToggle;
+	}
 
-    /*
-     *
-     */
+	/*
+	 *
+	 */
   private reflow(): void {
       const len: number = (this.summary.count.replace(/\./, '')).length + (this.summary.suffix ? 1 : 0);
       this.containerWidth = this.containerEl.nativeElement.offsetWidth;

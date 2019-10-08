@@ -960,3 +960,20 @@ rect.segment-outline {
   outline-style: solid;
   outline-color: al-color($al-purple, 500);
 }
+
+body .ui-tooltip.count-tooltip {
+	font-size: 12px;
+	left: 45% !important;
+	top: 30px !important;
+	.ui-tooltip-text {
+    background-color: rgba(255, 255, 255, .8);
+    padding: .75em;
+		color: black;
+	}
+	.ui-tooltip-arrow {
+		border-top-color: rgba(255, 255, 255, .8);
+		border-width: .35em .35em 0;
+		bottom: 0;
+	}
+}
+
