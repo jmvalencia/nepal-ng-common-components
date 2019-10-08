@@ -32,7 +32,10 @@ export const BASE_CONFIG: any = {
     },
 
     tooltip: {
-        enabled: false
+        headerFormat: '',
+        shadow: false,
+        useHTML: true,
+        pointFormat: ``,
     },
 
     yAxis: {
@@ -56,7 +59,7 @@ export const BASE_CONFIG: any = {
                 shadow: false,
                 formatter: null
             },
-        }
+        },        
     },
 
     series: [{
