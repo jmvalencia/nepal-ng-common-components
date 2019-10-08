@@ -49,7 +49,7 @@
     "@al/aims": "^1.0.0",
     "@al/client": "^1.0.3",
     "@al/common": "^1.1.0",
-    "@al/design": "^0.1.11",
+    "@al/design": "^0.1.13",
     "@al/session": "^1.1.0",
     "@al/subscriptions": "^1.0.0",
     "@angular/common": "~7.2.0",
